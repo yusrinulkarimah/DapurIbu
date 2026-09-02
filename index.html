@@ -47,7 +47,9 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,
 .toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#18375f;color:#fff;border-radius:99px;padding:9px 13px;font-size:11px;opacity:0;transition:.2s;z-index:80}.toast.show{opacity:1}
 .empty{text-align:center;padding:22px;color:var(--mut);font-size:11px}
 </style>
-</head>
+<style>
+body{font-size:14px}.brand h1{font-size:27px}.brand p{font-size:13px}.hero{border:0;border-radius:22px;padding:19px;box-shadow:0 9px 25px rgba(34,76,112,.09)}.hero small{font-size:14px}.hero h2{font-size:23px}.hero p{font-size:14px}.sectionTitle h3{font-size:19px}.sectionTitle p{font-size:13px}.meal{border:0;border-radius:20px;padding:14px;box-shadow:0 8px 23px rgba(34,76,112,.08)}.meal h4{font-size:16px}.mini{border:0;border-radius:13px;padding:11px}.mini span{font-size:12px}.mini b{font-size:15px}.summary{border:0;border-radius:18px;padding:14px;box-shadow:0 8px 23px rgba(34,76,112,.08)}.summary b{font-size:15px}.summary small{font-size:12px}.tip{font-size:13px}.head h2{font-size:25px}.head small{font-size:13px}.tabs{background:#f2f7fb;border-radius:16px;padding:4px}.tabs button{font-size:13px}.topSummary .title{font-size:14px}.topSummary span{font-size:12px}.addbar{font-size:14px;padding:13px}.listhead h3{font-size:17px}.itemtitle{font-size:15px}.price{font-size:13px}.shop,.request,.recipe{border-radius:17px;box-shadow:0 7px 20px rgba(34,76,112,.07)}.search input{font-size:13px}.stockHeader{font-size:10.5px;padding:11px 6px}.stockRow{font-size:11.5px;padding:11px 6px}.stockRow .name{font-size:13px}.badge{font-size:9.5px}.histTop b{font-size:14px}.histTop small{font-size:11px}.histTop span{font-size:13px}.histRow{font-size:11.5px}.monthbar b{font-size:14px}.day b{font-size:10px}.day span{font-size:17px}.reqTabs button{font-size:12px}.request b{font-size:14px}.request p{font-size:12px}.request small{font-size:10.5px}.pill{font-size:10px}.recipeTabs button{font-size:12px}.recipe{grid-template-columns:92px 1fr}.photo{height:92px}.rb h3{font-size:15px}.rb p{font-size:12px}.rb button{font-size:12px}.form label{font-size:14px}.form input,.form select,.form textarea{font-size:14px;padding:12px}nav{box-shadow:0 -8px 27px rgba(31,68,102,.09)}nav button{font-size:12px}nav svg{width:22px;height:22px}.circle{width:44px;height:44px}.savebtn{font-size:14px;padding:14px}
+</style></head>
 <body>
 <div class="app">
 <header>
@@ -165,15 +167,15 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,
 <script>
 const $=id=>document.getElementById(id),DAYS=['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'],SLOTS=['Sarapan','Makan Siang','Makan Malam','Snack'];
 function get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}}
-let meals=get('di_meals_v17',get('di_meals_v16',[]));
-let shop=get('di_shop_v17',get('di_shop_v16',[]));
-let stock=get('di_stock_v17',get('di_stock_v16',[{name:'Beras',qty:2,unit:'kg',min:5},{name:'Minyak Goreng',qty:1,unit:'L',min:2},{name:'Telur',qty:6,unit:'butir',min:10}]));
-let history=get('di_hist_v17',get('di_hist_v16',[]));
-let recipes=get('di_recipes_v17',get('di_recipes_v16',[]));
-let reqs=get('di_reqs_v17',get('di_reqs_v16',[]));
+let meals=get('di_meals_v18',get('di_meals_v17',[]));
+let shop=get('di_shop_v18',get('di_shop_v17',[]));
+let stock=get('di_stock_v18',get('di_stock_v17',[{name:'Beras',qty:2,unit:'kg',min:5},{name:'Minyak Goreng',qty:1,unit:'L',min:2},{name:'Telur',qty:6,unit:'butir',min:10}]));
+let history=get('di_hist_v18',get('di_hist_v17',[]));
+let recipes=get('di_recipes_v18',get('di_recipes_v17',[]));
+let reqs=get('di_reqs_v18',get('di_reqs_v17',[]));
 let currentDate=new Date(),editIndex=-1,reqFilter='all',approveIndex=-1;
 
-function save(){localStorage.setItem('di_meals_v17',JSON.stringify(meals));localStorage.setItem('di_shop_v17',JSON.stringify(shop));localStorage.setItem('di_stock_v17',JSON.stringify(stock));localStorage.setItem('di_hist_v17',JSON.stringify(history));localStorage.setItem('di_recipes_v17',JSON.stringify(recipes));localStorage.setItem('di_reqs_v17',JSON.stringify(reqs))}
+function save(){localStorage.setItem('di_meals_v18',JSON.stringify(meals));localStorage.setItem('di_shop_v18',JSON.stringify(shop));localStorage.setItem('di_stock_v18',JSON.stringify(stock));localStorage.setItem('di_hist_v18',JSON.stringify(history));localStorage.setItem('di_recipes_v18',JSON.stringify(recipes));localStorage.setItem('di_reqs_v18',JSON.stringify(reqs))}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function rp(n){return 'Rp '+Number(n||0).toLocaleString('id-ID')}
 function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1400)}
