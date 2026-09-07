@@ -47,7 +47,7 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,
 .toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#18375f;color:#fff;border-radius:99px;padding:9px 13px;font-size:11px;opacity:0;transition:.2s;z-index:80}.toast.show{opacity:1}
 .empty{text-align:center;padding:22px;color:var(--mut);font-size:11px}
 </style>
-<style id="DAPUR-IBU-V23">
+<style id="DAPUR-IBU-V25">
 body{background:#eef6fc!important}.app{background:#fff!important;box-shadow:0 0 55px #1c44691f!important}
 header{padding:22px 18px 15px!important;background:#fff!important}.brand{gap:13px!important}.logo{width:52px!important;height:52px!important;border:0!important;border-radius:18px!important;background:linear-gradient(145deg,#dceeff,#f6fbff)!important;box-shadow:0 10px 24px #2478df24!important}.brand h1{font-size:28px!important;letter-spacing:-.8px!important}.brand p{font-size:12.5px!important;margin-top:5px!important;color:#8293a6!important}main{padding:0 17px!important}
 .hero{position:relative;overflow:hidden;margin:5px 0 21px!important;padding:21px!important;border:0!important;border-radius:25px!important;background:linear-gradient(135deg,#dceeff,#edf7ff 65%,#fbfdff)!important;box-shadow:0 12px 30px #2569a919!important}.hero:after{content:"";position:absolute;width:105px;height:105px;border-radius:50%;right:-35px;top:-38px;background:#ffffff94}.hero h2{font-size:22px!important}.hero p,.hero small{font-size:12.5px!important}
@@ -64,7 +64,7 @@ header{padding:22px 18px 15px!important;background:#fff!important}.brand{gap:13p
 nav{padding:8px 6px calc(8px + env(safe-area-inset-bottom))!important;border-top:0!important;box-shadow:0 -8px 28px #20436317!important;background:#fffffff7!important}nav button{min-height:50px!important;border-radius:14px!important;gap:4px!important}nav button.active{background:#edf6ff!important;color:#2478df!important}nav svg{width:22px!important;height:22px!important}
 </style>
 
-<style id="DAPUR-IBU-V23-APP-LIKE">
+<style id="DAPUR-IBU-V25-APP-LIKE">
 :root{
  --b:#2f80ed;--b2:#6bb0f7;--ink:#16365f;--mut:#71859b;--line:#e7eef5;
  --sky:#eaf5ff;--sky2:#f7fbff;--mint:#ecf9f2;--peach:#fff4e8;--lav:#f4efff;--rose:#fff1f4;
@@ -110,6 +110,18 @@ nav{padding:8px 7px calc(8px + env(safe-area-inset-bottom))!important;border-top
 @media(max-width:390px){body{font-size:14.5px!important}.brand h1{font-size:25px!important}.brand p{font-size:11.5px!important}.head h2,.pageHeroTitle h2{font-size:25px!important}.sectionTitle h3{font-size:18px!important}}
 </style>
 
+
+<style id="V25-RECIPE-MEALPLAN">
+.recipeActions{display:grid;gap:10px;margin-top:16px}
+.mealPlanBtn,.shopRecipeBtn{width:100%;min-height:48px;border:0;border-radius:15px;font-size:13px;font-weight:750;display:flex;align-items:center;justify-content:center;gap:9px}
+.mealPlanBtn{background:linear-gradient(145deg,#3f8ef1,#2577dd);color:#fff;box-shadow:0 8px 18px rgba(47,128,237,.20)}
+.shopRecipeBtn{background:#edf6ff;color:#236fbe;box-shadow:inset 0 0 0 1px #d4e7f7}
+.recipeActionIcon{font-size:16px}
+#recipeMealModal .sheet{max-height:90vh}
+#recipeMealModal .form{display:grid;gap:2px}
+#recipeMealModal label{margin-top:8px}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -117,7 +129,7 @@ nav{padding:8px 7px calc(8px + env(safe-area-inset-bottom))!important;border-top
 <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
 <path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M9 20v-6h6v6" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
-</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">v23</span></p></div></div>
+</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">v25</span></p></div></div>
 
 </header>
 <main>
@@ -127,10 +139,7 @@ nav{padding:8px 7px calc(8px + env(safe-area-inset-bottom))!important;border-top
 <div id="todayMeals" class="stack"></div>
 <div class="sectionTitle"><h3>Ringkasan Hari Ini</h3></div>
 <div class="stack">
-<div class="summary sum1" onclick="goStock()"><span><svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M12 4 3.5 19h17L12 4Z" stroke="#d75067" stroke-width="1.8"/><path d="M12 9v4M12 16h.01" stroke="#d75067" stroke-width="2" stroke-linecap="round"/></svg></span><div class="txt"><b>Stok Hampir Habis</b><small id="sumLow"></small></div><span>›</span></div>
-<div class="summary sum2"><span><svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect x="4" y="5" width="16" height="15" rx="3" stroke="#18855c" stroke-width="1.8"/><path d="M8 3v4M16 3v4M4 9h16" stroke="#18855c" stroke-width="1.8"/></svg></span><div class="txt"><b>Hampir Kadaluwarsa</b><small>Belum ada data kadaluwarsa</small></div><span>›</span></div>
-<div class="summary sum3" onclick="go('requests')"><span><svg viewBox="0 0 24 24" width="22" height="22" fill="none"><path d="M7 10a4 4 0 1 1 2-7 5 5 0 0 1 6 0 4 4 0 1 1 2 7v9H7v-9Z" stroke="#486ed9" stroke-width="1.7"/><path d="M9 15h6" stroke="#486ed9" stroke-width="1.7"/></svg></span><div class="txt"><b>Request Masakan</b><small id="sumReq"></small></div><span>›</span></div>
-</div>
+
 <div class="tip"><b>Tips Hari Ini</b><br>Simpan sayuran di wadah tertutup agar tetap segar lebih lama.</div>
 </section>
 
@@ -214,6 +223,16 @@ nav{padding:8px 7px calc(8px + env(safe-area-inset-bottom))!important;border-top
 <div id="requestModal" class="modal"><div class="sheet"><div class="sheethead"><h3>Tambah Request</h3><button onclick="closeM('requestModal')">×</button></div><div class="form"><label>Nama</label><input id="rQName"><label>Request menu</label><input id="rQMenu"><label>Catatan</label><textarea id="rQNote"></textarea><button class="savebtn" onclick="saveRequest()">Simpan Request</button></div></div></div>
 
 <div id="approveModal" class="modal"><div class="sheet"><div class="sheethead"><h3>Tambah ke Meal Plan</h3><button onclick="closeM('approveModal')">×</button></div><div class="form"><label>Nama Menu</label><input id="aName"><label>Pilih Meal</label><select id="aSlot"><option>Sarapan</option><option>Makan Siang</option><option>Makan Malam</option><option>Snack</option></select><label>Untuk</label><select id="aType"><option>Keluarga</option><option>MPASI</option></select><label>Tanggal</label><input id="aDate" type="date"><button class="savebtn" onclick="confirmApprove()">Simpan ke Meal Plan</button></div></div></div>
+<div id="recipeMealModal" class="modal"><div class="sheet"><div class="sheethead"><h3>Tambah Resep ke Meal Plan</h3><button onclick="closeM('recipeMealModal')">×</button></div>
+<div class="form">
+<label>Nama Menu</label><input id="rmName">
+<label>Pilih Menu Makan</label>
+<select id="rmSlot"><option>Sarapan</option><option>Makan Siang</option><option>Makan Malam</option><option>Snack</option></select>
+<label>Untuk</label>
+<select id="rmType"><option>Keluarga</option><option>MPASI</option></select>
+<label>Tanggal</label><input id="rmDate" type="date">
+<button class="savebtn" onclick="saveRecipeToMealPlan()">Tambahkan ke Meal Plan</button>
+</div></div></div>
 
 <div id="recipeModal" class="modal"><div class="sheet"><div class="sheethead"><h3>Tambah Resep</h3><button onclick="closeM('recipeModal')">×</button></div><div class="form">
 <label>Foto resep</label>
@@ -281,7 +300,10 @@ function renderRecipes(){let q=($('recipeSearch').value||'').toLowerCase(),arr=r
 let deleteRecipeId='';
 function confirmDeleteRecipe(id){deleteRecipeId=id;let r=recipes.find(x=>x.id===id);$('deleteRecipeText').textContent='Resep “'+(r?.name||'')+'” akan dihapus dari daftar resep.';$('deleteRecipeModal').classList.add('show')}
 function doDeleteRecipe(){recipes=recipes.filter(x=>x.id!==deleteRecipeId);save();closeM('deleteRecipeModal');renderRecipes();toast('Resep dihapus')}
-function showRecipe(id){let r=recipes.find(x=>x.id===id);$('rdTitle').textContent=r.name;$('rdBody').innerHTML=`<div class="form">${r.photo?`<img src="${r.photo}" style="width:100%;max-height:240px;object-fit:cover;border-radius:15px;margin-bottom:12px">`:''}<b style="font-size:13px">Bahan</b><p style="white-space:pre-line;font-size:12px;line-height:1.5">${esc(r.ingredients)}</p><b style="font-size:13px">Langkah</b><p style="white-space:pre-line;font-size:12px;line-height:1.5">${esc(r.steps||'')}</p><button class="savebtn" onclick="recipeToShop('${id}')">Tambah Bahan ke Belanja</button></div>`;$('recipeDetail').classList.add('show')}
+function showRecipe(id){let r=recipes.find(x=>x.id===id);$('rdTitle').textContent=r.name;$('rdBody').innerHTML=`<div class="form">${r.photo?`<img src="${r.photo}" style="width:100%;max-height:240px;object-fit:cover;border-radius:18px;margin-bottom:14px">`:''}<b style="font-size:14px">Bahan</b><p style="white-space:pre-line;font-size:13px;line-height:1.55">${esc(r.ingredients)}</p><b style="font-size:14px">Langkah</b><p style="white-space:pre-line;font-size:13px;line-height:1.55">${esc(r.steps||'')}</p><div class="recipeActions"><button class="mealPlanBtn" onclick="openRecipeMeal('${id}')"><span class="recipeActionIcon">📅</span><span>Tambah ke Meal Plan</span></button><button class="shopRecipeBtn" onclick="recipeToShop('${id}')"><span class="recipeActionIcon">🛒</span><span>Tambah Bahan ke Belanja</span></button></div></div>`;$('recipeDetail').classList.add('show')}
+let recipeMealId='';
+function openRecipeMeal(id){let r=recipes.find(x=>x.id===id);if(!r)return;recipeMealId=id;$('rmName').value=r.name;$('rmSlot').value='Makan Siang';$('rmType').value='Keluarga';$('rmDate').value=iso(new Date());closeM('recipeDetail');$('recipeMealModal').classList.add('show')}
+function saveRecipeToMealPlan(){let r=recipes.find(x=>x.id===recipeMealId),name=$('rmName').value.trim(),date=$('rmDate').value;if(!r||!name||!date)return;let d=new Date(date+'T12:00:00'),day=dayName(d),slot=$('rmSlot').value,type=$('rmType').value;meals=meals.filter(x=>!(x.day===day&&x.slot===slot&&x.type===type));meals.push({day,slot,type,name});save();closeM('recipeMealModal');renderSchedule();renderHome();toast('Resep ditambahkan ke Meal Plan')}
 function recipeToShop(id){let r=recipes.find(x=>x.id===id);r.ingredients.split('\n').filter(Boolean).forEach(line=>{let m=line.trim().match(/^(\d+(?:[.,]\d+)?)\s*(kg|g|ml|L|butir|buah|siung|ikat|pcs|pack)?\s+(.+)$/i);if(m)shop.push({name:m[3].trim(),qty:parseFloat(m[1].replace(',','.')),unit:m[2]||'pcs',price:0,done:false});else shop.push({name:line.trim(),qty:1,unit:'pcs',price:0,done:false})});save();renderShop();closeM('recipeDetail');toast('Bahan ditambahkan ke belanja')}
 renderHome();renderSchedule();renderShop();renderStock();renderHistory();renderRecipes();renderRequests();save();
 </script>
