@@ -47,6 +47,397 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,
 .toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#18375f;color:#fff;border-radius:99px;padding:9px 13px;font-size:11px;opacity:0;transition:.2s;z-index:80}.toast.show{opacity:1}
 .empty{text-align:center;padding:22px;color:var(--mut);font-size:11px}
 </style>
+
+<style id="v21-visual-redesign">
+/* ===== DAPUR IBU v21 — VISUAL REDESIGN ONLY ===== */
+:root{
+  --ink:#17365f;
+  --muted:#72869d;
+  --blue:#2f80ed;
+  --blue2:#66a9f3;
+  --sky:#eef7ff;
+  --sky2:#f8fbff;
+  --line:#e7eef5;
+  --green:#eaf8f1;
+  --peach:#fff3e9;
+  --lav:#f4efff;
+  --rose:#fff0f3;
+  --shadow-sm:0 5px 16px rgba(34,72,108,.055);
+  --shadow:0 10px 30px rgba(34,72,108,.085);
+}
+*{-webkit-tap-highlight-color:transparent}
+body{
+  background:linear-gradient(180deg,#eaf5ff 0,#f7fbff 280px,#eef4f8 100%);
+  color:var(--ink);
+  font-size:14px;
+}
+.app{
+  background:linear-gradient(180deg,#fff 0,#fff 72%,#fbfdff 100%);
+  box-shadow:0 0 50px rgba(29,67,103,.09);
+}
+header{
+  padding:20px 18px 13px;
+  background:linear-gradient(180deg,#fbfdff 0%,#fff 100%);
+  border-bottom:0;
+}
+.brand{gap:12px}
+.brand h1{
+  font-size:27px!important;
+  line-height:1.05;
+  letter-spacing:-.7px;
+  color:#183b67;
+}
+.brand p{
+  margin-top:5px!important;
+  font-size:12.5px!important;
+  line-height:1.35;
+  color:#8292a5!important;
+}
+.logo{
+  width:50px!important;height:50px!important;
+  border:0!important;border-radius:18px!important;
+  background:linear-gradient(145deg,#e5f2ff,#f8fcff)!important;
+  box-shadow:0 9px 22px rgba(47,128,237,.13)!important;
+}
+main{padding:0 16px!important}
+
+/* Page titles */
+.head,.pageHeroTitle{
+  margin:12px 0 17px!important;
+  align-items:center!important;
+}
+.head h2,.pageHeroTitle h2{
+  font-size:26px!important;
+  line-height:1.1;
+  letter-spacing:-.65px!important;
+  color:#183b67;
+}
+.head small,.pageHeroTitle small{
+  display:block;
+  margin-top:5px;
+  font-size:12.5px!important;
+  line-height:1.35;
+  color:#8292a5!important;
+}
+.circle{
+  width:46px!important;height:46px!important;
+  border-radius:16px!important;
+  background:linear-gradient(145deg,#3a8cf3,#2375e3)!important;
+  box-shadow:0 9px 20px rgba(47,128,237,.24)!important;
+}
+
+/* Home hero */
+.hero{
+  margin-top:7px!important;
+  padding:20px!important;
+  border:0!important;
+  border-radius:24px!important;
+  background:
+    radial-gradient(circle at 88% 18%,rgba(255,255,255,.9) 0 24px,transparent 25px),
+    radial-gradient(circle at 94% 28%,rgba(255,255,255,.55) 0 48px,transparent 49px),
+    linear-gradient(135deg,#dfefff 0%,#edf7ff 55%,#f8fcff 100%)!important;
+  box-shadow:var(--shadow)!important;
+}
+.hero small{font-size:13px!important;font-weight:700!important;color:#4b7caf!important}
+.hero h2{font-size:22px!important;letter-spacing:-.4px!important}
+.hero p{font-size:13px!important}
+
+/* Section hierarchy */
+.sectionTitle{margin:22px 2px 11px!important}
+.sectionTitle h3{font-size:18px!important;letter-spacing:-.25px}
+.sectionTitle p{font-size:12px!important;line-height:1.35}
+.sectionTitle button{font-size:12px!important}
+
+/* Meal cards */
+.meal{
+  position:relative;
+  overflow:hidden;
+  padding:15px!important;
+  border:0!important;
+  border-radius:21px!important;
+  box-shadow:var(--shadow-sm)!important;
+}
+.meal:before{
+  content:"";position:absolute;right:-22px;top:-28px;
+  width:82px;height:82px;border-radius:50%;
+  background:rgba(255,255,255,.35);
+}
+.meal.blue{background:linear-gradient(145deg,#e7f3ff,#f8fcff)!important}
+.meal.green{background:linear-gradient(145deg,#eaf8f1,#f9fdfb)!important}
+.meal.purple{background:linear-gradient(145deg,#f3efff,#fbfaff)!important}
+.meal.orange{background:linear-gradient(145deg,#fff1e6,#fffaf6)!important}
+.meal h4{font-size:15px!important;margin-bottom:10px!important}
+.mini{
+  min-height:67px!important;
+  padding:11px!important;
+  border:0!important;
+  border-radius:14px!important;
+  background:rgba(255,255,255,.78)!important;
+  box-shadow:inset 0 0 0 1px rgba(212,226,238,.6);
+}
+.mini span{font-size:10.5px!important}
+.mini b{font-size:13.5px!important;line-height:1.3!important}
+
+/* Home summary */
+.summary{
+  min-height:67px;
+  padding:13px 14px!important;
+  border:0!important;
+  border-radius:18px!important;
+  box-shadow:var(--shadow-sm)!important;
+}
+.summary b{font-size:13.5px!important}
+.summary small{font-size:11px!important}
+.sum1{background:linear-gradient(135deg,#fff0f3,#fff9fa)!important}
+.sum2{background:linear-gradient(135deg,#eaf8f1,#f9fdfb)!important}
+.sum3{background:linear-gradient(135deg,#edf3ff,#fafcff)!important}
+.tip{
+  padding:14px 15px!important;
+  border:0!important;border-radius:18px!important;
+  background:linear-gradient(135deg,#edf6ff,#f9fcff)!important;
+  box-shadow:var(--shadow-sm)!important;
+  font-size:12px!important;line-height:1.5;
+}
+
+/* Segmented tabs */
+.tabs{
+  padding:4px!important;
+  gap:3px!important;
+  border-radius:17px!important;
+  background:#f1f6fa!important;
+}
+.tabs button{
+  min-height:39px;
+  border:0!important;
+  border-radius:13px!important;
+  background:transparent!important;
+  font-size:11.5px!important;
+  font-weight:650!important;
+}
+.tabs button.active{
+  color:#fff!important;
+  background:linear-gradient(145deg,#3a8cf3,#2375e3)!important;
+  box-shadow:0 6px 14px rgba(47,128,237,.2)!important;
+}
+
+/* Shopping */
+.topSummary{
+  padding:15px!important;
+  border:0!important;border-radius:20px!important;
+  background:linear-gradient(135deg,#e6f3ff,#f7fbff)!important;
+  box-shadow:var(--shadow-sm)!important;
+}
+.topSummary .title{font-size:13px!important}
+.topSummary span{font-size:10.5px!important}
+.topSummary b{font-size:18px!important}
+.addbar{
+  min-height:44px;
+  border:0!important;border-radius:15px!important;
+  background:#eef7ff!important;color:#2677d7!important;
+  box-shadow:inset 0 0 0 1px #d4e7f7!important;
+  font-size:12.5px!important;
+}
+.listhead h3{font-size:16px!important}
+.count{font-size:10px!important;padding:5px 9px!important}
+.shop{
+  padding:12px!important;
+  border:0!important;border-radius:17px!important;
+  background:#fff!important;
+  box-shadow:var(--shadow-sm)!important;
+}
+.itemtitle{font-size:13.5px!important}
+.controls{gap:5px!important}
+.controls button{width:29px!important;height:29px!important;border:0!important;background:#edf6ff!important}
+.controls input,.controls select{min-height:29px!important;font-size:10.5px!important}
+.price{font-size:11.5px!important}
+.iconbtn,.editMini,.trashMini{
+  width:31px!important;height:31px!important;border-radius:10px!important;
+}
+.edit,.editMini{background:#edf6ff!important;color:#2c78c7!important}
+.trash,.trashMini{background:#fff0f2!important;color:#d65366!important}
+
+/* Search */
+.search{
+  min-height:44px;
+  border:0!important;border-radius:15px!important;
+  background:#f2f6f9!important;
+  padding-left:13px!important;
+}
+.search input{font-size:12px!important;background:transparent!important}
+
+/* Stock */
+.stockstats{gap:8px!important}
+.stat{
+  padding:12px 4px!important;border-radius:16px!important;
+  box-shadow:var(--shadow-sm);
+}
+.stat b{font-size:19px!important}
+.stat span{font-size:9.5px!important}
+.stockTable{
+  border:0!important;border-radius:17px!important;
+  box-shadow:var(--shadow-sm)!important;
+  background:#fff;
+}
+.stockHeader{
+  background:#f4f8fb!important;
+  padding:11px 7px!important;
+  font-size:9.5px!important;
+}
+.stockRow{
+  padding:11px 7px!important;
+  font-size:10.5px!important;
+}
+.stockRow .name{font-size:11.5px!important}
+.badge{font-size:8.5px!important;padding:4px 5px!important}
+
+/* History */
+.history{
+  border:0!important;border-radius:17px!important;
+  box-shadow:var(--shadow-sm)!important;
+  background:#fff;
+}
+.histTop{padding:11px 12px!important;background:#f6faff!important}
+.histTop b{font-size:12px!important}
+.histTop small{font-size:9.5px!important}
+.histTop span{font-size:12px!important}
+.histRow{padding:10px 12px!important;font-size:10.5px!important}
+
+/* Schedule */
+.monthbar{margin:4px 0 10px!important}
+.monthbar b{font-size:13.5px!important}
+.monthbar button{
+  border:0!important;background:#f2f6fa!important;border-radius:11px!important;
+}
+.days{gap:6px!important}
+.day{
+  min-height:54px;
+  padding:8px 2px!important;
+  border:0!important;border-radius:14px!important;
+  background:#f2f6fa!important;
+}
+.day b{font-size:9px!important}
+.day span{font-size:15px!important}
+.day.active{
+  background:linear-gradient(145deg,#3a8cf3,#2375e3)!important;
+  box-shadow:0 7px 15px rgba(47,128,237,.21)!important;
+}
+
+/* Requests */
+.reqTabs{
+  padding:3px;
+  border:0!important;border-radius:15px;
+  background:#f3f7fa;
+}
+.reqTabs button{
+  min-height:37px;
+  font-size:10.5px!important;
+  border:0!important;border-radius:12px;
+}
+.reqTabs button.active{
+  background:#fff;
+  box-shadow:var(--shadow-sm);
+}
+.request{
+  padding:13px!important;
+  border:0!important;border-radius:18px!important;
+  box-shadow:var(--shadow-sm)!important;
+}
+.request b{font-size:13px!important}
+.request p{font-size:11px!important;line-height:1.4}
+.request small{font-size:9.5px!important}
+.pill{font-size:9px!important;padding:4px 7px!important}
+.approve,.reject{width:32px!important;height:32px!important}
+
+/* Recipe gallery */
+.recipegrid{gap:14px!important}
+.recipeImageWrap{
+  border-radius:20px!important;
+  box-shadow:0 9px 23px rgba(34,72,108,.1)!important;
+}
+.recipeImageWrap:after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 62%,rgba(13,35,58,.12));
+  pointer-events:none;
+}
+.recipeDelete{
+  right:9px!important;bottom:9px!important;
+  width:34px!important;height:34px!important;
+  border-radius:12px!important;
+  z-index:2;
+}
+.recipeName{
+  margin:9px 4px 4px!important;
+  font-size:14px!important;
+  letter-spacing:-.15px;
+}
+
+/* Modals / forms */
+.modal{backdrop-filter:blur(3px)}
+.sheet{
+  padding:17px 16px 24px!important;
+  border-radius:27px 27px 0 0!important;
+  box-shadow:0 -20px 55px rgba(18,49,82,.18)!important;
+}
+.sheethead h3{font-size:20px!important}
+.sheethead button{border-radius:11px!important}
+.form{
+  border:0!important;border-radius:18px!important;
+  background:#fbfdff!important;
+}
+.form label{font-size:12px!important;margin-bottom:6px!important}
+.form input,.form select,.form textarea{
+  min-height:44px;
+  padding:11px 12px!important;
+  border:1px solid #e1eaf2!important;
+  border-radius:13px!important;
+  font-size:13px!important;
+  background:#fff!important;
+}
+.form textarea{min-height:95px}
+.savebtn{
+  min-height:47px;
+  border-radius:15px!important;
+  background:linear-gradient(145deg,#3a8cf3,#2375e3)!important;
+  box-shadow:0 8px 18px rgba(47,128,237,.22)!important;
+  font-size:13px!important;
+}
+
+/* Bottom nav: clearer, more app-like */
+nav{
+  padding:8px 7px calc(7px + env(safe-area-inset-bottom))!important;
+  border-top:0!important;
+  background:rgba(255,255,255,.96)!important;
+  box-shadow:0 -8px 28px rgba(32,67,99,.09)!important;
+  backdrop-filter:blur(14px);
+}
+nav button{
+  min-height:51px;
+  gap:4px!important;
+  border-radius:14px!important;
+  font-size:9.5px!important;
+  font-weight:650!important;
+}
+nav button.active{
+  background:#eef6ff!important;
+  color:#287bd9!important;
+}
+nav svg{width:22px!important;height:22px!important}
+
+/* Toast */
+.toast{font-size:11px!important;padding:10px 14px!important}
+
+/* Small iPhones */
+@media(max-width:390px){
+  main{padding:0 14px!important}
+  .brand h1{font-size:25px!important}
+  .brand p{font-size:11.5px!important}
+  .pageHeroTitle h2,.head h2{font-size:24px!important}
+  .stockHeader{font-size:8.7px!important}
+  .stockRow{font-size:9.8px!important}
+  .stockRow .name{font-size:10.8px!important}
+}
+</style>
+
 </head>
 <body>
 <div class="app">
@@ -166,15 +557,15 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,
 <script>
 const $=id=>document.getElementById(id),DAYS=['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'],SLOTS=['Sarapan','Makan Siang','Makan Malam','Snack'];
 function get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}}
-let meals=get('di_meals_v20',get('di_meals_v19',[]));
-let shop=get('di_shop_v20',get('di_shop_v19',[]));
-let stock=get('di_stock_v20',get('di_stock_v19',[{name:'Beras',qty:2,unit:'kg',min:5},{name:'Minyak Goreng',qty:1,unit:'L',min:2},{name:'Telur',qty:6,unit:'butir',min:10}]));
-let history=get('di_hist_v20',get('di_hist_v19',[]));
-let recipes=get('di_recipes_v20',get('di_recipes_v19',[]));
-let reqs=get('di_reqs_v20',get('di_reqs_v19',[]));
+let meals=get('di_meals_v21',get('di_meals_v20',[]));
+let shop=get('di_shop_v21',get('di_shop_v20',[]));
+let stock=get('di_stock_v21',get('di_stock_v20',[{name:'Beras',qty:2,unit:'kg',min:5},{name:'Minyak Goreng',qty:1,unit:'L',min:2},{name:'Telur',qty:6,unit:'butir',min:10}]));
+let history=get('di_hist_v21',get('di_hist_v20',[]));
+let recipes=get('di_recipes_v21',get('di_recipes_v20',[]));
+let reqs=get('di_reqs_v21',get('di_reqs_v20',[]));
 let currentDate=new Date(),editIndex=-1,reqFilter='all',approveIndex=-1;
 
-function save(){localStorage.setItem('di_meals_v20',JSON.stringify(meals));localStorage.setItem('di_shop_v20',JSON.stringify(shop));localStorage.setItem('di_stock_v20',JSON.stringify(stock));localStorage.setItem('di_hist_v20',JSON.stringify(history));localStorage.setItem('di_recipes_v20',JSON.stringify(recipes));localStorage.setItem('di_reqs_v20',JSON.stringify(reqs))}
+function save(){localStorage.setItem('di_meals_v21',JSON.stringify(meals));localStorage.setItem('di_shop_v21',JSON.stringify(shop));localStorage.setItem('di_stock_v21',JSON.stringify(stock));localStorage.setItem('di_hist_v21',JSON.stringify(history));localStorage.setItem('di_recipes_v21',JSON.stringify(recipes));localStorage.setItem('di_reqs_v21',JSON.stringify(reqs))}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function rp(n){return 'Rp '+Number(n||0).toLocaleString('id-ID')}
 function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1400)}
