@@ -47,9 +47,7 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,
 .toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#18375f;color:#fff;border-radius:99px;padding:9px 13px;font-size:11px;opacity:0;transition:.2s;z-index:80}.toast.show{opacity:1}
 .empty{text-align:center;padding:22px;color:var(--mut);font-size:11px}
 </style>
-<style>
-body{font-size:14px}.brand h1{font-size:27px}.brand p{font-size:13px}.hero{border:0;border-radius:22px;padding:19px;box-shadow:0 9px 25px rgba(34,76,112,.09)}.hero small{font-size:14px}.hero h2{font-size:23px}.hero p{font-size:14px}.sectionTitle h3{font-size:19px}.sectionTitle p{font-size:13px}.meal{border:0;border-radius:20px;padding:14px;box-shadow:0 8px 23px rgba(34,76,112,.08)}.meal h4{font-size:16px}.mini{border:0;border-radius:13px;padding:11px}.mini span{font-size:12px}.mini b{font-size:15px}.summary{border:0;border-radius:18px;padding:14px;box-shadow:0 8px 23px rgba(34,76,112,.08)}.summary b{font-size:15px}.summary small{font-size:12px}.tip{font-size:13px}.head h2{font-size:25px}.head small{font-size:13px}.tabs{background:#f2f7fb;border-radius:16px;padding:4px}.tabs button{font-size:13px}.topSummary .title{font-size:14px}.topSummary span{font-size:12px}.addbar{font-size:14px;padding:13px}.listhead h3{font-size:17px}.itemtitle{font-size:15px}.price{font-size:13px}.shop,.request,.recipe{border-radius:17px;box-shadow:0 7px 20px rgba(34,76,112,.07)}.search input{font-size:13px}.stockHeader{font-size:10.5px;padding:11px 6px}.stockRow{font-size:11.5px;padding:11px 6px}.stockRow .name{font-size:13px}.badge{font-size:9.5px}.histTop b{font-size:14px}.histTop small{font-size:11px}.histTop span{font-size:13px}.histRow{font-size:11.5px}.monthbar b{font-size:14px}.day b{font-size:10px}.day span{font-size:17px}.reqTabs button{font-size:12px}.request b{font-size:14px}.request p{font-size:12px}.request small{font-size:10.5px}.pill{font-size:10px}.recipeTabs button{font-size:12px}.recipe{grid-template-columns:92px 1fr}.photo{height:92px}.rb h3{font-size:15px}.rb p{font-size:12px}.rb button{font-size:12px}.form label{font-size:14px}.form input,.form select,.form textarea{font-size:14px;padding:12px}nav{box-shadow:0 -8px 27px rgba(31,68,102,.09)}nav button{font-size:12px}nav svg{width:22px;height:22px}.circle{width:44px;height:44px}.savebtn{font-size:14px;padding:14px}
-</style></head>
+</head>
 <body>
 <div class="app">
 <header>
@@ -109,9 +107,8 @@ body{font-size:14px}.brand h1{font-size:27px}.brand p{font-size:13px}.hero{borde
 </section>
 
 <section id="recipes" class="page">
-<div class="head"><div><h2>Resep</h2><small>Kumpulan resep favorit</small></div><button class="circle" onclick="openRecipe()">＋</button></div>
+<div class="pageHeroTitle"><div><h2>Resep</h2><small>Kumpulan resep andalan untuk keluarga.</small></div><button class="circle" onclick="openRecipe()">＋</button></div>
 <div class="search recipeSearch">⌕<input id="recipeSearch" oninput="renderRecipes()" placeholder="Cari resep..."></div>
-<div class="recipeTabs"><button class="active">Semua</button><button>Keluarga</button><button>MPASI</button><button>Favorit</button></div>
 <div id="recipeList" class="recipegrid"></div>
 </section>
 
@@ -160,22 +157,23 @@ body{font-size:14px}.brand h1{font-size:27px}.brand p{font-size:13px}.hero{borde
 <div id="recPreview" style="width:92px;height:92px;border-radius:14px;background:#eef6ff;border:1px dashed #b9d3ea;display:grid;place-items:center;overflow:hidden;font-size:24px">📷</div>
 <div><input id="recPhoto" type="file" accept="image/*" onchange="previewRecipePhoto(this)" style="margin:0"><small style="display:block;color:#71829a;font-size:10px;line-height:1.35;margin-top:5px">Foto akan disimpan di perangkat ini.</small></div>
 </div>
-<label>Nama resep</label><input id="recName"><label>Kategori</label><select id="recCat"><option>Keluarga</option><option>MPASI</option></select><label>Bahan (satu per baris)</label><textarea id="recIng"></textarea><label>Langkah</label><textarea id="recSteps"></textarea><button class="savebtn" onclick="saveRecipe()">Simpan Resep</button></div></div></div>
+<label>Nama resep</label><input id="recName"><label>Bahan (satu per baris)</label><textarea id="recIng"></textarea><label>Langkah</label><textarea id="recSteps"></textarea><button class="savebtn" onclick="saveRecipe()">Simpan Resep</button></div></div></div>
 <div id="recipeDetail" class="modal"><div class="sheet"><div class="sheethead"><h3 id="rdTitle"></h3><button onclick="closeM('recipeDetail')">×</button></div><div id="rdBody"></div></div></div>
 
+<div id="deleteRecipeModal" class="modal"><div class="sheet deleteSheet"><div class="deleteIcon">🗑</div><h3>Hapus Resep?</h3><p id="deleteRecipeText"></p><div class="deleteActions"><button class="cancelDelete" onclick="closeM('deleteRecipeModal')">Batal</button><button class="confirmDelete" onclick="doDeleteRecipe()">Hapus</button></div></div></div>
 <div id="toast" class="toast"></div>
 <script>
 const $=id=>document.getElementById(id),DAYS=['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'],SLOTS=['Sarapan','Makan Siang','Makan Malam','Snack'];
 function get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}}
-let meals=get('di_meals_v18',get('di_meals_v17',[]));
-let shop=get('di_shop_v18',get('di_shop_v17',[]));
-let stock=get('di_stock_v18',get('di_stock_v17',[{name:'Beras',qty:2,unit:'kg',min:5},{name:'Minyak Goreng',qty:1,unit:'L',min:2},{name:'Telur',qty:6,unit:'butir',min:10}]));
-let history=get('di_hist_v18',get('di_hist_v17',[]));
-let recipes=get('di_recipes_v18',get('di_recipes_v17',[]));
-let reqs=get('di_reqs_v18',get('di_reqs_v17',[]));
+let meals=get('di_meals_v19',get('di_meals_v17',[]));
+let shop=get('di_shop_v19',get('di_shop_v17',[]));
+let stock=get('di_stock_v19',get('di_stock_v17',[{name:'Beras',qty:2,unit:'kg',min:5},{name:'Minyak Goreng',qty:1,unit:'L',min:2},{name:'Telur',qty:6,unit:'butir',min:10}]));
+let history=get('di_hist_v19',get('di_hist_v17',[]));
+let recipes=get('di_recipes_v19',get('di_recipes_v17',[]));
+let reqs=get('di_reqs_v19',get('di_reqs_v17',[]));
 let currentDate=new Date(),editIndex=-1,reqFilter='all',approveIndex=-1;
 
-function save(){localStorage.setItem('di_meals_v18',JSON.stringify(meals));localStorage.setItem('di_shop_v18',JSON.stringify(shop));localStorage.setItem('di_stock_v18',JSON.stringify(stock));localStorage.setItem('di_hist_v18',JSON.stringify(history));localStorage.setItem('di_recipes_v18',JSON.stringify(recipes));localStorage.setItem('di_reqs_v18',JSON.stringify(reqs))}
+function save(){localStorage.setItem('di_meals_v19',JSON.stringify(meals));localStorage.setItem('di_shop_v19',JSON.stringify(shop));localStorage.setItem('di_stock_v19',JSON.stringify(stock));localStorage.setItem('di_hist_v19',JSON.stringify(history));localStorage.setItem('di_recipes_v19',JSON.stringify(recipes));localStorage.setItem('di_reqs_v19',JSON.stringify(reqs))}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function rp(n){return 'Rp '+Number(n||0).toLocaleString('id-ID')}
 function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1400)}
@@ -213,11 +211,39 @@ function confirmApprove(){let r=reqs[approveIndex],name=$('aName').value.trim();
 let pendingRecipePhoto='';
 function openRecipe(){pendingRecipePhoto='';$('recName').value='';$('recIng').value='';$('recSteps').value='';$('recPhoto').value='';$('recPreview').innerHTML='📷';$('recipeModal').classList.add('show')}
 function previewRecipePhoto(inp){let f=inp.files&&inp.files[0];if(!f)return;let r=new FileReader();r.onload=e=>{pendingRecipePhoto=e.target.result;$('recPreview').innerHTML='<img src="'+pendingRecipePhoto+'" style="width:100%;height:100%;object-fit:cover">'};r.readAsDataURL(f)}
-function saveRecipe(){let n=$('recName').value.trim();if(!n)return;recipes.unshift({id:'r'+Date.now(),name:n,category:$('recCat').value,ingredients:$('recIng').value,steps:$('recSteps').value,photo:pendingRecipePhoto||''});save();closeM('recipeModal');renderRecipes();toast('Resep disimpan')}
-function renderRecipes(){let q=($('recipeSearch').value||'').toLowerCase(),arr=recipes.filter(r=>r.name.toLowerCase().includes(q));$('recipeList').innerHTML=arr.length?arr.map(r=>`<div class="recipe"><div class="photo">${r.photo?`<img src="${r.photo}" alt="">`:'🍲'}</div><div class="rb"><h3>${esc(r.name)}</h3><p>${esc(r.category)}</p><button onclick="showRecipe('${r.id}')">Lihat Resep</button></div></div>`).join(''):'<div class="empty">Belum ada resep.</div>'}
+function saveRecipe(){let n=$('recName').value.trim();if(!n)return;recipes.unshift({id:'r'+Date.now(),name:n,ingredients:$('recIng').value,steps:$('recSteps').value,photo:pendingRecipePhoto||''});save();closeM('recipeModal');renderRecipes();toast('Resep disimpan')}
+function renderRecipes(){let q=($('recipeSearch').value||'').toLowerCase(),arr=recipes.filter(r=>r.name.toLowerCase().includes(q));$('recipeList').innerHTML=arr.length?arr.map(r=>`<div class="recipeSquare"><div class="recipeImageWrap" onclick="showRecipe('${r.id}')">${r.photo?`<img src="${r.photo}" alt="">`:'<div class="recipePlaceholder">🍲</div>'}<button class="recipeDelete" onclick="event.stopPropagation();confirmDeleteRecipe('${r.id}')">🗑</button></div><div class="recipeName" onclick="showRecipe('${r.id}')">${esc(r.name)}</div></div>`).join(''):'<div class="empty" style="grid-column:1/-1">Belum ada resep.</div>'}
+let deleteRecipeId='';
+function confirmDeleteRecipe(id){deleteRecipeId=id;let r=recipes.find(x=>x.id===id);$('deleteRecipeText').textContent='Resep “'+(r?.name||'')+'” akan dihapus dari daftar resep.';$('deleteRecipeModal').classList.add('show')}
+function doDeleteRecipe(){recipes=recipes.filter(x=>x.id!==deleteRecipeId);save();closeM('deleteRecipeModal');renderRecipes();toast('Resep dihapus')}
 function showRecipe(id){let r=recipes.find(x=>x.id===id);$('rdTitle').textContent=r.name;$('rdBody').innerHTML=`<div class="form">${r.photo?`<img src="${r.photo}" style="width:100%;max-height:240px;object-fit:cover;border-radius:15px;margin-bottom:12px">`:''}<b style="font-size:13px">Bahan</b><p style="white-space:pre-line;font-size:12px;line-height:1.5">${esc(r.ingredients)}</p><b style="font-size:13px">Langkah</b><p style="white-space:pre-line;font-size:12px;line-height:1.5">${esc(r.steps||'')}</p><button class="savebtn" onclick="recipeToShop('${id}')">Tambah Bahan ke Belanja</button></div>`;$('recipeDetail').classList.add('show')}
 function recipeToShop(id){let r=recipes.find(x=>x.id===id);r.ingredients.split('\n').filter(Boolean).forEach(line=>{let m=line.trim().match(/^(\d+(?:[.,]\d+)?)\s*(kg|g|ml|L|butir|buah|siung|ikat|pcs|pack)?\s+(.+)$/i);if(m)shop.push({name:m[3].trim(),qty:parseFloat(m[1].replace(',','.')),unit:m[2]||'pcs',price:0,done:false});else shop.push({name:line.trim(),qty:1,unit:'pcs',price:0,done:false})});save();renderShop();closeM('recipeDetail');toast('Bahan ditambahkan ke belanja')}
 renderHome();renderSchedule();renderShop();renderStock();renderHistory();renderRecipes();renderRequests();save();
 </script>
 </body>
 </html>
+<style>
+.appHeader,header{background:linear-gradient(180deg,#fbfdff,#fff)}
+.brand h1{font-size:26px}.brand p{font-size:13px;line-height:1.4}
+.pageHeroTitle{display:flex;justify-content:space-between;align-items:flex-start;margin:8px 0 14px}
+.pageHeroTitle h2{font-size:28px;margin:0 0 4px;letter-spacing:-.7px}
+.pageHeroTitle small{font-size:13px;color:#71829a}
+.recipegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.recipeSquare{min-width:0}
+.recipeImageWrap{position:relative;aspect-ratio:1/1;border-radius:18px;overflow:hidden;background:linear-gradient(145deg,#eef6ff,#f8fbff);box-shadow:0 8px 20px rgba(34,76,112,.10)}
+.recipeImageWrap img{width:100%;height:100%;object-fit:cover;display:block}
+.recipePlaceholder{width:100%;height:100%;display:grid;place-items:center;font-size:34px}
+.recipeDelete{position:absolute;right:8px;bottom:8px;width:32px;height:32px;border-radius:50%;border:0;background:#fff0f2;color:#d84c5d;box-shadow:0 5px 14px rgba(130,48,60,.14);font-size:15px}
+.recipeName{font-size:14px;font-weight:750;line-height:1.25;margin:8px 3px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.deleteSheet{align-self:center;margin:auto 16px 18vh;max-width:430px;border-radius:24px!important;text-align:center;padding:22px!important}
+.deleteIcon{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#fff0f2;margin:0 auto 12px;font-size:24px}
+.deleteSheet h3{font-size:22px;margin:0 0 8px}
+.deleteSheet p{font-size:13px;line-height:1.55;color:#566d86;margin:0 auto 18px;max-width:290px}
+.deleteActions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cancelDelete,.confirmDelete{padding:12px;border-radius:13px;font-weight:700}
+.cancelDelete{background:#fff;border:1px solid #bcd1e5;color:#254d78}
+.confirmDelete{background:linear-gradient(180deg,#f45b67,#e84955);border:0;color:#fff}
+.search{border:0;background:#f4f8fb;border-radius:15px}
+.search input{font-size:13px;background:transparent}
+nav button{font-size:11px}
+</style>
