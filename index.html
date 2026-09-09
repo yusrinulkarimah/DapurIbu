@@ -417,6 +417,18 @@ window.__supabaseReady = new Promise((resolve,reject)=>{
 .syncBadge{position:fixed;top:8px;right:10px;z-index:500;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.95);box-shadow:0 6px 18px rgba(30,65,98,.12);font-size:10px;font-weight:800;color:#45637e}.syncBadge span:first-child{width:8px;height:8px;border-radius:50%;background:#f0a23a}
 </style>
 
+
+<style id="LOGOUT-RESTORED">
+.accountPill{position:fixed;right:14px;top:12px;z-index:520;border:0;border-radius:999px;padding:8px 11px;background:rgba(255,255,255,.96);color:#28517d;box-shadow:0 6px 18px rgba(29,66,101,.13);font-size:10px;font-weight:800;align-items:center;gap:6px}
+.accountDot,.syncDot{width:8px;height:8px;border-radius:50%;background:#38b879}
+.accountMenu{position:fixed;right:14px;top:54px;z-index:521;width:232px;padding:14px;border-radius:18px;background:#fff;box-shadow:0 15px 38px rgba(30,65,98,.18);display:none}
+.accountMenu.show{display:block}
+.accountMenuTitle{font-size:13px;font-weight:850;color:#183b67}
+.accountEmail{font-size:10.5px;color:#7a8ea3;margin:4px 0 11px;word-break:break-all}
+.syncLine{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:12px;background:#eef9f3;color:#287653;font-size:10.5px;font-weight:750}
+.logoutBtn{width:100%;margin-top:10px;padding:11px;border-radius:12px;border:0;background:#fff0f2;color:#d05263;font-weight:800;font-size:11px}
+</style>
+
 </head>
 <body>
 
@@ -441,6 +453,19 @@ window.__supabaseReady = new Promise((resolve,reject)=>{
     <div class="authFoot">Setiap anggota keluarga menggunakan akun masing-masing.</div>
   </div>
 </div>
+
+<button id="accountPill" class="accountPill" style="display:none" type="button" onclick="toggleAccountMenu()">
+  <span class="accountDot"></span>
+  <span id="accountName">Online</span>
+</button>
+
+<div id="accountMenu" class="accountMenu">
+  <div class="accountMenuTitle">Akun Dapur Ibu</div>
+  <div id="accountEmail" class="accountEmail"></div>
+  <div class="syncLine"><span class="syncDot"></span><span id="syncText">Tersambung</span></div>
+  <button class="logoutBtn" type="button" onclick="logoutDapurIbu()">Keluar / Logout</button>
+</div>
+
 <div id="syncBadge" class="syncBadge" style="display:none"><span id="syncDot"></span><span id="syncBadgeText">Menghubungkan</span></div>
 
 <div class="app">
@@ -448,7 +473,7 @@ window.__supabaseReady = new Promise((resolve,reject)=>{
 <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
 <path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M9 20v-6h6v6" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
-</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">REALTIME CLEAN</span></p></div></div>
+</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">REALTIME FIX + LOGOUT</span></p></div></div>
 
 </header>
 <main>
@@ -606,6 +631,8 @@ function setSyncStatus(text,type='busy'){
   if(currentSbUser)badge.style.display='flex';
   txt.textContent=text;
   dot.style.background=type==='ok'?'#36b878':type==='err'?'#df5968':'#f0a23a';
+  const at=document.getElementById('syncText'); if(at)at.textContent=text;
+  const ad=document.querySelector('.accountDot'); if(ad)ad.style.background=type==='ok'?'#36b878':type==='err'?'#df5968':'#f0a23a';
 }
 
 async function ensureSupabase(){
@@ -634,38 +661,69 @@ function applyCloudState(s){
   applyingRemote=false;
 }
 
+let pendingCloudState=null;
+
 function save(){
   writeLocalState();
-  if(applyingRemote||!currentSbUser)return;
+  if(applyingRemote)return;
+
+  // Capture the exact state immediately when the user changes something.
+  pendingCloudState=JSON.parse(JSON.stringify(localState()));
   clearTimeout(syncSaveTimer);
   setSyncStatus('Menyimpan...','busy');
-  syncSaveTimer=setTimeout(pushCloudState,100);
+  syncSaveTimer=setTimeout(()=>pushCloudState(),60);
 }
 
 async function pushCloudState(){
-  if(!sbClient||!currentSbUser)return;
   if(syncWriting){syncQueued=true;return;}
   syncWriting=true;
   syncQueued=false;
-  const state=localState();
 
   try{
+    await ensureSupabase();
+
+    // Recover the current authenticated user even if the variable was stale.
+    if(!currentSbUser){
+      const {data:{session}}=await sbClient.auth.getSession();
+      currentSbUser=session?.user||null;
+    }
+    if(!currentSbUser)throw new Error('SESSION_NOT_FOUND');
+
+    const state=pendingCloudState
+      ? JSON.parse(JSON.stringify(pendingCloudState))
+      : JSON.parse(JSON.stringify(localState()));
+
     const {data,error}=await sbClient.rpc('set_dapur_state',{new_data:state});
     if(error)throw error;
-    const row=Array.isArray(data)?data[0]:data;
-    lastCloudUpdatedAt=row?.updated_at||new Date().toISOString();
+
+    // Verify immediately by reading it back.
+    const {data:check,error:checkError}=await sbClient.rpc('get_dapur_state');
+    if(checkError)throw checkError;
+    const row=Array.isArray(check)?check[0]:check;
+    if(!row)throw new Error('CLOUD_EMPTY');
+
+    const expected=JSON.stringify(state);
+    const actual=JSON.stringify(row.data||{});
+    if(expected!==actual)throw new Error('CLOUD_VERIFY_FAILED');
+
+    lastCloudUpdatedAt=row.updated_at||new Date().toISOString();
+    pendingCloudState=null;
     setSyncStatus('Tersimpan online','ok');
   }catch(e){
     console.error('SAVE RPC',e);
     setSyncStatus('Gagal sinkron','err');
-    toast('Gagal menyimpan online');
+    toast('Data belum tersimpan online');
   }finally{
     syncWriting=false;
-    if(syncQueued){syncQueued=false;setTimeout(pushCloudState,50);}
+    if(syncQueued){
+      syncQueued=false;
+      setTimeout(()=>pushCloudState(),80);
+    }
   }
 }
 
 async function pullCloudState(force=false){
+  if(syncWriting||pendingCloudState)return;
   if(!sbClient||!currentSbUser)return;
   try{
     const {data,error}=await sbClient.rpc('get_dapur_state');
@@ -686,7 +744,7 @@ async function pullCloudState(force=false){
 function startSync(){
   if(syncPollTimer)clearInterval(syncPollTimer);
   pullCloudState(true);
-  syncPollTimer=setInterval(()=>{ if(!document.hidden)pullCloudState(false); },2000);
+  syncPollTimer=setInterval(()=>{ if(!document.hidden && !syncWriting && !pendingCloudState)pullCloudState(false); },2000);
 }
 
 async function loginDapurIbu(){
@@ -704,6 +762,8 @@ async function loginDapurIbu(){
     if(error)throw error;
     currentSbUser=data.user;
     document.getElementById('authGate').classList.add('hidden');
+    const pill=document.getElementById('accountPill'); if(pill)pill.style.display='flex';
+    const ae=document.getElementById('accountEmail'); if(ae)ae.textContent=currentSbUser?.email||'';
     setSyncStatus('Menghubungkan...','busy');
     await pullCloudState(true);
     startSync();
@@ -717,6 +777,32 @@ async function loginDapurIbu(){
   }
 }
 
+
+function toggleAccountMenu(){
+  const m=document.getElementById('accountMenu');
+  if(m)m.classList.toggle('show');
+}
+
+async function logoutDapurIbu(){
+  try{
+    if(syncPollTimer)clearInterval(syncPollTimer);
+    syncPollTimer=null;
+    if(sbClient)await sbClient.auth.signOut();
+  }catch(e){
+    console.warn('Logout:',e);
+  }
+  currentSbUser=null;
+  lastCloudUpdatedAt='';
+  pendingCloudState=null;
+
+  const m=document.getElementById('accountMenu'); if(m)m.classList.remove('show');
+  const p=document.getElementById('accountPill'); if(p)p.style.display='none';
+  const b=document.getElementById('syncBadge'); if(b)b.style.display='none';
+  const g=document.getElementById('authGate'); if(g)g.classList.remove('hidden');
+  const pw=document.getElementById('loginPassword'); if(pw)pw.value='';
+  const msg=document.getElementById('loginMsg'); if(msg)msg.textContent='Anda sudah keluar dari Dapur Ibu.';
+}
+
 async function initRealtime(){
   try{
     await ensureSupabase();
@@ -724,6 +810,8 @@ async function initRealtime(){
     currentSbUser=session?.user||null;
     if(currentSbUser){
       document.getElementById('authGate').classList.add('hidden');
+      const pill=document.getElementById('accountPill'); if(pill)pill.style.display='flex';
+      const ae=document.getElementById('accountEmail'); if(ae)ae.textContent=currentSbUser?.email||'';
       setSyncStatus('Menghubungkan...','busy');
       startSync();
     }
