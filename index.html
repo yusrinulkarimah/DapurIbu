@@ -47,7 +47,7 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,
 .toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#18375f;color:#fff;border-radius:99px;padding:9px 13px;font-size:11px;opacity:0;transition:.2s;z-index:80}.toast.show{opacity:1}
 .empty{text-align:center;padding:22px;color:var(--mut);font-size:11px}
 </style>
-<style id="DAPUR-IBU-V33">
+<style id="DAPUR-IBU-V34">
 body{background:#eef6fc!important}.app{background:#fff!important;box-shadow:0 0 55px #1c44691f!important}
 header{padding:22px 18px 15px!important;background:#fff!important}.brand{gap:13px!important}.logo{width:52px!important;height:52px!important;border:0!important;border-radius:18px!important;background:linear-gradient(145deg,#dceeff,#f6fbff)!important;box-shadow:0 10px 24px #2478df24!important}.brand h1{font-size:28px!important;letter-spacing:-.8px!important}.brand p{font-size:12.5px!important;margin-top:5px!important;color:#8293a6!important}main{padding:0 17px!important}
 .hero{position:relative;overflow:hidden;margin:5px 0 21px!important;padding:21px!important;border:0!important;border-radius:25px!important;background:linear-gradient(135deg,#dceeff,#edf7ff 65%,#fbfdff)!important;box-shadow:0 12px 30px #2569a919!important}.hero:after{content:"";position:absolute;width:105px;height:105px;border-radius:50%;right:-35px;top:-38px;background:#ffffff94}.hero h2{font-size:22px!important}.hero p,.hero small{font-size:12.5px!important}
@@ -64,7 +64,7 @@ header{padding:22px 18px 15px!important;background:#fff!important}.brand{gap:13p
 nav{padding:8px 6px calc(8px + env(safe-area-inset-bottom))!important;border-top:0!important;box-shadow:0 -8px 28px #20436317!important;background:#fffffff7!important}nav button{min-height:50px!important;border-radius:14px!important;gap:4px!important}nav button.active{background:#edf6ff!important;color:#2478df!important}nav svg{width:22px!important;height:22px!important}
 </style>
 
-<style id="DAPUR-IBU-V33-APP-LIKE">
+<style id="DAPUR-IBU-V34-APP-LIKE">
 :root{
  --b:#2f80ed;--b2:#6bb0f7;--ink:#16365f;--mut:#71859b;--line:#e7eef5;
  --sky:#eaf5ff;--sky2:#f7fbff;--mint:#ecf9f2;--peach:#fff4e8;--lav:#f4efff;--rose:#fff1f4;
@@ -403,7 +403,7 @@ window.__supabaseReady = new Promise((resolve,reject)=>{
 });
 </script>
 
-<style id="DAPUR-IBU-V33-LOGIN">
+<style id="DAPUR-IBU-V34-LOGIN">
 .authGate{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:22px;background:
 radial-gradient(circle at 18% 16%,rgba(185,220,255,.58) 0 60px,transparent 61px),
 radial-gradient(circle at 90% 8%,rgba(215,235,255,.72) 0 86px,transparent 87px),
@@ -476,7 +476,7 @@ linear-gradient(180deg,#f8fcff 0%,#edf7ff 55%,#e8f3ff 100%);overflow:hidden}
 <div id="accountMenu" class="accountMenu">
   <div class="accountMenuTitle">Akun Dapur Ibu</div>
   <div id="accountEmail" class="accountEmail"></div>
-  <div class="syncLine"><span class="syncDot"></span>Realtime aktif</div>
+  <div class="syncLine"><span class="syncDot"></span><span id="syncText">Realtime aktif</span></div>
   <button onclick="logoutDapurIbu()">Keluar</button>
 </div>
 
@@ -485,7 +485,7 @@ linear-gradient(180deg,#f8fcff 0%,#edf7ff 55%,#e8f3ff 100%);overflow:hidden}
 <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
 <path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M9 20v-6h6v6" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
-</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">v33</span></p></div></div>
+</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">v34</span></p></div></div>
 
 </header>
 <main>
@@ -659,8 +659,28 @@ function save(){
 }
 async function pushCloudState(){
   if(!sbClient||!currentSbUser)return;
-  const {error}=await sbClient.from('app_state').upsert({id:'dapur-ibu',data:localState(),updated_at:new Date().toISOString()});
-  if(error) console.error('Cloud save:',error);
+  const state=localState();
+  const {error}=await sbClient.from('app_state').upsert({
+    id:'dapur-ibu',
+    data:state,
+    updated_at:new Date().toISOString()
+  });
+  if(error){
+    console.error('Cloud save:',error);
+    toast('Gagal sinkron. Akan mencoba lagi.');
+    return;
+  }
+
+  // Send immediately to other online family devices.
+  if(realtimeChannel){
+    try{
+      await realtimeChannel.send({
+        type:'broadcast',
+        event:'state-change',
+        payload:{data:state}
+      });
+    }catch(e){console.warn('Broadcast:',e)}
+  }
 }
 function stateHasData(s){return ['meals','shop','stock','history','recipes','reqs'].some(k=>Array.isArray(s?.[k])&&s[k].length)}
 function applyCloudState(s){
@@ -687,13 +707,44 @@ async function loadCloudState(){
     applyCloudState(cloud);
   }
 }
+let syncPollTimer=null;
 function subscribeRealtime(){
+  if(!sbClient||!currentSbUser)return;
+
   if(realtimeChannel) sbClient.removeChannel(realtimeChannel);
-  realtimeChannel=sbClient.channel('dapur-ibu-state')
-    .on('postgres_changes',{event:'UPDATE',schema:'public',table:'app_state',filter:'id=eq.dapur-ibu'},payload=>{
+  if(syncPollTimer) clearInterval(syncPollTimer);
+
+  realtimeChannel=sbClient.channel('dapur-ibu-live',{
+    config:{broadcast:{self:false},presence:{key:currentSbUser.id}}
+  });
+
+  realtimeChannel
+    .on('broadcast',{event:'state-change'},({payload})=>{
+      if(payload?.data) applyCloudState(payload.data);
+    })
+    .on('postgres_changes',{event:'*',schema:'public',table:'app_state',filter:'id=eq.dapur-ibu'},payload=>{
       if(payload?.new?.data) applyCloudState(payload.new.data);
     })
-    .subscribe();
+    .subscribe(status=>{
+      const dot=document.querySelector('.accountDot');
+      const label=document.getElementById('accountName');
+      if(status==='SUBSCRIBED'){
+        if(dot) dot.style.background='#38b879';
+        if(label) label.textContent='Realtime';
+      }else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT'){
+        if(dot) dot.style.background='#f0a23a';
+        if(label) label.textContent='Sync';
+      }
+    });
+
+  // Fallback sync: keeps devices synchronized even if websocket is blocked.
+  syncPollTimer=setInterval(async()=>{
+    if(document.hidden||!currentSbUser||!sbClient)return;
+    try{
+      const {data,error}=await sbClient.from('app_state').select('data,updated_at').eq('id','dapur-ibu').single();
+      if(!error && data?.data) applyCloudState(data.data);
+    }catch(e){console.warn('Polling sync:',e)}
+  },3000);
 }
 function setAuthUi(user){
   const gate=document.getElementById('authGate'),pill=document.getElementById('accountPill');
@@ -778,6 +829,8 @@ async function loginDapurIbu(){
 async function logoutDapurIbu(){
   if(realtimeChannel)sbClient.removeChannel(realtimeChannel);
   realtimeChannel=null;
+  if(syncPollTimer)clearInterval(syncPollTimer);
+  syncPollTimer=null;
   await sbClient.auth.signOut();
   currentSbUser=null;
   setAuthUi(null);
