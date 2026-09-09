@@ -47,7 +47,7 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,
 .toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#18375f;color:#fff;border-radius:99px;padding:9px 13px;font-size:11px;opacity:0;transition:.2s;z-index:80}.toast.show{opacity:1}
 .empty{text-align:center;padding:22px;color:var(--mut);font-size:11px}
 </style>
-<style id="DAPUR-IBU-REALTIME-READY">
+<style id="DAPUR-IBU-REALTIME-FINAL">
 body{background:#eef6fc!important}.app{background:#fff!important;box-shadow:0 0 55px #1c44691f!important}
 header{padding:22px 18px 15px!important;background:#fff!important}.brand{gap:13px!important}.logo{width:52px!important;height:52px!important;border:0!important;border-radius:18px!important;background:linear-gradient(145deg,#dceeff,#f6fbff)!important;box-shadow:0 10px 24px #2478df24!important}.brand h1{font-size:28px!important;letter-spacing:-.8px!important}.brand p{font-size:12.5px!important;margin-top:5px!important;color:#8293a6!important}main{padding:0 17px!important}
 .hero{position:relative;overflow:hidden;margin:5px 0 21px!important;padding:21px!important;border:0!important;border-radius:25px!important;background:linear-gradient(135deg,#dceeff,#edf7ff 65%,#fbfdff)!important;box-shadow:0 12px 30px #2569a919!important}.hero:after{content:"";position:absolute;width:105px;height:105px;border-radius:50%;right:-35px;top:-38px;background:#ffffff94}.hero h2{font-size:22px!important}.hero p,.hero small{font-size:12.5px!important}
@@ -64,7 +64,7 @@ header{padding:22px 18px 15px!important;background:#fff!important}.brand{gap:13p
 nav{padding:8px 6px calc(8px + env(safe-area-inset-bottom))!important;border-top:0!important;box-shadow:0 -8px 28px #20436317!important;background:#fffffff7!important}nav button{min-height:50px!important;border-radius:14px!important;gap:4px!important}nav button.active{background:#edf6ff!important;color:#2478df!important}nav svg{width:22px!important;height:22px!important}
 </style>
 
-<style id="DAPUR-IBU-REALTIME-READY-APP-LIKE">
+<style id="DAPUR-IBU-REALTIME-FINAL-APP-LIKE">
 :root{
  --b:#2f80ed;--b2:#6bb0f7;--ink:#16365f;--mut:#71859b;--line:#e7eef5;
  --sky:#eaf5ff;--sky2:#f7fbff;--mint:#ecf9f2;--peach:#fff4e8;--lav:#f4efff;--rose:#fff1f4;
@@ -403,7 +403,7 @@ window.__supabaseReady = new Promise((resolve,reject)=>{
 });
 </script>
 
-<style id="DAPUR-IBU-REALTIME-READY-LOGIN">
+<style id="DAPUR-IBU-REALTIME-FINAL-LOGIN">
 .authGate{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:22px;background:
 radial-gradient(circle at 18% 16%,rgba(185,220,255,.58) 0 60px,transparent 61px),
 radial-gradient(circle at 90% 8%,rgba(215,235,255,.72) 0 86px,transparent 87px),
@@ -426,11 +426,9 @@ linear-gradient(180deg,#f8fcff 0%,#edf7ff 55%,#e8f3ff 100%);overflow:hidden}
 </style>
 
 
-<style id="REALTIME-READY">
-.syncLine{font-weight:700}
-#syncText{white-space:nowrap}
-@keyframes syncPulse{0%,100%{opacity:1}50%{opacity:.45}}
-.accountDot[style*="240, 162, 58"],.syncDot[style*="240, 162, 58"]{animation:syncPulse 1s infinite}
+<style id="REALTIME-FINAL">
+.globalSyncBadge{position:fixed;left:50%;transform:translateX(-50%);top:8px;z-index:130;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.94);box-shadow:0 5px 16px rgba(30,65,98,.12);font-size:9px;font-weight:800;color:#42617e;backdrop-filter:blur(10px)}
+.gsDot{width:7px;height:7px;border-radius:50%;background:#38b879}
 </style>
 
 </head>
@@ -478,13 +476,18 @@ linear-gradient(180deg,#f8fcff 0%,#edf7ff 55%,#e8f3ff 100%);overflow:hidden}
   </div>
 </div>
 
+
+<div id="globalSyncBadge" class="globalSyncBadge" style="display:none">
+  <span class="gsDot"></span><span id="globalSyncText">Online</span>
+</div>
+
 <button id="accountPill" class="accountPill" onclick="toggleAccountMenu()" style="display:none" aria-label="Akun">
   <span class="accountDot"></span><span id="accountName">Online</span>
 </button>
 <div id="accountMenu" class="accountMenu">
   <div class="accountMenuTitle">Akun Dapur Ibu</div>
   <div id="accountEmail" class="accountEmail"></div>
-  <div class="syncLine"><span class="syncDot"></span><span id="syncText">Menghubungkan...</span></div>
+  <div class="syncLine"><span class="syncDot"></span><span id="syncText">Realtime aktif</span></div>
   <button onclick="logoutDapurIbu()">Keluar</button>
 </div>
 
@@ -493,7 +496,7 @@ linear-gradient(180deg,#f8fcff 0%,#edf7ff 55%,#e8f3ff 100%);overflow:hidden}
 <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
 <path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M9 20v-6h6v6" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
-</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">READY</span></p></div></div>
+</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">FINAL</span></p></div></div>
 
 </header>
 <main>
@@ -659,87 +662,79 @@ function writeLocalState(){
   localStorage.setItem('di_reqs_v20',JSON.stringify(reqs));
 }
 
-let cloudWriteTimer=null;
-let cloudWriteInFlight=false;
-let cloudWriteQueued=false;
-let lastCloudUpdatedAt='';
+let syncTimer=null;
 let syncPollTimer=null;
+let applyingRemote=false;
+let lastCloudUpdatedAt='';
 
-function setSyncStatus(text,state='ok'){
-  const t=document.getElementById('syncText');
-  const dot=document.querySelector('.syncDot');
-  const label=document.getElementById('accountName');
-  if(t)t.textContent=text;
-  if(label)label.textContent=state==='ok'?'Realtime':state==='busy'?'Menyimpan':'Offline';
-  if(dot)dot.style.background=state==='ok'?'#38b879':state==='busy'?'#f0a23a':'#e45a67';
+function setCloudBadge(text,state='ok'){
+  const msg=document.getElementById('syncText');
+  const account=document.getElementById('accountName');
+  const dot=document.querySelector('.accountDot');
+  if(msg)msg.textContent=text;
+  if(account)account.textContent=state==='ok'?'Online':state==='busy'?'Menyimpan':'Offline';
+  if(dot)dot.style.background=state==='ok'?'#38b879':state==='busy'?'#f0a23a':'#e45a67'; const gb=document.getElementById('globalSyncBadge'),gt=document.getElementById('globalSyncText'),gd=document.querySelector('.gsDot'); if(gb&&currentSbUser)gb.style.display='flex'; if(gt)gt.textContent=text; if(gd)gd.style.background=state==='ok'?'#38b879':state==='busy'?'#f0a23a':'#e45a67';
 }
 
-async function getAccessToken(){
-  if(!sbClient)return null;
+async function getSessionToken(){
+  if(!sbClient) return null;
   const {data,error}=await sbClient.auth.getSession();
-  if(error)return null;
+  if(error) throw error;
   return data?.session?.access_token||null;
 }
 
-async function restRequest(path,options={}){
-  const token=await getAccessToken();
-  if(!token)throw new Error('NO_SESSION');
-  const headers={
-    'apikey':SUPABASE_PUBLISHABLE_KEY,
-    'Authorization':'Bearer '+token,
-    'Content-Type':'application/json',
-    ...(options.headers||{})
-  };
-  const res=await fetch(SUPABASE_URL+'/rest/v1/'+path,{...options,headers,cache:'no-store'});
-  if(!res.ok){
-    const txt=await res.text().catch(()=> '');
-    throw new Error('REST_'+res.status+': '+txt);
-  }
-  if(res.status===204)return null;
+async function cloudFetch(path,options={}){
+  const token=await getSessionToken();
+  if(!token) throw new Error('SESSION_NOT_FOUND');
+  const res=await fetch(SUPABASE_URL+'/rest/v1/'+path,{
+    ...options,
+    cache:'no-store',
+    headers:{
+      'apikey':SUPABASE_PUBLISHABLE_KEY,
+      'Authorization':'Bearer '+token,
+      'Content-Type':'application/json',
+      ...(options.headers||{})
+    }
+  });
   const text=await res.text();
+  if(!res.ok) throw new Error('SUPABASE '+res.status+' '+text);
   return text?JSON.parse(text):null;
 }
 
 function save(){
   writeLocalState();
-  if(currentSbUser && !applyingRemote){
-    setSyncStatus('Menyimpan...','busy');
-    clearTimeout(cloudWriteTimer);
-    cloudWriteTimer=setTimeout(()=>pushCloudState(),150);
-  }
+  if(applyingRemote) return;
+  clearTimeout(syncTimer);
+  setCloudBadge('Menyimpan...','busy');
+  syncTimer=setTimeout(()=>saveCloudVerified(),200);
 }
 
-async function pushCloudState(){
-  if(!currentSbUser)return;
-  if(cloudWriteInFlight){cloudWriteQueued=true;return}
-  cloudWriteInFlight=true;
-  cloudWriteQueued=false;
-  const state=localState();
-  const stamp=new Date().toISOString();
+async function saveCloudVerified(){
   try{
-    await restRequest('app_state?id=eq.dapur-ibu',{
-      method:'PATCH',
-      headers:{'Prefer':'return=minimal'},
-      body:JSON.stringify({data:state,updated_at:stamp})
+    const state=localState();
+    const stamp=new Date().toISOString();
+
+    await cloudFetch('app_state?on_conflict=id',{
+      method:'POST',
+      headers:{'Prefer':'resolution=merge-duplicates,return=minimal'},
+      body:JSON.stringify([{id:'dapur-ibu',data:state,updated_at:stamp}])
     });
-    lastCloudUpdatedAt=stamp;
-    setSyncStatus('Tersimpan online','ok');
-    // Broadcast is only an accelerator; polling below is the reliable fallback.
-    if(realtimeChannel){
-      try{
-        await realtimeChannel.send({type:'broadcast',event:'state-change',payload:{data:state,updated_at:stamp}});
-      }catch(e){}
-    }
+
+    // verify what Supabase actually stored
+    const rows=await cloudFetch('app_state?id=eq.dapur-ibu&select=data,updated_at',{method:'GET'});
+    const row=Array.isArray(rows)?rows[0]:null;
+    if(!row) throw new Error('DATA_TIDAK_DITEMUKAN');
+    lastCloudUpdatedAt=row.updated_at||stamp;
+
+    const cloudShop=JSON.stringify(row.data?.shop||[]);
+    const localShop=JSON.stringify(state.shop||[]);
+    if(cloudShop!==localShop) throw new Error('VERIFIKASI_GAGAL');
+
+    setCloudBadge('Tersimpan online','ok');
   }catch(e){
-    console.error('Cloud save failed:',e);
-    setSyncStatus('Gagal sinkron','error');
-    // keep local data; next interaction or polling will retry
-  }finally{
-    cloudWriteInFlight=false;
-    if(cloudWriteQueued){
-      cloudWriteQueued=false;
-      setTimeout(()=>pushCloudState(),100);
-    }
+    console.error('SAVE CLOUD ERROR',e);
+    setCloudBadge('Gagal sinkron','error');
+    toast('Gagal menyimpan ke Supabase');
   }
 }
 
@@ -759,55 +754,51 @@ function applyCloudState(s){
 }
 async function loadCloudState(){
   try{
-    const rows=await restRequest('app_state?id=eq.dapur-ibu&select=data,updated_at',{method:'GET'});
+    const rows=await cloudFetch('app_state?id=eq.dapur-ibu&select=data,updated_at',{method:'GET'});
     const row=Array.isArray(rows)?rows[0]:null;
     if(!row)return;
+    lastCloudUpdatedAt=row.updated_at||'';
     const cloud=row.data||{};
     const local=localState();
-    lastCloudUpdatedAt=row.updated_at||'';
-
     if(!stateHasData(cloud) && stateHasData(local)){
-      await pushCloudState();
+      await saveCloudVerified();
     }else{
       applyCloudState(cloud);
-      setSyncStatus('Tersinkron','ok');
+      setCloudBadge('Tersinkron','ok');
     }
   }catch(e){
-    console.error('Cloud load failed:',e);
-    setSyncStatus('Gagal mengambil data','error');
+    console.error('LOAD CLOUD ERROR',e);
+    setCloudBadge('Gagal mengambil data','error');
   }
 }
 function subscribeRealtime(){
   if(!sbClient||!currentSbUser)return;
+  if(realtimeChannel)sbClient.removeChannel(realtimeChannel);
+  if(syncPollTimer)clearInterval(syncPollTimer);
 
-  if(realtimeChannel) sbClient.removeChannel(realtimeChannel);
-  if(syncPollTimer) clearInterval(syncPollTimer);
-
-  realtimeChannel=sbClient.channel('dapur-ibu-live-'+currentSbUser.id)
-    .on('broadcast',{event:'state-change'},({payload})=>{
-      if(payload?.data && payload.updated_at!==lastCloudUpdatedAt){
-        lastCloudUpdatedAt=payload.updated_at||'';
-        applyCloudState(payload.data);
-        setSyncStatus('Tersinkron','ok');
+  realtimeChannel=sbClient.channel('dapur-ibu-final')
+    .on('postgres_changes',{event:'*',schema:'public',table:'app_state',filter:'id=eq.dapur-ibu'},payload=>{
+      if(payload?.new?.data){
+        lastCloudUpdatedAt=payload.new.updated_at||'';
+        applyCloudState(payload.new.data);
+        setCloudBadge('Tersinkron','ok');
       }
     })
     .subscribe();
 
-  // Reliable near-realtime fallback: poll Supabase every 2 seconds.
   syncPollTimer=setInterval(async()=>{
     if(document.hidden||!currentSbUser)return;
     try{
-      const rows=await restRequest('app_state?id=eq.dapur-ibu&select=data,updated_at',{method:'GET'});
+      const rows=await cloudFetch('app_state?id=eq.dapur-ibu&select=data,updated_at',{method:'GET'});
       const row=Array.isArray(rows)?rows[0]:null;
-      if(!row)return;
-      if(row.updated_at && row.updated_at!==lastCloudUpdatedAt){
+      if(row && row.updated_at && row.updated_at!==lastCloudUpdatedAt){
         lastCloudUpdatedAt=row.updated_at;
         applyCloudState(row.data||{});
-        setSyncStatus('Tersinkron','ok');
+        setCloudBadge('Tersinkron','ok');
       }
     }catch(e){
-      console.warn('Sync poll:',e);
-      setSyncStatus('Koneksi terputus','error');
+      console.warn('POLL ERROR',e);
+      setCloudBadge('Koneksi terputus','error');
     }
   },2000);
 }
@@ -820,7 +811,7 @@ function setAuthUi(user){
     document.getElementById('accountName').textContent='Online';
   }else{
     gate.classList.remove('hidden');
-    pill.style.display='none';
+    pill.style.display='none'; const gb=document.getElementById('globalSyncBadge'); if(gb)gb.style.display='none';
     document.getElementById('accountMenu').classList.remove('show');
   }
 }
@@ -896,7 +887,6 @@ async function logoutDapurIbu(){
   realtimeChannel=null;
   if(syncPollTimer)clearInterval(syncPollTimer);
   syncPollTimer=null;
-  lastCloudUpdatedAt='';
   await sbClient.auth.signOut();
   currentSbUser=null;
   setAuthUi(null);
