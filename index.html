@@ -47,7 +47,7 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,
 .toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#18375f;color:#fff;border-radius:99px;padding:9px 13px;font-size:11px;opacity:0;transition:.2s;z-index:80}.toast.show{opacity:1}
 .empty{text-align:center;padding:22px;color:var(--mut);font-size:11px}
 </style>
-<style id="DAPUR-IBU-REALTIME-FINAL-FIX">
+<style id="DAPUR-IBU-REALTIME-RPC">
 body{background:#eef6fc!important}.app{background:#fff!important;box-shadow:0 0 55px #1c44691f!important}
 header{padding:22px 18px 15px!important;background:#fff!important}.brand{gap:13px!important}.logo{width:52px!important;height:52px!important;border:0!important;border-radius:18px!important;background:linear-gradient(145deg,#dceeff,#f6fbff)!important;box-shadow:0 10px 24px #2478df24!important}.brand h1{font-size:28px!important;letter-spacing:-.8px!important}.brand p{font-size:12.5px!important;margin-top:5px!important;color:#8293a6!important}main{padding:0 17px!important}
 .hero{position:relative;overflow:hidden;margin:5px 0 21px!important;padding:21px!important;border:0!important;border-radius:25px!important;background:linear-gradient(135deg,#dceeff,#edf7ff 65%,#fbfdff)!important;box-shadow:0 12px 30px #2569a919!important}.hero:after{content:"";position:absolute;width:105px;height:105px;border-radius:50%;right:-35px;top:-38px;background:#ffffff94}.hero h2{font-size:22px!important}.hero p,.hero small{font-size:12.5px!important}
@@ -496,7 +496,7 @@ linear-gradient(180deg,#f8fcff 0%,#edf7ff 55%,#e8f3ff 100%);overflow:hidden}
 <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
 <path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M9 20v-6h6v6" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
-</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">FINAL FIX</span></p></div></div>
+</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">REALTIME</span></p></div></div>
 
 </header>
 <main>
@@ -677,64 +677,35 @@ function setCloudBadge(text,state='ok'){
 }
 
 async function getSessionToken(){
-  if(!sbClient) return null;
+  if(!sbClient)return null;
   const {data,error}=await sbClient.auth.getSession();
-  if(error) throw error;
+  if(error)throw error;
   return data?.session?.access_token||null;
-}
-
-async function cloudFetch(path,options={}){
-  const token=await getSessionToken();
-  if(!token) throw new Error('SESSION_NOT_FOUND');
-  const res=await fetch(SUPABASE_URL+'/rest/v1/'+path,{
-    ...options,
-    cache:'no-store',
-    headers:{
-      'apikey':SUPABASE_PUBLISHABLE_KEY,
-      'Authorization':'Bearer '+token,
-      'Content-Type':'application/json',
-      ...(options.headers||{})
-    }
-  });
-  const text=await res.text();
-  if(!res.ok) throw new Error('SUPABASE '+res.status+' '+text);
-  return text?JSON.parse(text):null;
 }
 
 function save(){
   writeLocalState();
-  if(applyingRemote) return;
+  if(applyingRemote)return;
   clearTimeout(syncTimer);
   setCloudBadge('Menyimpan...','busy');
-  syncTimer=setTimeout(()=>saveCloudVerified(),200);
+  syncTimer=setTimeout(()=>saveCloudRPC(),180);
 }
 
-async function saveCloudVerified(){
+async function saveCloudRPC(){
+  if(!sbClient||!currentSbUser)return;
   try{
     const state=localState();
-    const stamp=new Date().toISOString();
-
-    await cloudFetch('app_state?on_conflict=id',{
-      method:'POST',
-      headers:{'Prefer':'resolution=merge-duplicates,return=minimal'},
-      body:JSON.stringify([{id:'dapur-ibu',data:state,updated_at:stamp}])
-    });
-
-    // verify what Supabase actually stored
-    const rows=await cloudFetch('app_state?id=eq.dapur-ibu&select=data,updated_at',{method:'GET'});
-    const row=Array.isArray(rows)?rows[0]:null;
-    if(!row) throw new Error('DATA_TIDAK_DITEMUKAN');
-    lastCloudUpdatedAt=row.updated_at||stamp;
-
-    const cloudShop=JSON.stringify(row.data?.shop||[]);
-    const localShop=JSON.stringify(state.shop||[]);
-    if(cloudShop!==localShop) throw new Error('VERIFIKASI_GAGAL');
-
+    const {data,error}=await sbClient.rpc('set_dapur_state',{new_data:state});
+    if(error)throw error;
+    lastCloudUpdatedAt=(data && data.updated_at) ? data.updated_at : new Date().toISOString();
     setCloudBadge('Tersimpan online','ok');
+    if(realtimeChannel){
+      try{await realtimeChannel.send({type:'broadcast',event:'state-change',payload:{data:state}})}catch(_){}
+    }
   }catch(e){
-    console.error('SAVE CLOUD ERROR',e);
+    console.error('RPC SAVE ERROR',e);
     setCloudBadge('Gagal sinkron','error');
-    toast('Gagal menyimpan ke Supabase');
+    toast('Gagal menyimpan online');
   }
 }
 
@@ -753,21 +724,23 @@ function applyCloudState(s){
   applyingRemote=false;
 }
 async function loadCloudState(){
+  if(!sbClient||!currentSbUser)return;
   try{
-    const rows=await cloudFetch('app_state?id=eq.dapur-ibu&select=data,updated_at',{method:'GET'});
-    const row=Array.isArray(rows)?rows[0]:null;
+    const {data,error}=await sbClient.rpc('get_dapur_state');
+    if(error)throw error;
+    const row=Array.isArray(data)?data[0]:data;
     if(!row)return;
     lastCloudUpdatedAt=row.updated_at||'';
     const cloud=row.data||{};
     const local=localState();
-    if(!stateHasData(cloud) && stateHasData(local)){
-      await saveCloudVerified();
+    if(!stateHasData(cloud)&&stateHasData(local)){
+      await saveCloudRPC();
     }else{
       applyCloudState(cloud);
       setCloudBadge('Tersinkron','ok');
     }
   }catch(e){
-    console.error('LOAD CLOUD ERROR',e);
+    console.error('RPC LOAD ERROR',e);
     setCloudBadge('Gagal mengambil data','error');
   }
 }
@@ -776,29 +749,29 @@ function subscribeRealtime(){
   if(realtimeChannel)sbClient.removeChannel(realtimeChannel);
   if(syncPollTimer)clearInterval(syncPollTimer);
 
-  realtimeChannel=sbClient.channel('dapur-ibu-final')
-    .on('postgres_changes',{event:'*',schema:'public',table:'app_state',filter:'id=eq.dapur-ibu'},payload=>{
-      if(payload?.new?.data){
-        lastCloudUpdatedAt=payload.new.updated_at||'';
-        applyCloudState(payload.new.data);
+  // Broadcast accelerator
+  realtimeChannel=sbClient.channel('dapur-ibu-rpc')
+    .on('broadcast',{event:'state-change'},({payload})=>{
+      if(payload?.data){
+        applyCloudState(payload.data);
         setCloudBadge('Tersinkron','ok');
       }
-    })
-    .subscribe();
+    }).subscribe();
 
   syncPollTimer=setInterval(async()=>{
     if(document.hidden||!currentSbUser)return;
     try{
-      const rows=await cloudFetch('app_state?id=eq.dapur-ibu&select=data,updated_at',{method:'GET'});
-      const row=Array.isArray(rows)?rows[0]:null;
+      const {data,error}=await sbClient.rpc('get_dapur_state');
+      if(error)throw error;
+      const row=Array.isArray(data)?data[0]:data;
       if(row && row.updated_at && row.updated_at!==lastCloudUpdatedAt){
         lastCloudUpdatedAt=row.updated_at;
         applyCloudState(row.data||{});
         setCloudBadge('Tersinkron','ok');
       }
     }catch(e){
-      console.warn('POLL ERROR',e);
-      setCloudBadge('Koneksi terputus','error');
+      console.warn('RPC POLL ERROR',e);
+      setCloudBadge('Offline','error');
     }
   },2000);
 }
