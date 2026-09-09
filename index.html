@@ -47,7 +47,7 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,
 .toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#18375f;color:#fff;border-radius:99px;padding:9px 13px;font-size:11px;opacity:0;transition:.2s;z-index:80}.toast.show{opacity:1}
 .empty{text-align:center;padding:22px;color:var(--mut);font-size:11px}
 </style>
-<style id="DAPUR-IBU-REALTIME-RPC-VERIFIED">
+<style id="DAPUR-IBU-V29">
 body{background:#eef6fc!important}.app{background:#fff!important;box-shadow:0 0 55px #1c44691f!important}
 header{padding:22px 18px 15px!important;background:#fff!important}.brand{gap:13px!important}.logo{width:52px!important;height:52px!important;border:0!important;border-radius:18px!important;background:linear-gradient(145deg,#dceeff,#f6fbff)!important;box-shadow:0 10px 24px #2478df24!important}.brand h1{font-size:28px!important;letter-spacing:-.8px!important}.brand p{font-size:12.5px!important;margin-top:5px!important;color:#8293a6!important}main{padding:0 17px!important}
 .hero{position:relative;overflow:hidden;margin:5px 0 21px!important;padding:21px!important;border:0!important;border-radius:25px!important;background:linear-gradient(135deg,#dceeff,#edf7ff 65%,#fbfdff)!important;box-shadow:0 12px 30px #2569a919!important}.hero:after{content:"";position:absolute;width:105px;height:105px;border-radius:50%;right:-35px;top:-38px;background:#ffffff94}.hero h2{font-size:22px!important}.hero p,.hero small{font-size:12.5px!important}
@@ -64,7 +64,7 @@ header{padding:22px 18px 15px!important;background:#fff!important}.brand{gap:13p
 nav{padding:8px 6px calc(8px + env(safe-area-inset-bottom))!important;border-top:0!important;box-shadow:0 -8px 28px #20436317!important;background:#fffffff7!important}nav button{min-height:50px!important;border-radius:14px!important;gap:4px!important}nav button.active{background:#edf6ff!important;color:#2478df!important}nav svg{width:22px!important;height:22px!important}
 </style>
 
-<style id="DAPUR-IBU-REALTIME-FINAL-APP-LIKE">
+<style id="DAPUR-IBU-V29-APP-LIKE">
 :root{
  --b:#2f80ed;--b2:#6bb0f7;--ink:#16365f;--mut:#71859b;--line:#e7eef5;
  --sky:#eaf5ff;--sky2:#f7fbff;--mint:#ecf9f2;--peach:#fff4e8;--lav:#f4efff;--rose:#fff1f4;
@@ -382,126 +382,73 @@ nav button{
 <meta name="apple-mobile-web-app-title" content="Dapur Ibu">
 <meta name="theme-color" content="#2f80ed">
 
+
 <script>
 window.__supabaseReady = new Promise((resolve,reject)=>{
-  const sources=[
+  const urls=[
     'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',
     'https://unpkg.com/@supabase/supabase-js@2'
   ];
   let i=0;
-  function next(){
-    if(window.supabase){resolve(window.supabase);return}
-    if(i>=sources.length){reject(new Error('SUPABASE_LIBRARY_FAILED'));return}
+  const load=()=>{
+    if(window.supabase){resolve(window.supabase);return;}
+    if(i>=urls.length){reject(new Error('SUPABASE_LIBRARY_FAILED'));return;}
     const s=document.createElement('script');
-    s.src=sources[i++];
-    s.async=true;
-    s.onload=()=>window.supabase?resolve(window.supabase):next();
-    s.onerror=()=>next();
+    s.src=urls[i++]; s.async=true;
+    s.onload=()=>window.supabase?resolve(window.supabase):load();
+    s.onerror=load;
     document.head.appendChild(s);
-  }
-  next();
+  };
+  load();
 });
 </script>
 
-<style id="DAPUR-IBU-REALTIME-FINAL-LOGIN">
-.authGate{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:22px;background:
-radial-gradient(circle at 18% 16%,rgba(185,220,255,.58) 0 60px,transparent 61px),
-radial-gradient(circle at 90% 8%,rgba(215,235,255,.72) 0 86px,transparent 87px),
-linear-gradient(180deg,#f8fcff 0%,#edf7ff 55%,#e8f3ff 100%);overflow:hidden}
+
+<style id="FINAL-REALTIME-CLEAN">
+.authGate{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 14% 12%,#dbeeff 0 70px,transparent 71px),radial-gradient(circle at 92% 10%,#e3f2ff 0 92px,transparent 93px),linear-gradient(180deg,#f9fcff,#eaf5ff)}
 .authGate.hidden{display:none}
-.authDecor{position:absolute;color:#b8d8fb;font-size:40px;opacity:.45}.authLeaf1{left:7%;top:8%;transform:rotate(-22deg)}.authLeaf2{right:8%;bottom:12%;transform:rotate(18deg)}
-.authCard{width:min(100%,410px);background:rgba(255,255,255,.95);border:1px solid rgba(218,232,245,.9);border-radius:30px;padding:27px 23px 22px;box-shadow:0 24px 65px rgba(40,86,130,.16);backdrop-filter:blur(12px)}
-.authBrand{text-align:center;margin-bottom:20px}.authChef{width:84px;height:84px;margin:0 auto 8px;border-radius:28px;background:linear-gradient(145deg,#e8f5ff,#fdfefe);display:grid;place-items:center;box-shadow:0 12px 28px rgba(47,128,237,.13)}.authChef svg{width:59px;height:59px}
-.authTitle{font-size:31px;font-weight:850;letter-spacing:-.8px;color:#17385f}.authSubtitle{margin:6px auto 0;max-width:290px;font-size:13px;line-height:1.5;color:#74899e}
-.authWelcome{display:grid;grid-template-columns:45px 1fr;gap:11px;align-items:center;padding:13px 14px;margin:0 0 18px;border-radius:18px;background:linear-gradient(135deg,#eaf5ff,#f9fcff);box-shadow:inset 0 0 0 1px #e1eef8}
-.authWelcomeIcon{width:43px;height:43px;border-radius:14px;display:grid;place-items:center;background:#fff;font-size:21px}.authWelcome b{display:block;font-size:15px;color:#1a3d68}.authWelcome span{display:block;margin-top:3px;font-size:11.5px;line-height:1.45;color:#758ba1}
-.authLabel{display:block;margin:12px 3px 6px;font-size:12.5px;font-weight:750;color:#284e78}
-.authInputWrap{min-height:49px;border:1px solid #dfeaf3;border-radius:15px;background:#fff;display:grid;grid-template-columns:39px 1fr;align-items:center;padding:0 11px;box-shadow:0 5px 15px rgba(44,80,115,.045)}
-.authInputWrap span{text-align:center;color:#6da4df;font-size:17px}.authInputWrap input{width:100%;border:0;outline:0;background:transparent;font-size:15px;color:#17385f;padding:13px 4px}.authInputWrap input::placeholder{color:#a3b0bd}
-.authLoginBtn{width:100%;min-height:50px;margin-top:18px;border:0;border-radius:16px;background:linear-gradient(145deg,#4390ef,#2478df);color:#fff;font-size:15px;font-weight:800;box-shadow:0 10px 22px rgba(47,128,237,.24)}
-.authLoginBtn:disabled{opacity:.65}.authMsg{min-height:18px;margin-top:9px;text-align:center;font-size:11.5px;color:#d64f61}.authFoot{text-align:center;margin-top:9px;font-size:10.5px;line-height:1.4;color:#8fa0b0}
-.accountPill{position:fixed;right:14px;top:12px;z-index:120;border:0;border-radius:999px;padding:8px 11px;background:rgba(255,255,255,.93);color:#28517d;box-shadow:0 6px 18px rgba(29,66,101,.12);font-size:10px;font-weight:750;align-items:center;gap:6px}.accountDot,.syncDot{width:8px;height:8px;border-radius:50%;background:#38b879;box-shadow:0 0 0 3px #e9f8f1}
-.accountMenu{position:fixed;right:14px;top:53px;z-index:121;width:230px;padding:14px;border-radius:17px;background:#fff;box-shadow:0 14px 34px rgba(30,65,98,.18);display:none}.accountMenu.show{display:block}.accountMenuTitle{font-size:13px;font-weight:800;color:#183b67}.accountEmail{font-size:10.5px;color:#7a8ea3;margin:4px 0 11px;word-break:break-all}.syncLine{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:12px;background:#eef9f3;color:#287653;font-size:10.5px}.accountMenu button{width:100%;margin-top:10px;padding:10px;border-radius:12px;border:0;background:#fff0f2;color:#d05263;font-weight:750}
-@media(max-width:390px){.authCard{padding:23px 19px 19px;border-radius:27px}.authTitle{font-size:29px}.authChef{width:78px;height:78px}.authChef svg{width:54px;height:54px}}
-</style>
-
-
-<style id="REALTIME-FINAL">
-.globalSyncBadge{position:fixed;left:50%;transform:translateX(-50%);top:8px;z-index:130;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.94);box-shadow:0 5px 16px rgba(30,65,98,.12);font-size:9px;font-weight:800;color:#42617e;backdrop-filter:blur(10px)}
-.gsDot{width:7px;height:7px;border-radius:50%;background:#38b879}
-</style>
-
-
-<style id="RPC-VERIFIED">
-.manualSyncBtn{width:100%;margin-top:8px;padding:9px 10px;border:0;border-radius:11px;background:#edf6ff;color:#2b75bf;font-size:10.5px;font-weight:750}
+.authCard{width:min(100%,410px);background:#fff;border:1px solid #dce9f4;border-radius:30px;padding:26px 23px 22px;box-shadow:0 24px 65px rgba(40,86,130,.16)}
+.authChef{width:82px;height:82px;border-radius:27px;margin:0 auto 9px;background:linear-gradient(145deg,#e8f5ff,#fff);display:grid;place-items:center;box-shadow:0 12px 28px rgba(47,128,237,.13)}.authChef svg{width:58px}
+.authCard h1{text-align:center;margin:0;color:#17385f;font-size:30px;letter-spacing:-.7px}.authCard>p{text-align:center;color:#74899e;font-size:13px;margin:7px 0 18px}
+.authHello{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:center;padding:12px 13px;border-radius:17px;background:#eef7ff;margin-bottom:18px}.authHello>span{width:42px;height:42px;border-radius:13px;background:#fff;display:grid;place-items:center;font-size:20px}.authHello b{display:block;font-size:15px}.authHello small{display:block;color:#7890a7;font-size:11.5px;margin-top:3px;line-height:1.4}
+.authCard label{display:block;margin:12px 2px 6px;color:#244b75;font-size:12.5px;font-weight:800}.authCard input{width:100%;box-sizing:border-box;min-height:48px;border:1px solid #dfeaf3;border-radius:14px;padding:12px 13px;font-size:15px;outline:none}.authCard input:focus{border-color:#80b8f2;box-shadow:0 0 0 3px #e9f4ff}
+#loginBtn{width:100%;min-height:50px;margin-top:18px;border:0;border-radius:16px;background:linear-gradient(145deg,#4390ef,#2478df);color:#fff;font-size:15px;font-weight:800;box-shadow:0 10px 22px rgba(47,128,237,.24)}
+#loginBtn:disabled{opacity:.6}.loginMsg{min-height:18px;text-align:center;color:#d55263;font-size:11.5px;margin-top:9px}.authFoot{text-align:center;color:#90a1b0;font-size:10.5px;margin-top:8px}
+.syncBadge{position:fixed;top:8px;right:10px;z-index:500;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.95);box-shadow:0 6px 18px rgba(30,65,98,.12);font-size:10px;font-weight:800;color:#45637e}.syncBadge span:first-child{width:8px;height:8px;border-radius:50%;background:#f0a23a}
 </style>
 
 </head>
 <body>
 
 <div id="authGate" class="authGate">
-  <div class="authDecor authLeaf1">✦</div>
-  <div class="authDecor authLeaf2">✦</div>
   <div class="authCard">
-    <div class="authBrand">
-      <div class="authChef">
-        <svg viewBox="0 0 64 64" aria-hidden="true">
-          <path d="M20 29c-7 0-11-5-11-11 0-6 5-11 11-11 2 0 4 .5 5.5 1.5C28 4.5 32 2 37 2c7 0 13 5 14 12 6 .6 10.5 5.4 10.5 11.2C61.5 31.7 56 37 49 37H20c-7 0-12-3-12-8Z" fill="#fff" stroke="#2f80ed" stroke-width="2.4"/>
-          <path d="M18 34h30v20c0 4-3 7-7 7H25c-4 0-7-3-7-7V34Z" fill="#fff" stroke="#2f80ed" stroke-width="2.4"/>
-          <path d="M23 45h20M23 52h20" stroke="#b7d7fb" stroke-width="2.2" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="authTitle">Dapur Ibu</div>
-      <div class="authSubtitle">Masak lebih mudah, keluarga selalu terhubung 💙</div>
+    <div class="authChef">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M20 29c-7 0-11-5-11-11 0-6 5-11 11-11 2 0 4 .5 5.5 1.5C28 4.5 32 2 37 2c7 0 13 5 14 12 6 .6 10.5 5.4 10.5 11.2C61.5 31.7 56 37 49 37H20c-7 0-12-3-12-8Z" fill="#fff" stroke="#2f80ed" stroke-width="2.4"/>
+        <path d="M18 34h30v20c0 4-3 7-7 7H25c-4 0-7-3-7-7V34Z" fill="#fff" stroke="#2f80ed" stroke-width="2.4"/>
+        <path d="M23 45h20M23 52h20" stroke="#b7d7fb" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
     </div>
-
-    <div class="authWelcome">
-      <div class="authWelcomeIcon">🏡</div>
-      <div>
-        <b>Selamat datang</b>
-        <span>Masuk untuk melihat data keluarga secara realtime.</span>
-      </div>
-    </div>
-
-    <label class="authLabel" for="loginEmail">Email</label>
-    <div class="authInputWrap">
-      <span>✉</span>
-      <input id="loginEmail" type="email" autocomplete="email" placeholder="nama@email.com">
-    </div>
-
-    <label class="authLabel" for="loginPassword">Password</label>
-    <div class="authInputWrap">
-      <span>⌑</span>
-      <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Masukkan password">
-    </div>
-
-    <button id="loginBtn" type="button" class="authLoginBtn" onclick="loginDapurIbu()">Masuk ke Dapur Ibu</button>
-    <div id="loginMsg" class="authMsg"></div>
+    <h1>Dapur Ibu</h1>
+    <p>Masak lebih mudah, keluarga selalu terhubung 💙</p>
+    <div class="authHello"><span>🏡</span><div><b>Selamat datang</b><small>Masuk untuk melihat data keluarga secara realtime.</small></div></div>
+    <label>Email</label>
+    <input id="loginEmail" type="email" autocomplete="email" placeholder="nama@email.com">
+    <label>Password</label>
+    <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Masukkan password">
+    <button id="loginBtn" type="button" onclick="loginDapurIbu()">Masuk ke Dapur Ibu</button>
+    <div id="loginMsg" class="loginMsg"></div>
     <div class="authFoot">Setiap anggota keluarga menggunakan akun masing-masing.</div>
   </div>
 </div>
-
-
-<div id="globalSyncBadge" class="globalSyncBadge" style="display:none">
-  <span class="gsDot"></span><span id="globalSyncText">Online</span>
-</div>
-
-<button id="accountPill" class="accountPill" onclick="toggleAccountMenu()" style="display:none" aria-label="Akun">
-  <span class="accountDot"></span><span id="accountName">Online</span>
-</button>
-<div id="accountMenu" class="accountMenu">
-  <div class="accountMenuTitle">Akun Dapur Ibu</div>
-  <div id="accountEmail" class="accountEmail"></div>
-  <div class="syncLine"><span class="syncDot"></span><span id="syncText">Realtime aktif</span></div>
-  <button onclick="logoutDapurIbu()">Keluar</button>
-</div>
+<div id="syncBadge" class="syncBadge" style="display:none"><span id="syncDot"></span><span id="syncBadgeText">Menghubungkan</span></div>
 
 <div class="app">
 <header>
 <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
 <path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M9 20v-6h6v6" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
-</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">REALTIME VERIFIED</span></p></div></div>
+</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">REALTIME CLEAN</span></p></div></div>
 
 </header>
 <main>
@@ -632,33 +579,17 @@ let currentDate=new Date(),editIndex=-1,reqFilter='all',approveIndex=-1;
 const SUPABASE_URL='https://uduxugyvvqmxbzznqdmu.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_9kz1C-zW9Eefsfj1ZsZn5Q_djk9TdPs';
 
-let sbClient=null,currentSbUser=null,realtimeChannel=null,cloudSaveTimer=null,appBooted=false,applyingRemote=false;
+let sbClient=null;
+let currentSbUser=null;
+let syncPollTimer=null;
+let syncSaveTimer=null;
+let syncWriting=false;
+let syncQueued=false;
+let applyingRemote=false;
+let lastCloudUpdatedAt='';
 
-document.addEventListener('DOMContentLoaded',()=>{const b=document.getElementById('loginBtn');if(b){b.disabled=false;b.textContent='Masuk ke Dapur Ibu';}});
-async function ensureSupabaseClient(){
-  if(sbClient) return sbClient;
-  const msg=document.getElementById('loginMsg');
-  try{
-    if(msg) msg.textContent='Menyiapkan koneksi Supabase...';
-    await Promise.race([
-      window.__supabaseReady,
-      new Promise((_,reject)=>setTimeout(()=>reject(new Error('LIB_TIMEOUT')),15000))
-    ]);
-    if(!window.supabase) throw new Error('LIB_NOT_READY');
-    sbClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{
-      auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}
-    });
-    if(msg) msg.textContent='';
-    return sbClient;
-  }catch(e){
-    console.error('ensureSupabaseClient:',e);
-    if(msg) msg.textContent='Supabase gagal dimuat. Coba refresh atau jaringan lain.';
-    throw e;
-  }
-}
+function localState(){ return {meals,shop,stock,history,recipes,reqs}; }
 
-
-function localState(){return {meals,shop,stock,history,recipes,reqs}}
 function writeLocalState(){
   localStorage.setItem('di_meals_v20',JSON.stringify(meals));
   localStorage.setItem('di_shop_v20',JSON.stringify(shop));
@@ -668,100 +599,27 @@ function writeLocalState(){
   localStorage.setItem('di_reqs_v20',JSON.stringify(reqs));
 }
 
-let syncTimer=null;
-let syncPollTimer=null;
-let lastCloudUpdatedAt='';
-
-function setCloudBadge(text,state='ok'){
-  const msg=document.getElementById('syncText');
-  const account=document.getElementById('accountName');
-  const dot=document.querySelector('.accountDot');
-  if(msg)msg.textContent=text;
-  if(account)account.textContent=state==='ok'?'Online':state==='busy'?'Menyimpan':'Offline';
-  if(dot)dot.style.background=state==='ok'?'#38b879':state==='busy'?'#f0a23a':'#e45a67'; const gb=document.getElementById('globalSyncBadge'),gt=document.getElementById('globalSyncText'),gd=document.querySelector('.gsDot'); if(gb&&currentSbUser)gb.style.display='flex'; if(gt)gt.textContent=text; if(gd)gd.style.background=state==='ok'?'#38b879':state==='busy'?'#f0a23a':'#e45a67';
+function setSyncStatus(text,type='busy'){
+  const badge=document.getElementById('syncBadge');
+  const dot=document.getElementById('syncDot');
+  const txt=document.getElementById('syncBadgeText');
+  if(currentSbUser)badge.style.display='flex';
+  txt.textContent=text;
+  dot.style.background=type==='ok'?'#36b878':type==='err'?'#df5968':'#f0a23a';
 }
 
-async function getSessionToken(){
-  if(!sbClient)return null;
-  const {data,error}=await sbClient.auth.getSession();
-  if(error)throw error;
-  return data?.session?.access_token||null;
+async function ensureSupabase(){
+  if(sbClient)return sbClient;
+  await Promise.race([
+    window.__supabaseReady,
+    new Promise((_,rej)=>setTimeout(()=>rej(new Error('Supabase library timeout')),15000))
+  ]);
+  sbClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{
+    auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}
+  });
+  return sbClient;
 }
 
-let saveSeq=0;
-let saveInFlight=false;
-let saveQueued=false;
-
-function save(){
-  writeLocalState();
-  if(applyingRemote)return;
-  saveSeq++;
-  setCloudBadge('Menyimpan...','busy');
-  saveCloudRPC();
-}
-
-async function saveCloudRPC(){
-  if(!sbClient||!currentSbUser)return;
-  if(saveInFlight){saveQueued=true;return}
-  saveInFlight=true;
-  saveQueued=false;
-
-  const state=localState();
-  const expectedShop=JSON.stringify(state.shop||[]);
-  let ok=false;
-  let lastError=null;
-
-  for(let attempt=1;attempt<=3 && !ok;attempt++){
-    try{
-      const {error}=await sbClient.rpc('set_dapur_state',{new_data:state});
-      if(error)throw error;
-
-      // Read back immediately so we KNOW Supabase stored this state.
-      const {data:checkData,error:checkError}=await sbClient.rpc('get_dapur_state');
-      if(checkError)throw checkError;
-
-      const row=Array.isArray(checkData)?checkData[0]:checkData;
-      if(!row)throw new Error('Tidak ada data dari Supabase');
-
-      const actualShop=JSON.stringify(row.data?.shop||[]);
-      if(actualShop!==expectedShop){
-        throw new Error('Verifikasi cloud belum sesuai');
-      }
-
-      lastCloudUpdatedAt=row.updated_at||new Date().toISOString();
-      ok=true;
-      setCloudBadge('Tersimpan online','ok');
-
-      if(realtimeChannel){
-        try{
-          await realtimeChannel.send({
-            type:'broadcast',
-            event:'state-change',
-            payload:{data:state,updated_at:lastCloudUpdatedAt}
-          });
-        }catch(_){}
-      }
-    }catch(e){
-      lastError=e;
-      console.error('RPC SAVE attempt '+attempt,e);
-      if(attempt<3)await new Promise(r=>setTimeout(r,700));
-    }
-  }
-
-  if(!ok){
-    setCloudBadge('Gagal sinkron','error');
-    toast('Data belum tersimpan online');
-    console.error('Final RPC save error',lastError);
-  }
-
-  saveInFlight=false;
-  if(saveQueued){
-    saveQueued=false;
-    saveCloudRPC();
-  }
-}
-
-function stateHasData(s){return ['meals','shop','stock','history','recipes','reqs'].some(k=>Array.isArray(s?.[k])&&s[k].length)}
 function applyCloudState(s){
   if(!s)return;
   applyingRemote=true;
@@ -775,211 +633,106 @@ function applyCloudState(s){
   renderHome();renderSchedule();renderShop();renderStock();renderHistory();renderRecipes();renderRequests();
   applyingRemote=false;
 }
-async function loadCloudState(){
+
+function save(){
+  writeLocalState();
+  if(applyingRemote||!currentSbUser)return;
+  clearTimeout(syncSaveTimer);
+  setSyncStatus('Menyimpan...','busy');
+  syncSaveTimer=setTimeout(pushCloudState,100);
+}
+
+async function pushCloudState(){
+  if(!sbClient||!currentSbUser)return;
+  if(syncWriting){syncQueued=true;return;}
+  syncWriting=true;
+  syncQueued=false;
+  const state=localState();
+
+  try{
+    const {data,error}=await sbClient.rpc('set_dapur_state',{new_data:state});
+    if(error)throw error;
+    const row=Array.isArray(data)?data[0]:data;
+    lastCloudUpdatedAt=row?.updated_at||new Date().toISOString();
+    setSyncStatus('Tersimpan online','ok');
+  }catch(e){
+    console.error('SAVE RPC',e);
+    setSyncStatus('Gagal sinkron','err');
+    toast('Gagal menyimpan online');
+  }finally{
+    syncWriting=false;
+    if(syncQueued){syncQueued=false;setTimeout(pushCloudState,50);}
+  }
+}
+
+async function pullCloudState(force=false){
   if(!sbClient||!currentSbUser)return;
   try{
     const {data,error}=await sbClient.rpc('get_dapur_state');
     if(error)throw error;
     const row=Array.isArray(data)?data[0]:data;
     if(!row)return;
-    lastCloudUpdatedAt=row.updated_at||'';
-    const cloud=row.data||{};
-    const local=localState();
-    if(!stateHasData(cloud)&&stateHasData(local)){
-      await saveCloudRPC();
-    }else{
-      applyCloudState(cloud);
-      syncFailCount=0;
-      setCloudBadge('Tersinkron','ok');
+    if(force || (row.updated_at && row.updated_at!==lastCloudUpdatedAt)){
+      lastCloudUpdatedAt=row.updated_at||'';
+      applyCloudState(row.data||{});
     }
+    setSyncStatus('Tersinkron','ok');
   }catch(e){
-    console.error('RPC LOAD ERROR',e);
-    setCloudBadge('Gagal mengambil data','error');
+    console.error('PULL RPC',e);
+    setSyncStatus('Koneksi terputus','err');
   }
 }
-let syncFailCount=0;
-function subscribeRealtime(){
-  if(!sbClient||!currentSbUser)return;
-  if(realtimeChannel)sbClient.removeChannel(realtimeChannel);
+
+function startSync(){
   if(syncPollTimer)clearInterval(syncPollTimer);
-
-  // Broadcast accelerator
-  realtimeChannel=sbClient.channel('dapur-ibu-rpc')
-    .on('broadcast',{event:'state-change'},({payload})=>{
-      if(payload?.data){
-        applyCloudState(payload.data);
-        setCloudBadge('Tersinkron','ok');
-      }
-    }).subscribe();
-
-  syncPollTimer=setInterval(async()=>{
-    if(document.hidden||!currentSbUser)return;
-    try{
-      const {data,error}=await sbClient.rpc('get_dapur_state');
-      if(error)throw error;
-
-      syncFailCount=0;
-      const row=Array.isArray(data)?data[0]:data;
-      if(row && row.updated_at && row.updated_at!==lastCloudUpdatedAt){
-        lastCloudUpdatedAt=row.updated_at;
-        applyCloudState(row.data||{});
-        setCloudBadge('Tersinkron','ok');
-      }else{
-        setCloudBadge('Tersambung','ok');
-      }
-    }catch(e){
-      syncFailCount++;
-      console.warn('RPC POLL ERROR',e);
-      if(syncFailCount>=3)setCloudBadge('Koneksi terputus','error');
-      else setCloudBadge('Menyambungkan ulang...','busy');
-    }
-  },1500);
+  pullCloudState(true);
+  syncPollTimer=setInterval(()=>{ if(!document.hidden)pullCloudState(false); },2000);
 }
-function setAuthUi(user){
-  const gate=document.getElementById('authGate'),pill=document.getElementById('accountPill');
-  if(user){
-    gate.classList.add('hidden');
-    pill.style.display='flex';
-    document.getElementById('accountEmail').textContent=user.email||'';
-    document.getElementById('accountName').textContent='Online';
-  }else{
-    gate.classList.remove('hidden');
-    pill.style.display='none'; const gb=document.getElementById('globalSyncBadge'); if(gb)gb.style.display='none';
-    document.getElementById('accountMenu').classList.remove('show');
-  }
-}
+
 async function loginDapurIbu(){
   const email=document.getElementById('loginEmail').value.trim();
   const password=document.getElementById('loginPassword').value;
-  const msg=document.getElementById('loginMsg'),btn=document.getElementById('loginBtn');
-
-  msg.textContent='';
-  if(!email||!password){msg.textContent='Masukkan email dan password.';return}
-  if(!navigator.onLine){msg.textContent='Tidak ada koneksi internet.';return}
-
-  btn.disabled=true;
-  btn.textContent='Menyiapkan koneksi...';
-
-  try{
-    await ensureSupabaseClient();
-
-    btn.textContent='Sedang masuk...';
-
-    const timeout=new Promise((_,reject)=>setTimeout(()=>reject(new Error('LOGIN_TIMEOUT')),15000));
-    const loginPromise=sbClient.auth.signInWithPassword({email,password});
-    const {data,error}=await Promise.race([loginPromise,timeout]);
-
-    if(error){
-      console.error('Login error:',error);
-      const em=String(error.message||'').toLowerCase();
-      if(em.includes('invalid login credentials')){
-        msg.textContent='Email atau password salah.';
-      }else if(em.includes('email not confirmed')){
-        msg.textContent='Email belum dikonfirmasi di Supabase.';
-      }else{
-        msg.textContent='Login gagal: '+(error.message||'coba lagi.');
-      }
-      return;
-    }
-
-    if(!data?.user){
-      msg.textContent='Login belum berhasil. Silakan coba lagi.';
-      return;
-    }
-
-    currentSbUser=data.user;
-    setAuthUi(currentSbUser);
-
-    try{
-      await Promise.race([
-        loadCloudState(),
-        new Promise((_,reject)=>setTimeout(()=>reject(new Error('SYNC_TIMEOUT')),10000))
-      ]);
-    }catch(e){
-      console.warn('Initial sync warning:',e);
-      toast('Login berhasil. Sinkronisasi akan mencoba kembali.');
-    }
-
-    subscribeRealtime();
-  }catch(e){
-    console.error('Login exception:',e);
-    if(e?.message==='LOGIN_TIMEOUT'){
-      msg.textContent='Login terlalu lama. Periksa internet lalu coba lagi.';
-    }else if(e?.message==='LIB_TIMEOUT'||e?.message==='LIB_NOT_READY'){
-      msg.textContent='Library Supabase gagal dimuat. Coba refresh atau jaringan lain.';
-    }else{
-      msg.textContent='Koneksi Supabase gagal. Coba refresh halaman.';
-    }
-  }finally{
-    btn.disabled=false;
-    btn.textContent='Masuk ke Dapur Ibu';
-  }
-}
-async function logoutDapurIbu(){
-  if(realtimeChannel)sbClient.removeChannel(realtimeChannel);
-  realtimeChannel=null;
-  if(syncPollTimer)clearInterval(syncPollTimer);
-  syncPollTimer=null;
-  await sbClient.auth.signOut();
-  currentSbUser=null;
-  setAuthUi(null);
-}
-function toggleAccountMenu(){document.getElementById('accountMenu').classList.toggle('show')}
-async function initRealtime(){
+  const btn=document.getElementById('loginBtn');
   const msg=document.getElementById('loginMsg');
+  msg.textContent='';
+  if(!email||!password){msg.textContent='Masukkan email dan password.';return;}
+  btn.disabled=true; btn.textContent='Sedang masuk...';
+
   try{
-    await ensureSupabaseClient();
-
-    const sessionResult=await Promise.race([
-      sbClient.auth.getSession(),
-      new Promise((_,reject)=>setTimeout(()=>reject(new Error('INIT_TIMEOUT')),10000))
-    ]);
-
-    currentSbUser=sessionResult?.data?.session?.user||null;
-    setAuthUi(currentSbUser);
-
-    if(currentSbUser){
-      try{
-        await Promise.race([
-          loadCloudState(),
-          new Promise((_,reject)=>setTimeout(()=>reject(new Error('SYNC_TIMEOUT')),10000))
-        ]);
-      }catch(e){console.warn('Initial sync:',e)}
-      subscribeRealtime();
-    }
-
-    sbClient.auth.onAuthStateChange(async(event,sessionNow)=>{
-      const nextUser=sessionNow?.user||null;
-      if(nextUser?.id!==currentSbUser?.id){
-        currentSbUser=nextUser;
-        setAuthUi(currentSbUser);
-        if(currentSbUser){
-          try{await loadCloudState()}catch(e){console.warn(e)}
-          subscribeRealtime();
-        }
-      }
-    });
+    await ensureSupabase();
+    const {data,error}=await sbClient.auth.signInWithPassword({email,password});
+    if(error)throw error;
+    currentSbUser=data.user;
+    document.getElementById('authGate').classList.add('hidden');
+    setSyncStatus('Menghubungkan...','busy');
+    await pullCloudState(true);
+    startSync();
   }catch(e){
-    console.error('Supabase init:',e);
-    if(msg && !msg.textContent){
-      msg.textContent='Supabase belum tersambung. Tekan Masuk untuk mencoba lagi.';
+    console.error('LOGIN',e);
+    msg.textContent=String(e.message||'Login gagal').toLowerCase().includes('invalid login')
+      ? 'Email atau password salah.'
+      : 'Login gagal. Coba lagi.';
+  }finally{
+    btn.disabled=false;btn.textContent='Masuk ke Dapur Ibu';
+  }
+}
+
+async function initRealtime(){
+  try{
+    await ensureSupabase();
+    const {data:{session}}=await sbClient.auth.getSession();
+    currentSbUser=session?.user||null;
+    if(currentSbUser){
+      document.getElementById('authGate').classList.add('hidden');
+      setSyncStatus('Menghubungkan...','busy');
+      startSync();
     }
+  }catch(e){
+    document.getElementById('loginMsg').textContent='Koneksi Supabase gagal dimuat.';
   }
 }
 
-document.addEventListener('keydown',e=>{
-  if(e.key==='Enter' && !document.getElementById('authGate').classList.contains('hidden')){
-    loginDapurIbu();
-  }
-});
-
-
-if(document.readyState==='loading'){
-  document.addEventListener('DOMContentLoaded',()=>{ initRealtime(); },{once:true});
-}else{
-  setTimeout(()=>initRealtime(),0);
-}
-
+document.addEventListener('DOMContentLoaded',initRealtime);
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function rp(n){return 'Rp '+Number(n||0).toLocaleString('id-ID')}
 function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1400)}
