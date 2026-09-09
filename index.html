@@ -383,56 +383,24 @@ nav button{
 <meta name="theme-color" content="#2f80ed">
 
 
-<script>
-window.__supabaseReady = new Promise((resolve,reject)=>{
-  const urls=[
-    'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',
-    'https://unpkg.com/@supabase/supabase-js@2'
-  ];
-  let i=0;
-  const load=()=>{
-    if(window.supabase){resolve(window.supabase);return;}
-    if(i>=urls.length){reject(new Error('SUPABASE_LIBRARY_FAILED'));return;}
-    const s=document.createElement('script');
-    s.src=urls[i++]; s.async=true;
-    s.onload=()=>window.supabase?resolve(window.supabase):load();
-    s.onerror=load;
-    document.head.appendChild(s);
-  };
-  load();
-});
-</script>
-
-
-<style id="FINAL-REALTIME-CLEAN">
-.authGate{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 14% 12%,#dbeeff 0 70px,transparent 71px),radial-gradient(circle at 92% 10%,#e3f2ff 0 92px,transparent 93px),linear-gradient(180deg,#f9fcff,#eaf5ff)}
+<style id="REALTIME-CLEAN-REBUILD">
+.authGate{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 14% 12%,#dbeeff 0 70px,transparent 71px),radial-gradient(circle at 92% 10%,#e3f2ff 0 92px,transparent 93px),linear-gradient(180deg,#f9fcff,#eaf5ff)}
 .authGate.hidden{display:none}
 .authCard{width:min(100%,410px);background:#fff;border:1px solid #dce9f4;border-radius:30px;padding:26px 23px 22px;box-shadow:0 24px 65px rgba(40,86,130,.16)}
-.authChef{width:82px;height:82px;border-radius:27px;margin:0 auto 9px;background:linear-gradient(145deg,#e8f5ff,#fff);display:grid;place-items:center;box-shadow:0 12px 28px rgba(47,128,237,.13)}.authChef svg{width:58px}
-.authCard h1{text-align:center;margin:0;color:#17385f;font-size:30px;letter-spacing:-.7px}.authCard>p{text-align:center;color:#74899e;font-size:13px;margin:7px 0 18px}
-.authHello{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:center;padding:12px 13px;border-radius:17px;background:#eef7ff;margin-bottom:18px}.authHello>span{width:42px;height:42px;border-radius:13px;background:#fff;display:grid;place-items:center;font-size:20px}.authHello b{display:block;font-size:15px}.authHello small{display:block;color:#7890a7;font-size:11.5px;margin-top:3px;line-height:1.4}
-.authCard label{display:block;margin:12px 2px 6px;color:#244b75;font-size:12.5px;font-weight:800}.authCard input{width:100%;box-sizing:border-box;min-height:48px;border:1px solid #dfeaf3;border-radius:14px;padding:12px 13px;font-size:15px;outline:none}.authCard input:focus{border-color:#80b8f2;box-shadow:0 0 0 3px #e9f4ff}
+.authChef{width:82px;height:82px;border-radius:27px;margin:0 auto 9px;background:linear-gradient(145deg,#e8f5ff,#fff);display:grid;place-items:center;box-shadow:0 12px 28px rgba(47,128,237,.13)}
+.authChef svg{width:58px}.authCard h1{text-align:center;margin:0;color:#17385f;font-size:30px;letter-spacing:-.7px}.authCard>p{text-align:center;color:#74899e;font-size:13px;margin:7px 0 18px}
+.authHello{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:center;padding:12px 13px;border-radius:17px;background:#eef7ff;margin-bottom:18px}
+.authHello>span{width:42px;height:42px;border-radius:13px;background:#fff;display:grid;place-items:center;font-size:20px}.authHello b{display:block;font-size:15px}.authHello small{display:block;color:#7890a7;font-size:11.5px;margin-top:3px;line-height:1.4}
+.authCard label{display:block;margin:12px 2px 6px;color:#244b75;font-size:12.5px;font-weight:800}.authCard input{width:100%;box-sizing:border-box;min-height:48px;border:1px solid #dfeaf3;border-radius:14px;padding:12px 13px;font-size:15px;outline:none}
+.authCard input:focus{border-color:#80b8f2;box-shadow:0 0 0 3px #e9f4ff}
 #loginBtn{width:100%;min-height:50px;margin-top:18px;border:0;border-radius:16px;background:linear-gradient(145deg,#4390ef,#2478df);color:#fff;font-size:15px;font-weight:800;box-shadow:0 10px 22px rgba(47,128,237,.24)}
 #loginBtn:disabled{opacity:.6}.loginMsg{min-height:18px;text-align:center;color:#d55263;font-size:11.5px;margin-top:9px}.authFoot{text-align:center;color:#90a1b0;font-size:10.5px;margin-top:8px}
-.syncBadge{position:fixed;top:8px;right:10px;z-index:500;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.95);box-shadow:0 6px 18px rgba(30,65,98,.12);font-size:10px;font-weight:800;color:#45637e}.syncBadge span:first-child{width:8px;height:8px;border-radius:50%;background:#f0a23a}
-</style>
-
-
-<style id="LOGOUT-RESTORED">
-.accountPill{position:fixed;right:14px;top:12px;z-index:520;border:0;border-radius:999px;padding:8px 11px;background:rgba(255,255,255,.96);color:#28517d;box-shadow:0 6px 18px rgba(29,66,101,.13);font-size:10px;font-weight:800;align-items:center;gap:6px}
-.accountDot,.syncDot{width:8px;height:8px;border-radius:50%;background:#38b879}
-.accountMenu{position:fixed;right:14px;top:54px;z-index:521;width:232px;padding:14px;border-radius:18px;background:#fff;box-shadow:0 15px 38px rgba(30,65,98,.18);display:none}
-.accountMenu.show{display:block}
-.accountMenuTitle{font-size:13px;font-weight:850;color:#183b67}
-.accountEmail{font-size:10.5px;color:#7a8ea3;margin:4px 0 11px;word-break:break-all}
-.syncLine{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:12px;background:#eef9f3;color:#287653;font-size:10.5px;font-weight:750}
-.logoutBtn{width:100%;margin-top:10px;padding:11px;border-radius:12px;border:0;background:#fff0f2;color:#d05263;font-weight:800;font-size:11px}
-</style>
-
-
-<style id="REALTIME-STABLE">
-.syncDetail{margin-top:7px;padding:7px 8px;border-radius:10px;background:#f5f8fb;color:#7b8fa3;font-size:9px;line-height:1.35;word-break:break-word}
-.retrySyncBtn{width:100%;margin-top:8px;padding:9px;border:0;border-radius:11px;background:#edf6ff;color:#2a73bd;font-size:10.5px;font-weight:800}
+.accountPill{position:fixed;right:13px;top:10px;z-index:520;border:0;border-radius:999px;padding:8px 11px;background:rgba(255,255,255,.96);color:#28517d;box-shadow:0 6px 18px rgba(29,66,101,.13);font-size:10px;font-weight:800;align-items:center;gap:6px}
+.accountDot,.syncDot{width:8px;height:8px;border-radius:50%;background:#f0a23a;flex:0 0 auto}
+.accountMenu{position:fixed;right:13px;top:52px;z-index:521;width:240px;padding:14px;border-radius:18px;background:#fff;box-shadow:0 15px 38px rgba(30,65,98,.18);display:none}
+.accountMenu.show{display:block}.accountMenuTitle{font-size:13px;font-weight:850;color:#183b67}.accountEmail{font-size:10.5px;color:#7a8ea3;margin:4px 0 11px;word-break:break-all}
+.syncBox{display:flex;align-items:flex-start;gap:9px;padding:10px;border-radius:12px;background:#f3f8fc;color:#365d80}.syncBox .syncDot{margin-top:4px}.syncBox b{display:block;font-size:10.5px}.syncBox small{display:block;margin-top:2px;font-size:9px;color:#7a91a6;line-height:1.35}
+.manualSyncBtn,.logoutBtn{width:100%;margin-top:9px;padding:10px;border:0;border-radius:12px;font-weight:800;font-size:10.5px}.manualSyncBtn{background:#edf6ff;color:#2a73bd}.logoutBtn{background:#fff0f2;color:#d05263}
 </style>
 
 </head>
@@ -449,39 +417,39 @@ window.__supabaseReady = new Promise((resolve,reject)=>{
     </div>
     <h1>Dapur Ibu</h1>
     <p>Masak lebih mudah, keluarga selalu terhubung 💙</p>
-    <div class="authHello"><span>🏡</span><div><b>Selamat datang</b><small>Masuk untuk melihat data keluarga secara realtime.</small></div></div>
+    <div class="authHello"><span>🏡</span><div><b>Selamat datang</b><small>Masuk untuk menggunakan Dapur Ibu bersama keluarga secara realtime.</small></div></div>
     <label>Email</label>
     <input id="loginEmail" type="email" autocomplete="email" placeholder="nama@email.com">
     <label>Password</label>
     <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Masukkan password">
-    <button id="loginBtn" type="button" onclick="loginDapurIbu()" aria-label="Masuk ke Dapur Ibu">Masuk ke Dapur Ibu</button>
+    <button id="loginBtn" type="button" onclick="loginDapurIbu()">Masuk ke Dapur Ibu</button>
     <div id="loginMsg" class="loginMsg"></div>
     <div class="authFoot">Setiap anggota keluarga menggunakan akun masing-masing.</div>
   </div>
 </div>
 
-<button id="accountPill" class="accountPill" style="display:none" type="button" onclick="toggleAccountMenu()">
-  <span class="accountDot"></span>
-  <span id="accountName">Online</span>
+<button id="accountPill" class="accountPill" type="button" style="display:none" onclick="toggleAccountMenu()">
+  <span id="accountDot" class="accountDot"></span>
+  <span id="accountStatus">Menghubungkan</span>
 </button>
 
 <div id="accountMenu" class="accountMenu">
   <div class="accountMenuTitle">Akun Dapur Ibu</div>
   <div id="accountEmail" class="accountEmail"></div>
-  <div class="syncLine"><span class="syncDot"></span><span id="syncText">Tersambung</span></div>
-<div id="syncDetail" class="syncDetail">Sinkronisasi aman aktif</div>
-<button class="retrySyncBtn" type="button" onclick="const s=JSON.parse(JSON.stringify(localState()));s._syncRevision=makeRevision();pendingCloudState=s;markDirty(s);pushCloudState()">Sinkronkan sekarang</button>
+  <div class="syncBox">
+    <span id="menuSyncDot" class="syncDot"></span>
+    <div><b id="menuSyncText">Menghubungkan</b><small id="menuSyncDetail">Supabase belum diperiksa</small></div>
+  </div>
+  <button class="manualSyncBtn" type="button" onclick="manualSync()">Sinkronkan sekarang</button>
   <button class="logoutBtn" type="button" onclick="logoutDapurIbu()">Keluar / Logout</button>
 </div>
-
-<div id="syncBadge" class="syncBadge" style="display:none"><span id="syncDot"></span><span id="syncBadgeText">Menghubungkan</span></div>
 
 <div class="app">
 <header>
 <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
 <path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M9 20v-6h6v6" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
-</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">REALTIME SAFE FIXED</span></p></div></div>
+</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">REALTIME CLEAN</span></p></div></div>
 
 </header>
 <main>
@@ -608,20 +576,21 @@ let recipes=get('di_recipes_v20',get('di_recipes_v19',[]));
 let reqs=get('di_reqs_v20',get('di_reqs_v19',[]));
 let currentDate=new Date(),editIndex=-1,reqFilter='all',approveIndex=-1;
 
-
 const SUPABASE_URL='https://uduxugyvvqmxbzznqdmu.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_9kz1C-zW9Eefsfj1ZsZn5Q_djk9TdPs';
 
-let sbClient=null;
 let currentSbUser=null;
 let syncPollTimer=null;
-let syncSaveTimer=null;
-let syncWriting=false;
-let syncQueued=false;
+let saveTimer=null;
+let saveRunning=false;
+let saveAgain=false;
 let applyingRemote=false;
 let lastCloudUpdatedAt='';
+let lastSyncError='';
 
-function localState(){ return {meals,shop,stock,history,recipes,reqs}; }
+function localState(){
+  return {meals,shop,stock,history,recipes,reqs};
+}
 
 function writeLocalState(){
   localStorage.setItem('di_meals_v20',JSON.stringify(meals));
@@ -632,32 +601,96 @@ function writeLocalState(){
   localStorage.setItem('di_reqs_v20',JSON.stringify(reqs));
 }
 
-function setSyncStatus(text,type='busy'){
-  const badge=document.getElementById('syncBadge');
-  const dot=document.getElementById('syncDot');
-  const txt=document.getElementById('syncBadgeText');
-  if(currentSbUser)badge.style.display='flex';
-  txt.textContent=text;
-  dot.style.background=type==='ok'?'#36b878':type==='err'?'#df5968':'#f0a23a';
-  const at=document.getElementById('syncText'); if(at)at.textContent=text;
-  const ad=document.querySelector('.accountDot'); if(ad)ad.style.background=type==='ok'?'#36b878':type==='err'?'#df5968':'#f0a23a';
-  const sd=document.getElementById('syncDetail');
-  if(sd)sd.textContent=type==='err'?'Data aman di HP • sinkron akan dicoba lagi':'Sinkronisasi aman aktif';
+function setUnsynced(state){
+  localStorage.setItem('di_cloud_pending','1');
+  localStorage.setItem('di_cloud_pending_state',JSON.stringify(state));
 }
 
-async function ensureSupabase(){
-  if(sbClient)return sbClient;
-  await Promise.race([
-    window.__supabaseReady,
-    new Promise((_,rej)=>setTimeout(()=>rej(new Error('Supabase library timeout')),15000))
-  ]);
-  sbClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{
-    auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}
+function getUnsynced(){
+  try{
+    if(localStorage.getItem('di_cloud_pending')!=='1')return null;
+    return JSON.parse(localStorage.getItem('di_cloud_pending_state')||'null');
+  }catch(e){return null}
+}
+
+function clearUnsynced(){
+  localStorage.removeItem('di_cloud_pending');
+  localStorage.removeItem('di_cloud_pending_state');
+}
+
+function getSavedSession(){
+  try{return JSON.parse(localStorage.getItem('di_supabase_session')||'null')}catch(e){return null}
+}
+function saveSession(s){localStorage.setItem('di_supabase_session',JSON.stringify(s))}
+function clearSession(){localStorage.removeItem('di_supabase_session')}
+
+async function authRequest(path,body){
+  const res=await fetch(SUPABASE_URL+'/auth/v1/'+path,{
+    method:'POST',
+    cache:'no-store',
+    headers:{'apikey':SUPABASE_PUBLISHABLE_KEY,'Content-Type':'application/json'},
+    body:JSON.stringify(body||{})
   });
-  return sbClient;
+  const text=await res.text();
+  let data=null;try{data=text?JSON.parse(text):null}catch(e){data=text}
+  if(!res.ok)throw new Error((data&&((data.msg)||(data.message)||(data.error_description)))||text||('HTTP '+res.status));
+  return data;
 }
 
-function applyCloudState(s){
+async function refreshSession(){
+  const old=getSavedSession();
+  if(!old?.refresh_token)throw new Error('Sesi login tidak ditemukan');
+  const data=await authRequest('token?grant_type=refresh_token',{refresh_token:old.refresh_token});
+  const s={access_token:data.access_token,refresh_token:data.refresh_token,user:data.user,expires_at:Date.now()+Number(data.expires_in||3600)*1000};
+  saveSession(s);currentSbUser=s.user||null;return s;
+}
+
+async function activeSession(){
+  let s=getSavedSession();
+  if(!s?.access_token)throw new Error('Sesi login tidak ditemukan');
+  if(!s.expires_at || Date.now() > s.expires_at-60000)s=await refreshSession();
+  currentSbUser=s.user||null;
+  return s;
+}
+
+async function rpc(name,args){
+  let s=await activeSession();
+  let res=await fetch(SUPABASE_URL+'/rest/v1/rpc/'+name,{
+    method:'POST',
+    cache:'no-store',
+    headers:{'apikey':SUPABASE_PUBLISHABLE_KEY,'Authorization':'Bearer '+s.access_token,'Content-Type':'application/json'},
+    body:JSON.stringify(args||{})
+  });
+  if(res.status===401){
+    s=await refreshSession();
+    res=await fetch(SUPABASE_URL+'/rest/v1/rpc/'+name,{
+      method:'POST',
+      cache:'no-store',
+      headers:{'apikey':SUPABASE_PUBLISHABLE_KEY,'Authorization':'Bearer '+s.access_token,'Content-Type':'application/json'},
+      body:JSON.stringify(args||{})
+    });
+  }
+  const text=await res.text();
+  let data=null;try{data=text?JSON.parse(text):null}catch(e){data=text}
+  if(!res.ok)throw new Error((data&&data.message)||text||('RPC '+res.status));
+  return data;
+}
+
+function syncStatus(text,type='busy',detail=''){
+  const pill=document.getElementById('accountPill');
+  const dot=document.getElementById('accountDot');
+  const status=document.getElementById('accountStatus');
+  const mdot=document.getElementById('menuSyncDot');
+  const mtext=document.getElementById('menuSyncText');
+  const mdetail=document.getElementById('menuSyncDetail');
+  if(currentSbUser&&pill)pill.style.display='flex';
+  const color=type==='ok'?'#38b879':type==='err'?'#df5968':'#f0a23a';
+  if(dot)dot.style.background=color;if(mdot)mdot.style.background=color;
+  if(status)status.textContent=text;if(mtext)mtext.textContent=text;
+  if(mdetail)mdetail.textContent=detail||(type==='ok'?'Data keluarga tersambung ke Supabase':lastSyncError||'Sedang mencoba koneksi');
+}
+
+function applyRemote(s){
   if(!s)return;
   applyingRemote=true;
   meals=Array.isArray(s.meals)?s.meals:[];
@@ -671,171 +704,98 @@ function applyCloudState(s){
   applyingRemote=false;
 }
 
-let pendingCloudState=null;
-let syncRevisionCounter=0;
-
-let syncFailCount=0;
-
-function makeRevision(){
-  syncRevisionCounter++;
-  return Date.now()+'-'+syncRevisionCounter+'-'+Math.random().toString(36).slice(2,8);
-}
-
-function markDirty(state){
-  localStorage.setItem('di_unsynced_state',JSON.stringify(state));
-  localStorage.setItem('di_unsynced','1');
-}
-
-function clearDirty(){
-  localStorage.removeItem('di_unsynced_state');
-  localStorage.setItem('di_unsynced','0');
-}
-
-function readDirty(){
-  try{
-    if(localStorage.getItem('di_unsynced')!=='1')return null;
-    return JSON.parse(localStorage.getItem('di_unsynced_state')||'null');
-  }catch(e){return null}
-}
-
-async function getActiveSession(){
-  await ensureSupabase();
-  const {data,error}=await sbClient.auth.getSession();
-  if(error)throw error;
-  if(!data?.session?.user)throw new Error('SESSION_NOT_FOUND');
-  currentSbUser=data.session.user;
-  return data.session;
-}
-
-async function rpcFetch(functionName,args={}){
-  const session=await getActiveSession();
-  const res=await fetch(SUPABASE_URL+'/rest/v1/rpc/'+functionName,{
-    method:'POST',
-    cache:'no-store',
-    headers:{
-      'apikey':SUPABASE_PUBLISHABLE_KEY,
-      'Authorization':'Bearer '+session.access_token,
-      'Content-Type':'application/json'
-    },
-    body:JSON.stringify(args)
-  });
-  const text=await res.text();
-  if(!res.ok)throw new Error('RPC '+res.status+' '+text);
-  return text?JSON.parse(text):null;
-}
-
 function save(){
+  // Always persist on this device first.
   writeLocalState();
   if(applyingRemote)return;
 
   const state=JSON.parse(JSON.stringify(localState()));
-  state._syncRevision=makeRevision();
-  pendingCloudState=state;
-  markDirty(state);
+  state._deviceRevision=Date.now()+'-'+Math.random().toString(36).slice(2,8);
+  setUnsynced(state);
 
-  clearTimeout(syncSaveTimer);
-  setSyncStatus('Menyimpan...','busy');
-  syncSaveTimer=setTimeout(()=>pushCloudState(),100);
+  clearTimeout(saveTimer);
+  syncStatus('Menyimpan...','busy','Menyimpan perubahan ke Supabase');
+  saveTimer=setTimeout(pushPending,120);
 }
 
-async function pushCloudState(){
-  if(syncWriting){syncQueued=true;return;}
-  const dirty=readDirty();
-  const state=dirty||pendingCloudState;
-  if(!state)return;
+async function pushPending(){
+  if(saveRunning){saveAgain=true;return}
+  const state=getUnsynced();
+  if(!state||!currentSbUser)return;
 
-  syncWriting=true;
-  syncQueued=false;
+  saveRunning=true;
+  saveAgain=false;
 
   try{
-    const revision=state._syncRevision||makeRevision();
-    state._syncRevision=revision;
+    const revision=state._deviceRevision;
+    let verified=false;
+    let err=null;
 
-    let saved=false;
-    let lastErr=null;
-
-    for(let attempt=1;attempt<=3&&!saved;attempt++){
+    for(let i=0;i<3&&!verified;i++){
       try{
-        await rpcFetch('set_dapur_state',{new_data:state});
-
-        const check=await rpcFetch('get_dapur_state',{});
-        const row=Array.isArray(check)?check[0]:check;
-        if(!row)throw new Error('CLOUD_EMPTY');
-
-        const cloudRevision=row?.data?._syncRevision||'';
-        if(cloudRevision!==revision)throw new Error('VERIFY_REVISION_MISMATCH');
-
-        lastCloudUpdatedAt=row.updated_at||new Date().toISOString();
-        saved=true;
-        pendingCloudState=null;
-        clearDirty();
-        syncFailCount=0;
-        setSyncStatus('Tersimpan online','ok');
+        await rpc('set_dapur_state',{new_data:state});
+        const got=await rpc('get_dapur_state',{});
+        const row=Array.isArray(got)?got[0]:got;
+        if(!row)throw new Error('Supabase tidak mengembalikan data');
+        if((row.data?._deviceRevision||'')!==revision)throw new Error('Verifikasi penyimpanan belum cocok');
+        lastCloudUpdatedAt=row.updated_at||'';
+        clearUnsynced();
+        lastSyncError='';
+        verified=true;
+        syncStatus('Tersimpan online','ok');
       }catch(e){
-        lastErr=e;
-        console.error('SAVE attempt '+attempt,e);
-        if(attempt<3)await new Promise(r=>setTimeout(r,700));
+        err=e;
+        if(i<2)await new Promise(r=>setTimeout(r,700));
       }
     }
-
-    if(!saved)throw lastErr||new Error('SAVE_FAILED');
+    if(!verified)throw err||new Error('Gagal menyimpan');
   }catch(e){
-    console.error('SAVE CLOUD FINAL',e);
-    setSyncStatus('Belum tersimpan online','err');
-    toast('Data tetap tersimpan di HP. Sinkronisasi akan dicoba lagi.');
+    lastSyncError=e.message||String(e);
+    syncStatus('Belum tersinkron','err','Data tetap aman di HP • '+lastSyncError);
   }finally{
-    syncWriting=false;
-    if(syncQueued||readDirty()){
-      syncQueued=false;
-      setTimeout(()=>pushCloudState(),800);
+    saveRunning=false;
+    if(saveAgain||getUnsynced()){
+      saveAgain=false;
+      setTimeout(pushPending,1000);
     }
   }
 }
 
-async function pullCloudState(force=false){
-  if(syncWriting||readDirty())return;
-  if(!currentSbUser)return;
-
+async function pullCloud(force=false){
+  // Never overwrite a local change that still has not been saved online.
+  if(saveRunning||getUnsynced()||!currentSbUser)return;
   try{
-    const data=await rpcFetch('get_dapur_state',{});
-    const row=Array.isArray(data)?data[0]:data;
+    const got=await rpc('get_dapur_state',{});
+    const row=Array.isArray(got)?got[0]:got;
     if(!row)return;
-
-    if(force||(row.updated_at&&row.updated_at!==lastCloudUpdatedAt)){
+    if(force || (row.updated_at&&row.updated_at!==lastCloudUpdatedAt)){
       lastCloudUpdatedAt=row.updated_at||'';
-      applyCloudState(row.data||{});
+      applyRemote(row.data||{});
     }
-    syncFailCount=0;
-    setSyncStatus('Tersinkron','ok');
+    lastSyncError='';
+    syncStatus('Tersinkron','ok');
   }catch(e){
-    syncFailCount++;
-    console.error('PULL CLOUD',e);
-    if(syncFailCount>=3)setSyncStatus('Koneksi terputus','err');
-    else setSyncStatus('Menyambungkan ulang...','busy');
+    lastSyncError=e.message||String(e);
+    syncStatus('Koneksi terputus','err',lastSyncError);
   }
 }
 
-async function recoverUnsyncedThenPull(){
-  const dirty=readDirty();
-  if(dirty){
-    pendingCloudState=dirty;
-    setSyncStatus('Memulihkan data...','busy');
-    await pushCloudState();
-    if(readDirty())return; // never overwrite unsynced local data
+async function recoverThenSync(){
+  if(getUnsynced()){
+    syncStatus('Memulihkan data...','busy','Ada perubahan di HP yang belum tersimpan online');
+    await pushPending();
+    if(getUnsynced())return;
   }
-  await pullCloudState(true);
+  await pullCloud(true);
 }
 
 function startSync(){
   if(syncPollTimer)clearInterval(syncPollTimer);
-  recoverUnsyncedThenPull();
+  recoverThenSync();
   syncPollTimer=setInterval(async()=>{
     if(document.hidden||!currentSbUser)return;
-    if(readDirty()){
-      await pushCloudState();
-    }else{
-      await pullCloudState(false);
-    }
+    if(getUnsynced())await pushPending();
+    else await pullCloud(false);
   },2000);
 }
 
@@ -845,78 +805,78 @@ async function loginDapurIbu(){
   const btn=document.getElementById('loginBtn');
   const msg=document.getElementById('loginMsg');
   msg.textContent='';
-  if(!email||!password){msg.textContent='Masukkan email dan password.';return;}
-  btn.disabled=true; btn.textContent='Sedang masuk...';
+  if(!email||!password){msg.textContent='Masukkan email dan password.';return}
+  if(!navigator.onLine){msg.textContent='Tidak ada koneksi internet.';return}
 
+  btn.disabled=true;btn.textContent='Sedang masuk...';
   try{
-    await ensureSupabase();
-    const {data,error}=await sbClient.auth.signInWithPassword({email,password});
-    if(error)throw error;
-    currentSbUser=data.user;
+    const data=await Promise.race([
+      authRequest('token?grant_type=password',{email,password}),
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error('Waktu koneksi habis')),15000))
+    ]);
+    const s={access_token:data.access_token,refresh_token:data.refresh_token,user:data.user,expires_at:Date.now()+Number(data.expires_in||3600)*1000};
+    saveSession(s);currentSbUser=s.user||null;
+
     document.getElementById('authGate').classList.add('hidden');
-    const pill=document.getElementById('accountPill'); if(pill)pill.style.display='flex';
-    const ae=document.getElementById('accountEmail'); if(ae)ae.textContent=currentSbUser?.email||'';
-    setSyncStatus('Menghubungkan...','busy');
-    await recoverUnsyncedThenPull();
+    document.getElementById('accountEmail').textContent=currentSbUser?.email||email;
+    syncStatus('Menghubungkan...','busy');
     startSync();
   }catch(e){
-    console.error('LOGIN',e);
-    msg.textContent=String(e.message||'Login gagal').toLowerCase().includes('invalid login')
+    msg.textContent=(e.message||'Login gagal').toLowerCase().includes('invalid')
       ? 'Email atau password salah.'
-      : 'Login gagal. Coba lagi.';
+      : 'Login gagal: '+(e.message||'coba lagi.');
   }finally{
     btn.disabled=false;btn.textContent='Masuk ke Dapur Ibu';
   }
 }
 
-
 function toggleAccountMenu(){
-  const m=document.getElementById('accountMenu');
-  if(m)m.classList.toggle('show');
+  document.getElementById('accountMenu').classList.toggle('show');
+}
+
+async function manualSync(){
+  if(getUnsynced())await pushPending();
+  else await pullCloud(true);
 }
 
 async function logoutDapurIbu(){
   try{
     if(syncPollTimer)clearInterval(syncPollTimer);
     syncPollTimer=null;
-    if(sbClient)await sbClient.auth.signOut();
-  }catch(e){
-    console.warn('Logout:',e);
+    const s=getSavedSession();
+    if(s?.access_token){
+      fetch(SUPABASE_URL+'/auth/v1/logout',{method:'POST',headers:{'apikey':SUPABASE_PUBLISHABLE_KEY,'Authorization':'Bearer '+s.access_token}}).catch(()=>{});
+    }
+  }finally{
+    clearSession();currentSbUser=null;lastCloudUpdatedAt='';
+    document.getElementById('accountMenu').classList.remove('show');
+    document.getElementById('accountPill').style.display='none';
+    document.getElementById('authGate').classList.remove('hidden');
+    document.getElementById('loginPassword').value='';
+    document.getElementById('loginMsg').textContent='Anda sudah keluar.';
   }
-  currentSbUser=null;
-  lastCloudUpdatedAt='';
-  pendingCloudState=null;
-
-  const m=document.getElementById('accountMenu'); if(m)m.classList.remove('show');
-  const p=document.getElementById('accountPill'); if(p)p.style.display='none';
-  const b=document.getElementById('syncBadge'); if(b)b.style.display='none';
-  const g=document.getElementById('authGate'); if(g)g.classList.remove('hidden');
-  const pw=document.getElementById('loginPassword'); if(pw)pw.value='';
-  const msg=document.getElementById('loginMsg'); if(msg)msg.textContent='Anda sudah keluar dari Dapur Ibu.';
 }
 
 async function initRealtime(){
+  const btn=document.getElementById('loginBtn');
+  if(btn){btn.disabled=false;btn.textContent='Masuk ke Dapur Ibu';}
   try{
-    await ensureSupabase();
-    const {data:{session}}=await sbClient.auth.getSession();
-    currentSbUser=session?.user||null;
+    let s=getSavedSession();
+    if(!s?.access_token)return;
+    if(!s.expires_at || Date.now()>s.expires_at-60000)s=await refreshSession();
+    currentSbUser=s.user||null;
     if(currentSbUser){
       document.getElementById('authGate').classList.add('hidden');
-      const pill=document.getElementById('accountPill'); if(pill)pill.style.display='flex';
-      const ae=document.getElementById('accountEmail'); if(ae)ae.textContent=currentSbUser?.email||'';
-      setSyncStatus('Menghubungkan...','busy');
+      document.getElementById('accountEmail').textContent=currentSbUser?.email||'';
+      syncStatus('Menghubungkan...','busy');
       startSync();
     }
   }catch(e){
-    document.getElementById('loginMsg').textContent='Koneksi Supabase gagal dimuat.';
+    clearSession();currentSbUser=null;
   }
 }
 
-document.addEventListener('DOMContentLoaded',()=>{
-  const b=document.getElementById('loginBtn');
-  if(b){b.disabled=false;b.textContent='Masuk ke Dapur Ibu';}
-  initRealtime();
-});
+document.addEventListener('DOMContentLoaded',initRealtime);
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function rp(n){return 'Rp '+Number(n||0).toLocaleString('id-ID')}
 function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1400)}
