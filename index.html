@@ -383,21 +383,17 @@ nav button{
 <meta name="theme-color" content="#2f80ed">
 
 
-<style id="REALTIME-CLEAN-REBUILD">
-.authGate{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 14% 12%,#dbeeff 0 70px,transparent 71px),radial-gradient(circle at 92% 10%,#e3f2ff 0 92px,transparent 93px),linear-gradient(180deg,#f9fcff,#eaf5ff)}
-.authGate.hidden{display:none}
-.authCard{width:min(100%,410px);background:#fff;border:1px solid #dce9f4;border-radius:30px;padding:26px 23px 22px;box-shadow:0 24px 65px rgba(40,86,130,.16)}
-.authChef{width:82px;height:82px;border-radius:27px;margin:0 auto 9px;background:linear-gradient(145deg,#e8f5ff,#fff);display:grid;place-items:center;box-shadow:0 12px 28px rgba(47,128,237,.13)}
-.authChef svg{width:58px}.authCard h1{text-align:center;margin:0;color:#17385f;font-size:30px;letter-spacing:-.7px}.authCard>p{text-align:center;color:#74899e;font-size:13px;margin:7px 0 18px}
-.authHello{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:center;padding:12px 13px;border-radius:17px;background:#eef7ff;margin-bottom:18px}
-.authHello>span{width:42px;height:42px;border-radius:13px;background:#fff;display:grid;place-items:center;font-size:20px}.authHello b{display:block;font-size:15px}.authHello small{display:block;color:#7890a7;font-size:11.5px;margin-top:3px;line-height:1.4}
+<style id="TABLE-REALTIME">
+.authGate{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:22px;background:linear-gradient(180deg,#f9fcff,#eaf5ff)}
+.authGate.hidden{display:none}.authCard{width:min(100%,410px);background:#fff;border:1px solid #dce9f4;border-radius:30px;padding:26px 23px 22px;box-shadow:0 24px 65px rgba(40,86,130,.16)}
+.authChef{width:82px;height:82px;border-radius:27px;margin:0 auto 9px;background:linear-gradient(145deg,#e8f5ff,#fff);display:grid;place-items:center;font-size:42px}
+.authCard h1{text-align:center;margin:0;color:#17385f;font-size:30px}.authCard>p{text-align:center;color:#74899e;font-size:13px;margin:7px 0 18px}
+.authHello{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:center;padding:12px 13px;border-radius:17px;background:#eef7ff;margin-bottom:18px}.authHello>span{width:42px;height:42px;border-radius:13px;background:#fff;display:grid;place-items:center;font-size:20px}
+.authHello b{display:block;font-size:15px}.authHello small{display:block;color:#7890a7;font-size:11.5px;margin-top:3px;line-height:1.4}
 .authCard label{display:block;margin:12px 2px 6px;color:#244b75;font-size:12.5px;font-weight:800}.authCard input{width:100%;box-sizing:border-box;min-height:48px;border:1px solid #dfeaf3;border-radius:14px;padding:12px 13px;font-size:15px;outline:none}
-.authCard input:focus{border-color:#80b8f2;box-shadow:0 0 0 3px #e9f4ff}
-#loginBtn{width:100%;min-height:50px;margin-top:18px;border:0;border-radius:16px;background:linear-gradient(145deg,#4390ef,#2478df);color:#fff;font-size:15px;font-weight:800;box-shadow:0 10px 22px rgba(47,128,237,.24)}
-#loginBtn:disabled{opacity:.6}.loginMsg{min-height:18px;text-align:center;color:#d55263;font-size:11.5px;margin-top:9px}.authFoot{text-align:center;color:#90a1b0;font-size:10.5px;margin-top:8px}
+#loginBtn{width:100%;min-height:50px;margin-top:18px;border:0;border-radius:16px;background:linear-gradient(145deg,#4390ef,#2478df);color:#fff;font-size:15px;font-weight:800}.loginMsg{min-height:18px;text-align:center;color:#d55263;font-size:11.5px;margin-top:9px}
 .accountPill{position:fixed;right:13px;top:10px;z-index:520;border:0;border-radius:999px;padding:8px 11px;background:rgba(255,255,255,.96);color:#28517d;box-shadow:0 6px 18px rgba(29,66,101,.13);font-size:10px;font-weight:800;align-items:center;gap:6px}
-.accountDot,.syncDot{width:8px;height:8px;border-radius:50%;background:#f0a23a;flex:0 0 auto}
-.accountMenu{position:fixed;right:13px;top:52px;z-index:521;width:240px;padding:14px;border-radius:18px;background:#fff;box-shadow:0 15px 38px rgba(30,65,98,.18);display:none}
+.accountDot,.syncDot{width:8px;height:8px;border-radius:50%;background:#f0a23a;flex:0 0 auto}.accountMenu{position:fixed;right:13px;top:52px;z-index:521;width:245px;padding:14px;border-radius:18px;background:#fff;box-shadow:0 15px 38px rgba(30,65,98,.18);display:none}
 .accountMenu.show{display:block}.accountMenuTitle{font-size:13px;font-weight:850;color:#183b67}.accountEmail{font-size:10.5px;color:#7a8ea3;margin:4px 0 11px;word-break:break-all}
 .syncBox{display:flex;align-items:flex-start;gap:9px;padding:10px;border-radius:12px;background:#f3f8fc;color:#365d80}.syncBox .syncDot{margin-top:4px}.syncBox b{display:block;font-size:10.5px}.syncBox small{display:block;margin-top:2px;font-size:9px;color:#7a91a6;line-height:1.35}
 .manualSyncBtn,.logoutBtn{width:100%;margin-top:9px;padding:10px;border:0;border-radius:12px;font-weight:800;font-size:10.5px}.manualSyncBtn{background:#edf6ff;color:#2a73bd}.logoutBtn{background:#fff0f2;color:#d05263}
@@ -408,23 +404,16 @@ nav button{
 
 <div id="authGate" class="authGate">
   <div class="authCard">
-    <div class="authChef">
-      <svg viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M20 29c-7 0-11-5-11-11 0-6 5-11 11-11 2 0 4 .5 5.5 1.5C28 4.5 32 2 37 2c7 0 13 5 14 12 6 .6 10.5 5.4 10.5 11.2C61.5 31.7 56 37 49 37H20c-7 0-12-3-12-8Z" fill="#fff" stroke="#2f80ed" stroke-width="2.4"/>
-        <path d="M18 34h30v20c0 4-3 7-7 7H25c-4 0-7-3-7-7V34Z" fill="#fff" stroke="#2f80ed" stroke-width="2.4"/>
-        <path d="M23 45h20M23 52h20" stroke="#b7d7fb" stroke-width="2.2" stroke-linecap="round"/>
-      </svg>
-    </div>
+    <div class="authChef">👩‍🍳</div>
     <h1>Dapur Ibu</h1>
     <p>Masak lebih mudah, keluarga selalu terhubung 💙</p>
-    <div class="authHello"><span>🏡</span><div><b>Selamat datang</b><small>Masuk untuk menggunakan Dapur Ibu bersama keluarga secara realtime.</small></div></div>
+    <div class="authHello"><span>🏡</span><div><b>Selamat datang</b><small>Masuk untuk menggunakan data keluarga yang sama di semua perangkat.</small></div></div>
     <label>Email</label>
     <input id="loginEmail" type="email" autocomplete="email" placeholder="nama@email.com">
     <label>Password</label>
     <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Masukkan password">
     <button id="loginBtn" type="button" onclick="loginDapurIbu()">Masuk ke Dapur Ibu</button>
     <div id="loginMsg" class="loginMsg"></div>
-    <div class="authFoot">Setiap anggota keluarga menggunakan akun masing-masing.</div>
   </div>
 </div>
 
@@ -438,7 +427,7 @@ nav button{
   <div id="accountEmail" class="accountEmail"></div>
   <div class="syncBox">
     <span id="menuSyncDot" class="syncDot"></span>
-    <div><b id="menuSyncText">Menghubungkan</b><small id="menuSyncDetail">Supabase belum diperiksa</small></div>
+    <div><b id="menuSyncText">Menghubungkan</b><small id="menuSyncDetail">Menyiapkan database</small></div>
   </div>
   <button class="manualSyncBtn" type="button" onclick="manualSync()">Sinkronkan sekarang</button>
   <button class="logoutBtn" type="button" onclick="logoutDapurIbu()">Keluar / Logout</button>
@@ -449,7 +438,7 @@ nav button{
 <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
 <path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M9 20v-6h6v6" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
-</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">REALTIME CLEAN</span></p></div></div>
+</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">TABLE REALTIME</span></p></div></div>
 
 </header>
 <main>
@@ -579,303 +568,99 @@ let currentDate=new Date(),editIndex=-1,reqFilter='all',approveIndex=-1;
 const SUPABASE_URL='https://uduxugyvvqmxbzznqdmu.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_9kz1C-zW9Eefsfj1ZsZn5Q_djk9TdPs';
 
-let currentSbUser=null;
-let syncPollTimer=null;
-let saveTimer=null;
-let saveRunning=false;
-let saveAgain=false;
-let applyingRemote=false;
-let lastCloudUpdatedAt='';
-let lastSyncError='';
+let currentSbUser=null,syncTimer=null,syncBusy=false,syncAgain=false,changeVersion=0,baseline=null,applyingRemote=false,lastSyncError='';
 
-function localState(){
-  return {meals,shop,stock,history,recipes,reqs};
+function uuid(){if(crypto&&crypto.randomUUID)return crypto.randomUUID();return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0,v=c==='x'?r:(r&3|8);return v.toString(16)})}
+function isUuid(v){return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v||'')}
+function clone(v){return JSON.parse(JSON.stringify(v))}
+function ensureIds(){
+  meals.forEach(x=>{if(!isUuid(x.id))x.id=uuid();if(!x.date)x.date=iso(currentDate)});
+  shop.forEach(x=>{if(!isUuid(x.id))x.id=uuid()});
+  stock.forEach(x=>{if(!isUuid(x.id))x.id=uuid()});
+  reqs.forEach(x=>{if(!isUuid(x.id))x.id=uuid()});
+  recipes.forEach(x=>{if(!isUuid(x.id))x.id=uuid()});
+  history.forEach(h=>{if(!isUuid(h.transaction_id))h.transaction_id=uuid();(h.items||[]).forEach(x=>{if(!isUuid(x.id))x.id=uuid()})});
 }
+function writeLocalState(){ensureIds();localStorage.setItem('di_meals_v20',JSON.stringify(meals));localStorage.setItem('di_shop_v20',JSON.stringify(shop));localStorage.setItem('di_stock_v20',JSON.stringify(stock));localStorage.setItem('di_hist_v20',JSON.stringify(history));localStorage.setItem('di_recipes_v20',JSON.stringify(recipes));localStorage.setItem('di_reqs_v20',JSON.stringify(reqs))}
+function localState(){ensureIds();return {meals,shop,stock,history,recipes,reqs}}
 
-function writeLocalState(){
-  localStorage.setItem('di_meals_v20',JSON.stringify(meals));
-  localStorage.setItem('di_shop_v20',JSON.stringify(shop));
-  localStorage.setItem('di_stock_v20',JSON.stringify(stock));
-  localStorage.setItem('di_hist_v20',JSON.stringify(history));
-  localStorage.setItem('di_recipes_v20',JSON.stringify(recipes));
-  localStorage.setItem('di_reqs_v20',JSON.stringify(reqs));
-}
-
-function setUnsynced(state){
-  localStorage.setItem('di_cloud_pending','1');
-  localStorage.setItem('di_cloud_pending_state',JSON.stringify(state));
-}
-
-function getUnsynced(){
-  try{
-    if(localStorage.getItem('di_cloud_pending')!=='1')return null;
-    return JSON.parse(localStorage.getItem('di_cloud_pending_state')||'null');
-  }catch(e){return null}
-}
-
-function clearUnsynced(){
-  localStorage.removeItem('di_cloud_pending');
-  localStorage.removeItem('di_cloud_pending_state');
-}
-
-function getSavedSession(){
-  try{return JSON.parse(localStorage.getItem('di_supabase_session')||'null')}catch(e){return null}
-}
+function getSavedSession(){try{return JSON.parse(localStorage.getItem('di_supabase_session')||'null')}catch(e){return null}}
 function saveSession(s){localStorage.setItem('di_supabase_session',JSON.stringify(s))}
 function clearSession(){localStorage.removeItem('di_supabase_session')}
-
 async function authRequest(path,body){
-  const res=await fetch(SUPABASE_URL+'/auth/v1/'+path,{
-    method:'POST',
-    cache:'no-store',
-    headers:{'apikey':SUPABASE_PUBLISHABLE_KEY,'Content-Type':'application/json'},
-    body:JSON.stringify(body||{})
-  });
-  const text=await res.text();
-  let data=null;try{data=text?JSON.parse(text):null}catch(e){data=text}
-  if(!res.ok)throw new Error((data&&((data.msg)||(data.message)||(data.error_description)))||text||('HTTP '+res.status));
-  return data;
+  const res=await fetch(SUPABASE_URL+'/auth/v1/'+path,{method:'POST',cache:'no-store',headers:{apikey:SUPABASE_PUBLISHABLE_KEY,'Content-Type':'application/json'},body:JSON.stringify(body||{})});
+  const text=await res.text();let data=null;try{data=text?JSON.parse(text):null}catch(e){data=text}
+  if(!res.ok)throw new Error((data&&((data.msg)||(data.message)||(data.error_description)))||text||('HTTP '+res.status));return data
 }
-
-async function refreshSession(){
-  const old=getSavedSession();
-  if(!old?.refresh_token)throw new Error('Sesi login tidak ditemukan');
-  const data=await authRequest('token?grant_type=refresh_token',{refresh_token:old.refresh_token});
-  const s={access_token:data.access_token,refresh_token:data.refresh_token,user:data.user,expires_at:Date.now()+Number(data.expires_in||3600)*1000};
-  saveSession(s);currentSbUser=s.user||null;return s;
-}
-
-async function activeSession(){
-  let s=getSavedSession();
-  if(!s?.access_token)throw new Error('Sesi login tidak ditemukan');
-  if(!s.expires_at || Date.now() > s.expires_at-60000)s=await refreshSession();
-  currentSbUser=s.user||null;
-  return s;
-}
-
-async function rpc(name,args){
+async function refreshSession(){const old=getSavedSession();if(!old?.refresh_token)throw new Error('Sesi login tidak ditemukan');const data=await authRequest('token?grant_type=refresh_token',{refresh_token:old.refresh_token});const s={access_token:data.access_token,refresh_token:data.refresh_token,user:data.user,expires_at:Date.now()+Number(data.expires_in||3600)*1000};saveSession(s);currentSbUser=s.user||null;return s}
+async function activeSession(){let s=getSavedSession();if(!s?.access_token)throw new Error('Sesi login tidak ditemukan');if(!s.expires_at||Date.now()>s.expires_at-60000)s=await refreshSession();currentSbUser=s.user||null;return s}
+async function db(table,{method='GET',query='',body=null,prefer='return=representation'}={}){
   let s=await activeSession();
-  let res=await fetch(SUPABASE_URL+'/rest/v1/rpc/'+name,{
-    method:'POST',
-    cache:'no-store',
-    headers:{'apikey':SUPABASE_PUBLISHABLE_KEY,'Authorization':'Bearer '+s.access_token,'Content-Type':'application/json'},
-    body:JSON.stringify(args||{})
-  });
-  if(res.status===401){
-    s=await refreshSession();
-    res=await fetch(SUPABASE_URL+'/rest/v1/rpc/'+name,{
-      method:'POST',
-      cache:'no-store',
-      headers:{'apikey':SUPABASE_PUBLISHABLE_KEY,'Authorization':'Bearer '+s.access_token,'Content-Type':'application/json'},
-      body:JSON.stringify(args||{})
-    });
+  const request=()=>fetch(SUPABASE_URL+'/rest/v1/'+table+query,{method,cache:'no-store',headers:{apikey:SUPABASE_PUBLISHABLE_KEY,Authorization:'Bearer '+s.access_token,'Content-Type':'application/json',Prefer:prefer},body:body===null?undefined:JSON.stringify(body)});
+  let res=await request();if(res.status===401){s=await refreshSession();res=await request()}
+  const text=await res.text();let data=null;try{data=text?JSON.parse(text):null}catch(e){data=text}
+  if(!res.ok)throw new Error((data&&data.message)||text||('Database '+res.status));return data
+}
+function syncStatus(text,type='busy',detail=''){const pill=document.getElementById('accountPill'),dot=document.getElementById('accountDot'),status=document.getElementById('accountStatus'),mdot=document.getElementById('menuSyncDot'),mtext=document.getElementById('menuSyncText'),mdetail=document.getElementById('menuSyncDetail');if(currentSbUser&&pill)pill.style.display='flex';const color=type==='ok'?'#38b879':type==='err'?'#df5968':'#f0a23a';if(dot)dot.style.background=color;if(mdot)mdot.style.background=color;if(status)status.textContent=text;if(mtext)mtext.textContent=text;if(mdetail)mdetail.textContent=detail||(type==='ok'?'Data tersimpan per item di Supabase':lastSyncError||'Sedang menghubungkan')}
+
+function rowsByTable(state){
+  const now=new Date().toISOString(),h=[];
+  state.history.forEach(g=>(g.items||[]).forEach(x=>h.push({id:x.id,transaction_id:g.transaction_id,history_type:'purchase',name:x.name,qty:Number(x.qty)||0,unit:x.unit,price:Number(x.price)||0,movement:'in',created_by:currentSbUser.id,created_at:g.date||now})));
+  return {
+    meal_plan:state.meals.map(x=>({id:x.id,meal_date:x.date,slot:x.slot,type:x.type,name:x.name,created_by:currentSbUser.id,updated_at:now})),
+    shopping:state.shop.map(x=>({id:x.id,name:x.name,qty:Number(x.qty)||0,unit:x.unit,price:Number(x.price)||0,done:!!x.done,created_by:currentSbUser.id,updated_at:now})),
+    stock:state.stock.map(x=>({id:x.id,name:x.name,qty:Number(x.qty)||0,unit:x.unit,min_qty:Number(x.min)||0,created_by:currentSbUser.id,updated_at:now})),
+    recipes:state.recipes.map(x=>({id:x.id,name:x.name,ingredients:x.ingredients||'',steps:x.steps||'',photo_url:x.photo||'',created_by:currentSbUser.id,updated_at:now})),
+    requests:state.reqs.map(x=>({id:x.id,menu_name:x.menu,note:x.note||'',status:x.status||'waiting',request_date:(x.date||now).slice(0,10),requester_name:x.name||'',created_by:currentSbUser.id,updated_at:now})),
+    history:h
   }
-  const text=await res.text();
-  let data=null;try{data=text?JSON.parse(text):null}catch(e){data=text}
-  if(!res.ok)throw new Error((data&&data.message)||text||('RPC '+res.status));
-  return data;
+}
+function cmp(r){const x={...r};delete x.updated_at;delete x.created_at;delete x.created_by;return JSON.stringify(x)}
+function diffRows(oldRows,newRows){const a=new Map(oldRows.map(x=>[x.id,x])),b=new Map(newRows.map(x=>[x.id,x])),up=[],del=[];for(const [id,row] of b){const old=a.get(id);if(!old||cmp(old)!==cmp(row))up.push(row)}for(const id of a.keys())if(!b.has(id))del.push(id);return {up,del}}
+async function upsertRows(table,rows){if(!rows.length)return;await db(table,{method:'POST',query:'?on_conflict=id',body:rows,prefer:'resolution=merge-duplicates,return=minimal'})}
+async function deleteRows(table,ids){if(!ids.length)return;await db(table,{method:'DELETE',query:'?id=in.('+ids.join(',')+')',prefer:'return=minimal'})}
+
+function save(){writeLocalState();if(applyingRemote||!currentSbUser)return;changeVersion++;syncStatus('Menyimpan...','busy','Menyimpan perubahan per item');clearTimeout(syncTimer);syncTimer=setTimeout(flushChanges,120)}
+async function flushChanges(){
+  if(syncBusy){syncAgain=true;return}if(!currentSbUser||!baseline)return;
+  syncBusy=true;syncAgain=false;const ver=changeVersion,captured=clone(localState());
+  try{
+    const oldT=rowsByTable(baseline),newT=rowsByTable(captured);
+    for(const table of ['meal_plan','shopping','stock','recipes','requests','history']){const d=diffRows(oldT[table],newT[table]);await upsertRows(table,d.up);await deleteRows(table,d.del)}
+    baseline=clone(captured);lastSyncError='';syncStatus('Tersimpan online','ok');if(changeVersion!==ver)syncAgain=true
+  }catch(e){lastSyncError=e.message||String(e);syncStatus('Gagal sinkron','err',lastSyncError);toast('Belum tersimpan online')}
+  finally{syncBusy=false;if(syncAgain){syncAgain=false;setTimeout(flushChanges,200)}}
 }
 
-function syncStatus(text,type='busy',detail=''){
-  const pill=document.getElementById('accountPill');
-  const dot=document.getElementById('accountDot');
-  const status=document.getElementById('accountStatus');
-  const mdot=document.getElementById('menuSyncDot');
-  const mtext=document.getElementById('menuSyncText');
-  const mdetail=document.getElementById('menuSyncDetail');
-  if(currentSbUser&&pill)pill.style.display='flex';
-  const color=type==='ok'?'#38b879':type==='err'?'#df5968':'#f0a23a';
-  if(dot)dot.style.background=color;if(mdot)mdot.style.background=color;
-  if(status)status.textContent=text;if(mtext)mtext.textContent=text;
-  if(mdetail)mdetail.textContent=detail||(type==='ok'?'Data keluarga tersambung ke Supabase':lastSyncError||'Sedang mencoba koneksi');
-}
-
-function applyRemote(s){
-  if(!s)return;
+function groupHistory(rows){const map=new Map();rows.forEach(r=>{const k=r.transaction_id||r.id;if(!map.has(k))map.set(k,{transaction_id:k,date:r.created_at||new Date().toISOString(),items:[],total:0});const g=map.get(k),item={id:r.id,name:r.name,qty:Number(r.qty)||0,unit:r.unit,price:Number(r.price)||0};g.items.push(item);g.total+=item.price});return [...map.values()].sort((a,b)=>new Date(b.date)-new Date(a.date))}
+async function loadAllFromCloud(){
+  const [m,s,st,h,rq,rc]=await Promise.all([
+    db('meal_plan',{query:'?select=*&order=meal_date.asc'}),db('shopping',{query:'?select=*&order=created_at.asc'}),
+    db('stock',{query:'?select=*&order=name.asc'}),db('history',{query:'?select=*&order=created_at.desc'}),
+    db('requests',{query:'?select=*&order=created_at.desc'}),db('recipes',{query:'?select=*&order=created_at.desc'})
+  ]);
   applyingRemote=true;
-  meals=Array.isArray(s.meals)?s.meals:[];
-  shop=Array.isArray(s.shop)?s.shop:[];
-  stock=Array.isArray(s.stock)?s.stock:[];
-  history=Array.isArray(s.history)?s.history:[];
-  recipes=Array.isArray(s.recipes)?s.recipes:[];
-  reqs=Array.isArray(s.reqs)?s.reqs:[];
-  writeLocalState();
-  renderHome();renderSchedule();renderShop();renderStock();renderHistory();renderRecipes();renderRequests();
-  applyingRemote=false;
+  meals=(m||[]).map(x=>({id:x.id,date:x.meal_date,day:dayName(new Date(x.meal_date+'T12:00:00')),slot:x.slot,type:x.type,name:x.name}));
+  shop=(s||[]).map(x=>({id:x.id,name:x.name,qty:Number(x.qty)||0,unit:x.unit,price:Number(x.price)||0,done:!!x.done}));
+  stock=(st||[]).map(x=>({id:x.id,name:x.name,qty:Number(x.qty)||0,unit:x.unit,min:Number(x.min_qty)||0}));
+  history=groupHistory(h||[]);
+  reqs=(rq||[]).map(x=>({id:x.id,name:x.requester_name||'',menu:x.menu_name,note:x.note||'',date:x.request_date||x.created_at,status:x.status||'waiting'}));
+  recipes=(rc||[]).map(x=>({id:x.id,name:x.name,ingredients:x.ingredients||'',steps:x.steps||'',photo:x.photo_url||''}));
+  writeLocalState();renderHome();renderSchedule();renderShop();renderStock();renderHistory();renderRecipes();renderRequests();applyingRemote=false;baseline=clone(localState())
 }
-
-function save(){
-  // Always persist on this device first.
-  writeLocalState();
-  if(applyingRemote)return;
-
-  const state=JSON.parse(JSON.stringify(localState()));
-  state._deviceRevision=Date.now()+'-'+Math.random().toString(36).slice(2,8);
-  setUnsynced(state);
-
-  clearTimeout(saveTimer);
-  syncStatus('Menyimpan...','busy','Menyimpan perubahan ke Supabase');
-  saveTimer=setTimeout(pushPending,120);
-}
-
-async function pushPending(){
-  if(saveRunning){saveAgain=true;return}
-  const state=getUnsynced();
-  if(!state||!currentSbUser)return;
-
-  saveRunning=true;
-  saveAgain=false;
-
-  try{
-    const revision=state._deviceRevision;
-    let verified=false;
-    let err=null;
-
-    for(let i=0;i<3&&!verified;i++){
-      try{
-        await rpc('set_dapur_state',{new_data:state});
-        const got=await rpc('get_dapur_state',{});
-        const row=Array.isArray(got)?got[0]:got;
-        if(!row)throw new Error('Supabase tidak mengembalikan data');
-        if((row.data?._deviceRevision||'')!==revision)throw new Error('Verifikasi penyimpanan belum cocok');
-        lastCloudUpdatedAt=row.updated_at||'';
-        clearUnsynced();
-        lastSyncError='';
-        verified=true;
-        syncStatus('Tersimpan online','ok');
-      }catch(e){
-        err=e;
-        if(i<2)await new Promise(r=>setTimeout(r,700));
-      }
-    }
-    if(!verified)throw err||new Error('Gagal menyimpan');
-  }catch(e){
-    lastSyncError=e.message||String(e);
-    syncStatus('Belum tersinkron','err','Data tetap aman di HP • '+lastSyncError);
-  }finally{
-    saveRunning=false;
-    if(saveAgain||getUnsynced()){
-      saveAgain=false;
-      setTimeout(pushPending,1000);
-    }
-  }
-}
-
-async function pullCloud(force=false){
-  // Never overwrite a local change that still has not been saved online.
-  if(saveRunning||getUnsynced()||!currentSbUser)return;
-  try{
-    const got=await rpc('get_dapur_state',{});
-    const row=Array.isArray(got)?got[0]:got;
-    if(!row)return;
-    if(force || (row.updated_at&&row.updated_at!==lastCloudUpdatedAt)){
-      lastCloudUpdatedAt=row.updated_at||'';
-      applyRemote(row.data||{});
-    }
-    lastSyncError='';
-    syncStatus('Tersinkron','ok');
-  }catch(e){
-    lastSyncError=e.message||String(e);
-    syncStatus('Koneksi terputus','err',lastSyncError);
-  }
-}
-
-async function recoverThenSync(){
-  if(getUnsynced()){
-    syncStatus('Memulihkan data...','busy','Ada perubahan di HP yang belum tersimpan online');
-    await pushPending();
-    if(getUnsynced())return;
-  }
-  await pullCloud(true);
-}
-
-function startSync(){
-  if(syncPollTimer)clearInterval(syncPollTimer);
-  recoverThenSync();
-  syncPollTimer=setInterval(async()=>{
-    if(document.hidden||!currentSbUser)return;
-    if(getUnsynced())await pushPending();
-    else await pullCloud(false);
-  },2000);
-}
+async function pollCloud(){if(syncBusy||!currentSbUser)return;try{await loadAllFromCloud();syncStatus('Tersinkron','ok')}catch(e){lastSyncError=e.message||String(e);syncStatus('Koneksi terputus','err',lastSyncError)}}
+function startPolling(){if(window._diPoll)clearInterval(window._diPoll);window._diPoll=setInterval(()=>{if(!document.hidden&&!syncBusy)pollCloud()},3000)}
 
 async function loginDapurIbu(){
-  const email=document.getElementById('loginEmail').value.trim();
-  const password=document.getElementById('loginPassword').value;
-  const btn=document.getElementById('loginBtn');
-  const msg=document.getElementById('loginMsg');
-  msg.textContent='';
-  if(!email||!password){msg.textContent='Masukkan email dan password.';return}
-  if(!navigator.onLine){msg.textContent='Tidak ada koneksi internet.';return}
-
-  btn.disabled=true;btn.textContent='Sedang masuk...';
-  try{
-    const data=await Promise.race([
-      authRequest('token?grant_type=password',{email,password}),
-      new Promise((_,rej)=>setTimeout(()=>rej(new Error('Waktu koneksi habis')),15000))
-    ]);
-    const s={access_token:data.access_token,refresh_token:data.refresh_token,user:data.user,expires_at:Date.now()+Number(data.expires_in||3600)*1000};
-    saveSession(s);currentSbUser=s.user||null;
-
-    document.getElementById('authGate').classList.add('hidden');
-    document.getElementById('accountEmail').textContent=currentSbUser?.email||email;
-    syncStatus('Menghubungkan...','busy');
-    startSync();
-  }catch(e){
-    msg.textContent=(e.message||'Login gagal').toLowerCase().includes('invalid')
-      ? 'Email atau password salah.'
-      : 'Login gagal: '+(e.message||'coba lagi.');
-  }finally{
-    btn.disabled=false;btn.textContent='Masuk ke Dapur Ibu';
-  }
+  const email=document.getElementById('loginEmail').value.trim(),password=document.getElementById('loginPassword').value,btn=document.getElementById('loginBtn'),msg=document.getElementById('loginMsg');msg.textContent='';
+  if(!email||!password){msg.textContent='Masukkan email dan password.';return}btn.disabled=true;btn.textContent='Sedang masuk...';
+  try{const data=await authRequest('token?grant_type=password',{email,password});const s={access_token:data.access_token,refresh_token:data.refresh_token,user:data.user,expires_at:Date.now()+Number(data.expires_in||3600)*1000};saveSession(s);currentSbUser=s.user||null;document.getElementById('authGate').classList.add('hidden');document.getElementById('accountEmail').textContent=currentSbUser?.email||email;syncStatus('Mengambil data...','busy','Membaca tabel Supabase');await loadAllFromCloud();syncStatus('Tersinkron','ok');startPolling()}
+  catch(e){msg.textContent='Login/data gagal: '+(e.message||'coba lagi.')}finally{btn.disabled=false;btn.textContent='Masuk ke Dapur Ibu'}
 }
-
-function toggleAccountMenu(){
-  document.getElementById('accountMenu').classList.toggle('show');
-}
-
-async function manualSync(){
-  if(getUnsynced())await pushPending();
-  else await pullCloud(true);
-}
-
-async function logoutDapurIbu(){
-  try{
-    if(syncPollTimer)clearInterval(syncPollTimer);
-    syncPollTimer=null;
-    const s=getSavedSession();
-    if(s?.access_token){
-      fetch(SUPABASE_URL+'/auth/v1/logout',{method:'POST',headers:{'apikey':SUPABASE_PUBLISHABLE_KEY,'Authorization':'Bearer '+s.access_token}}).catch(()=>{});
-    }
-  }finally{
-    clearSession();currentSbUser=null;lastCloudUpdatedAt='';
-    document.getElementById('accountMenu').classList.remove('show');
-    document.getElementById('accountPill').style.display='none';
-    document.getElementById('authGate').classList.remove('hidden');
-    document.getElementById('loginPassword').value='';
-    document.getElementById('loginMsg').textContent='Anda sudah keluar.';
-  }
-}
-
-async function initRealtime(){
-  const btn=document.getElementById('loginBtn');
-  if(btn){btn.disabled=false;btn.textContent='Masuk ke Dapur Ibu';}
-  try{
-    let s=getSavedSession();
-    if(!s?.access_token)return;
-    if(!s.expires_at || Date.now()>s.expires_at-60000)s=await refreshSession();
-    currentSbUser=s.user||null;
-    if(currentSbUser){
-      document.getElementById('authGate').classList.add('hidden');
-      document.getElementById('accountEmail').textContent=currentSbUser?.email||'';
-      syncStatus('Menghubungkan...','busy');
-      startSync();
-    }
-  }catch(e){
-    clearSession();currentSbUser=null;
-  }
-}
-
+function toggleAccountMenu(){document.getElementById('accountMenu').classList.toggle('show')}
+async function manualSync(){try{if(baseline)await flushChanges();await loadAllFromCloud();syncStatus('Tersinkron','ok')}catch(e){lastSyncError=e.message||String(e);syncStatus('Gagal sinkron','err',lastSyncError)}}
+async function logoutDapurIbu(){if(window._diPoll)clearInterval(window._diPoll);clearSession();currentSbUser=null;baseline=null;document.getElementById('accountMenu').classList.remove('show');document.getElementById('accountPill').style.display='none';document.getElementById('authGate').classList.remove('hidden');document.getElementById('loginPassword').value=''}
+async function initRealtime(){try{let s=getSavedSession();if(!s?.access_token)return;if(!s.expires_at||Date.now()>s.expires_at-60000)s=await refreshSession();currentSbUser=s.user||null;document.getElementById('authGate').classList.add('hidden');document.getElementById('accountEmail').textContent=currentSbUser?.email||'';syncStatus('Mengambil data...','busy','Membaca tabel Supabase');await loadAllFromCloud();syncStatus('Tersinkron','ok');startPolling()}catch(e){clearSession();currentSbUser=null;document.getElementById('authGate').classList.remove('hidden')}}
 document.addEventListener('DOMContentLoaded',initRealtime);
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function rp(n){return 'Rp '+Number(n||0).toLocaleString('id-ID')}
@@ -891,31 +676,31 @@ function renderHome(){let n=new Date(),h=n.getHours();$('greet').textContent=h<1
 function weekStart(d){let x=new Date(d),k=(x.getDay()+6)%7;x.setDate(x.getDate()-k);x.setHours(12,0,0,0);return x}
 function shiftWeek(n){currentDate.setDate(currentDate.getDate()+n);renderSchedule()}
 function selectDay(s){currentDate=new Date(s+'T12:00:00');renderSchedule()}
-function renderSchedule(){let st=weekStart(currentDate);$('monthLabel').textContent=currentDate.toLocaleDateString('id-ID',{month:'long',year:'numeric'});$('dayStrip').innerHTML=DAYS.map((dn,i)=>{let d=new Date(st);d.setDate(st.getDate()+i);return `<button class="day ${iso(d)===iso(currentDate)?'active':''}" onclick="selectDay('${iso(d)}')"><b>${dn.slice(0,3)}</b><span>${d.getDate()}</span></button>`}).join('');let day=dayName(currentDate),tones=['blue','green','purple','orange'];$('scheduleList').innerHTML=SLOTS.map((s,i)=>{let a=meals.filter(x=>x.day===day&&x.slot===s);return `<div class="meal ${tones[i]}"><h4>${s}</h4><div class="pair"><div class="mini"><span>Keluarga</span><b>${esc(a.find(x=>x.type==='Keluarga')?.name||'Belum ada menu')}</b></div><div class="mini"><span>MPASI</span><b>${esc(a.find(x=>x.type==='MPASI')?.name||'Belum ada menu')}</b></div></div></div>`}).join('')}
+function renderSchedule(){let st=weekStart(currentDate);$('monthLabel').textContent=currentDate.toLocaleDateString('id-ID',{month:'long',year:'numeric'});$('dayStrip').innerHTML=DAYS.map((dn,i)=>{let d=new Date(st);d.setDate(st.getDate()+i);return `<button class="day ${iso(d)===iso(currentDate)?'active':''}" onclick="selectDay('${iso(d)}')"><b>${dn.slice(0,3)}</b><span>${d.getDate()}</span></button>`}).join('');let date=iso(currentDate),tones=['blue','green','purple','orange'];$('scheduleList').innerHTML=SLOTS.map((s,i)=>{let a=meals.filter(x=>x.date===date&&x.slot===s);return `<div class="meal ${tones[i]}"><h4>${s}</h4><div class="pair"><div class="mini"><span>Keluarga</span><b>${esc(a.find(x=>x.type==='Keluarga')?.name||'Belum ada menu')}</b></div><div class="mini"><span>MPASI</span><b>${esc(a.find(x=>x.type==='MPASI')?.name||'Belum ada menu')}</b></div></div></div>`}).join('')}
 function openMeal(){$('mealName').value='';$('mealModal').classList.add('show')}
-function saveMeal(){let n=$('mealName').value.trim();if(!n)return;let d=dayName(currentDate),s=$('mealSlot').value,t=$('mealType').value;meals=meals.filter(x=>!(x.day===d&&x.slot===s&&x.type===t));meals.push({day:d,slot:s,type:t,name:n});save();closeM('mealModal');renderSchedule();renderHome();toast('Jadwal disimpan')}
+function saveMeal(){let n=$('mealName').value.trim();if(!n)return;let date=iso(currentDate),d=dayName(currentDate),s=$('mealSlot').value,t=$('mealType').value;meals=meals.filter(x=>!(x.date===date&&x.slot===s&&x.type===t));meals.push({id:uuid(),date,day:d,slot:s,type:t,name:n});save();closeM('mealModal');renderSchedule();renderHome();toast('Jadwal disimpan')}
 function openBuy(){$('bName').value='';$('bQty').value=1;$('bPrice').value='';$('buyModal').classList.add('show')}
-function saveBuy(){let n=$('bName').value.trim();if(!n)return;shop.push({name:n,qty:Number($('bQty').value)||1,unit:$('bUnit').value,price:Number(String($('bPrice').value).replace(/\D/g,''))||0,done:false});save();closeM('buyModal');renderShop();toast('Belanja ditambahkan')}
+function saveBuy(){let n=$('bName').value.trim();if(!n)return;shop.push({id:uuid(),name:n,qty:Number($('bQty').value)||1,unit:$('bUnit').value,price:Number(String($('bPrice').value).replace(/\D/g,''))||0,done:false});save();closeM('buyModal');renderShop();toast('Belanja ditambahkan')}
 function renderShop(){let total=shop.reduce((a,b)=>a+(+b.price||0),0);$('sumItems').textContent=shop.length;$('sumPrice').textContent=rp(total);$('itemCount').textContent=shop.length+' item';$('shopList').innerHTML=shop.length?shop.map((x,i)=>`<div class="shop"><input type="checkbox" ${x.done?'checked':''} onchange="shop[${i}].done=this.checked;save()"><div><div class="itemtitle">${esc(x.name)}</div><div class="controls"><button onclick="shop[${i}].qty=Math.max(0,shop[${i}].qty-1);save();renderShop()">−</button><input value="${x.qty}" onchange="shop[${i}].qty=Number(this.value)||0;save()" type="number"><button onclick="shop[${i}].qty++;save();renderShop()">＋</button><select onchange="shop[${i}].unit=this.value;save()">${['pcs','pack','buah','butir','kg','g','L','ml','siung','ikat'].map(u=>`<option ${u===x.unit?'selected':''}>${u}</option>`).join('')}</select><span class="price">${rp(x.price)}</span></div></div><div class="actions"><button class="iconbtn edit" onclick="openEdit(${i})">✎</button><button class="iconbtn trash" onclick="shop.splice(${i},1);save();renderShop();renderHome()">🗑</button></div></div>`).join(''):'<div class="empty">Belum ada item belanja.</div>'}
 function openEdit(i){editIndex=i;let x=shop[i];$('eName').value=x.name;$('eQty').value=x.qty;$('eUnit').value=x.unit;$('ePrice').value=x.price||'';$('editBuyModal').classList.add('show')}
 function saveEditBuy(){let x=shop[editIndex],n=$('eName').value.trim();if(!x||!n)return;x.name=n;x.qty=Number($('eQty').value)||0;x.unit=$('eUnit').value;x.price=Number(String($('ePrice').value).replace(/\D/g,''))||0;save();closeM('editBuyModal');renderShop();toast('Belanja diperbarui')}
-function saveShoppingDone(){let done=shop.filter(x=>x.done);if(!done.length){toast('Centang item yang sudah dibeli');return}history.unshift({date:new Date().toISOString(),items:done.map(x=>({...x})),total:done.reduce((a,b)=>a+(+b.price||0),0)});done.forEach(x=>{let s=stock.find(y=>y.name.toLowerCase()===x.name.toLowerCase()&&y.unit===x.unit);if(s)s.qty+=Number(x.qty)||0;else stock.push({name:x.name,qty:Number(x.qty)||0,unit:x.unit,min:0})});shop=shop.filter(x=>!x.done);save();renderShop();renderStock();renderHistory();renderHome();switchShop('hist')}
+function saveShoppingDone(){let done=shop.filter(x=>x.done);if(!done.length){toast('Centang item yang sudah dibeli');return}history.unshift({transaction_id:uuid(),date:new Date().toISOString(),items:done.map(x=>({id:uuid(),name:x.name,qty:x.qty,unit:x.unit,price:x.price})),total:done.reduce((a,b)=>a+(+b.price||0),0)});done.forEach(x=>{let s=stock.find(y=>y.name.toLowerCase()===x.name.toLowerCase()&&y.unit===x.unit);if(s)s.qty+=Number(x.qty)||0;else stock.push({id:uuid(),name:x.name,qty:Number(x.qty)||0,unit:x.unit,min:0})});shop=shop.filter(x=>!x.done);save();renderShop();renderStock();renderHistory();renderHome();switchShop('hist')}
 function level(x){if(+x.min<=0)return'safe';let r=(+x.qty||0)/(+x.min||1);return r<.6?'danger':r<1?'warn':'safe'}
 function renderStock(){let q=($('stockSearch').value||'').toLowerCase(),arr=stock.filter(x=>x.name.toLowerCase().includes(q));$('stDanger').textContent=stock.filter(x=>level(x)==='danger').length;$('stWarn').textContent=stock.filter(x=>level(x)==='warn').length;$('stSafe').textContent=stock.filter(x=>level(x)==='safe').length;$('stockList').innerHTML=arr.length?arr.map(x=>{let i=stock.indexOf(x),v=level(x),t=v==='danger'?'Hampir Habis':v==='warn'?'Menipis':'Aman';return `<div class="stockRow"><div class="name">${esc(x.name)}</div><div class="center">${x.qty}</div><div class="center">${x.min}</div><div class="center">${esc(x.unit)}</div><div><div class="badge ${v}">${t}</div></div><div class="stockActions"><button class="editMini" onclick="openEditStock(${i})" aria-label="Edit stok"><svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M4 20h4l11-11-4-4L4 16v4Z" stroke="currentColor" stroke-width="1.8"/><path d="m13.8 6.2 4 4" stroke="currentColor" stroke-width="1.8"/></svg></button><button class="trashMini" onclick="stock.splice(${i},1);save();renderStock();renderHome()" aria-label="Hapus stok"><svg viewBox="0 0 24 24" width="14" height="14" fill="none"><path d="M5 7h14M9 7V4h6v3M8 10v7M12 10v7M16 10v7M7 7l1 13h8l1-13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></div></div>`}).join(''):'<div class="empty">Belum ada stok.</div>'}
 function openStock(){$('sName').value='';$('sQty').value=1;$('sMin').value=1;$('stockModal').classList.add('show')}
-function saveStock(){let n=$('sName').value.trim();if(!n)return;stock.push({name:n,qty:Number($('sQty').value)||0,unit:$('sUnit').value,min:Number($('sMin').value)||0});save();closeM('stockModal');renderStock();renderHome()}
+function saveStock(){let n=$('sName').value.trim();if(!n)return;stock.push({id:uuid(),name:n,qty:Number($('sQty').value)||0,unit:$('sUnit').value,min:Number($('sMin').value)||0});save();closeM('stockModal');renderStock();renderHome()}
 let editStockIndex=-1;function openEditStock(i){editStockIndex=i;let x=stock[i];if(!x)return;$('esName').value=x.name;$('esQty').value=x.qty;$('esUnit').value=x.unit;$('esMin').value=x.min;$('editStockModal').classList.add('show')}function saveEditStock(){let x=stock[editStockIndex],n=$('esName').value.trim();if(!x||!n)return;x.name=n;x.qty=Number($('esQty').value)||0;x.unit=$('esUnit').value;x.min=Number($('esMin').value)||0;save();closeM('editStockModal');renderStock();renderHome();toast('Stok diperbarui')}
 function renderHistory(){let q=($('histSearch').value||'').toLowerCase(),arr=history.filter(h=>!q||h.items.some(x=>x.name.toLowerCase().includes(q)));$('historyList').innerHTML=arr.length?arr.map(h=>{let hi=history.indexOf(h);return `<div class="history"><div class="histTop"><div><b>${new Date(h.date).toLocaleDateString('id-ID',{day:'numeric',month:'long',year:'numeric'})}</b><br><small>${h.items.length} item</small></div><span>${rp(h.total)}</span></div>${h.items.map((x,ii)=>`<div class="histRow"><span>${esc(x.name)}</span><span>${x.qty} ${esc(x.unit)}</span><span>${rp(x.price)}</span><button class="trashMini" onclick="history[${hi}].items.splice(${ii},1);history[${hi}].total=history[${hi}].items.reduce((a,b)=>a+(+b.price||0),0);if(!history[${hi}].items.length)history.splice(${hi},1);save();renderHistory()">🗑</button></div>`).join('')}</div>`}).join(''):'<div class="empty">Belum ada riwayat belanja.</div>'}
 function openRequest(){$('rQName').value='';$('rQMenu').value='';$('rQNote').value='';$('requestModal').classList.add('show')}
-function saveRequest(){let n=$('rQName').value.trim(),m=$('rQMenu').value.trim();if(!n||!m)return;reqs.unshift({name:n,menu:m,note:$('rQNote').value.trim(),date:new Date().toISOString(),status:'waiting'});save();closeM('requestModal');renderRequests();renderHome()}
+function saveRequest(){let n=$('rQName').value.trim(),m=$('rQMenu').value.trim();if(!n||!m)return;reqs.unshift({id:uuid(),name:n,menu:m,note:$('rQNote').value.trim(),date:new Date().toISOString(),status:'waiting'});save();closeM('requestModal');renderRequests();renderHome()}
 function setReqFilter(f){reqFilter=f;['rqAll','rqWait','rqOk','rqNo'].forEach(id=>$(id).classList.remove('active'));$(f==='all'?'rqAll':f==='waiting'?'rqWait':f==='approved'?'rqOk':'rqNo').classList.add('active');renderRequests()}
 function renderRequests(){let arr=reqs.map((r,i)=>({...r,_i:i})).filter(r=>reqFilter==='all'||(r.status||'waiting')===reqFilter);$('reqList').innerHTML=arr.length?arr.map(r=>{let st=r.status||'waiting',txt=st==='waiting'?'Menunggu':st==='approved'?'Disetujui':'Ditolak';return `<div class="request"><div><span class="pill ${st==='waiting'?'wait':st==='approved'?'ok':'no'}">${txt}</span><b>${esc(r.menu)}</b><p>${esc(r.note||'')}</p><small>oleh ${esc(r.name)} • ${new Date(r.date||Date.now()).toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'})}</small></div>${st==='waiting'?`<div class="reqActions"><button class="approve" onclick="approveReq(${r._i})">✓</button><button class="reject" onclick="reqs[${r._i}].status='rejected';save();renderRequests();renderHome()">×</button></div>`:''}</div>`}).join(''):'<div class="empty">Belum ada request pada kategori ini.</div>'}
 function approveReq(i){approveIndex=i;let r=reqs[i];$('aName').value=r.menu;$('aSlot').value='Makan Siang';$('aType').value='Keluarga';$('aDate').value=iso(new Date());$('approveModal').classList.add('show')}
-function confirmApprove(){let r=reqs[approveIndex],name=$('aName').value.trim();if(!r||!name)return;let d=new Date($('aDate').value+'T12:00:00'),day=dayName(d),slot=$('aSlot').value,type=$('aType').value;meals=meals.filter(x=>!(x.day===day&&x.slot===slot&&x.type===type));meals.push({day,slot,type,name});r.status='approved';r.approvedName=name;save();closeM('approveModal');renderRequests();renderHome();renderSchedule();toast('Request masuk ke Meal Plan')}
+function confirmApprove(){let r=reqs[approveIndex],name=$('aName').value.trim(),date=$('aDate').value;if(!r||!name||!date)return;let d=new Date(date+'T12:00:00'),day=dayName(d),slot=$('aSlot').value,type=$('aType').value;meals=meals.filter(x=>!(x.date===date&&x.slot===slot&&x.type===type));meals.push({id:uuid(),date,day,slot,type,name});r.status='approved';save();closeM('approveModal');renderRequests();renderHome();renderSchedule();toast('Request masuk ke Meal Plan')}
 let pendingRecipePhoto='';
 function openRecipe(){pendingRecipePhoto='';$('recName').value='';$('recIng').value='';$('recSteps').value='';$('recPhoto').value='';$('recPreview').innerHTML='📷';$('recipeModal').classList.add('show')}
 function previewRecipePhoto(inp){let f=inp.files&&inp.files[0];if(!f)return;let r=new FileReader();r.onload=e=>{pendingRecipePhoto=e.target.result;$('recPreview').innerHTML='<img src="'+pendingRecipePhoto+'" style="width:100%;height:100%;object-fit:cover">'};r.readAsDataURL(f)}
-function saveRecipe(){let n=$('recName').value.trim();if(!n)return;recipes.unshift({id:'r'+Date.now(),name:n,ingredients:$('recIng').value,steps:$('recSteps').value,photo:pendingRecipePhoto||''});save();closeM('recipeModal');renderRecipes();toast('Resep disimpan')}
+function saveRecipe(){let n=$('recName').value.trim();if(!n)return;recipes.unshift({id:uuid(),name:n,ingredients:$('recIng').value,steps:$('recSteps').value,photo:pendingRecipePhoto||''});save();closeM('recipeModal');renderRecipes();toast('Resep disimpan')}
 function renderRecipes(){let q=($('recipeSearch').value||'').toLowerCase(),arr=recipes.filter(r=>r.name.toLowerCase().includes(q));$('recipeList').innerHTML=arr.length?arr.map(r=>`<div class="recipeSquare"><div class="recipeImageWrap" onclick="showRecipe('${r.id}')">${r.photo?`<img src="${r.photo}" alt="">`:'<div class="recipePlaceholder">🍲</div>'}<button class="recipeDelete" onclick="event.stopPropagation();confirmDeleteRecipe('${r.id}')">🗑</button></div><div class="recipeName" onclick="showRecipe('${r.id}')">${esc(r.name)}</div></div>`).join(''):'<div class="empty" style="grid-column:1/-1">Belum ada resep.</div>'}
 let deleteRecipeId='';
 function confirmDeleteRecipe(id){deleteRecipeId=id;let r=recipes.find(x=>x.id===id);$('deleteRecipeText').textContent='Resep “'+(r?.name||'')+'” akan dihapus dari daftar resep.';$('deleteRecipeModal').classList.add('show')}
@@ -923,8 +708,8 @@ function doDeleteRecipe(){recipes=recipes.filter(x=>x.id!==deleteRecipeId);save(
 function showRecipe(id){let r=recipes.find(x=>x.id===id);$('rdTitle').textContent=r.name;$('rdBody').innerHTML=`<div class="form">${r.photo?`<img src="${r.photo}" style="width:100%;max-height:240px;object-fit:cover;border-radius:18px;margin-bottom:14px">`:''}<b style="font-size:14px">Bahan</b><p style="white-space:pre-line;font-size:13px;line-height:1.55">${esc(r.ingredients)}</p><b style="font-size:14px">Langkah</b><p style="white-space:pre-line;font-size:13px;line-height:1.55">${esc(r.steps||'')}</p><div class="recipeActions"><button class="mealPlanBtn" onclick="openRecipeMeal('${id}')"><span class="recipeActionIcon">📅</span><span>Tambah ke Meal Plan</span></button><button class="shopRecipeBtn" onclick="recipeToShop('${id}')"><span class="recipeActionIcon">🛒</span><span>Tambah Bahan ke Belanja</span></button></div></div>`;$('recipeDetail').classList.add('show')}
 let recipeMealId='';
 function openRecipeMeal(id){let r=recipes.find(x=>x.id===id);if(!r)return;recipeMealId=id;$('rmName').value=r.name;$('rmSlot').value='Makan Siang';$('rmType').value='Keluarga';$('rmDate').value=iso(new Date());closeM('recipeDetail');$('recipeMealModal').classList.add('show')}
-function saveRecipeToMealPlan(){let r=recipes.find(x=>x.id===recipeMealId),name=$('rmName').value.trim(),date=$('rmDate').value;if(!r||!name||!date)return;let d=new Date(date+'T12:00:00'),day=dayName(d),slot=$('rmSlot').value,type=$('rmType').value;meals=meals.filter(x=>!(x.day===day&&x.slot===slot&&x.type===type));meals.push({day,slot,type,name});save();closeM('recipeMealModal');renderSchedule();renderHome();toast('Resep ditambahkan ke Meal Plan')}
-function recipeToShop(id){let r=recipes.find(x=>x.id===id);r.ingredients.split('\n').filter(Boolean).forEach(line=>{let m=line.trim().match(/^(\d+(?:[.,]\d+)?)\s*(kg|g|ml|L|butir|buah|siung|ikat|pcs|pack)?\s+(.+)$/i);if(m)shop.push({name:m[3].trim(),qty:parseFloat(m[1].replace(',','.')),unit:m[2]||'pcs',price:0,done:false});else shop.push({name:line.trim(),qty:1,unit:'pcs',price:0,done:false})});save();renderShop();closeM('recipeDetail');toast('Bahan ditambahkan ke belanja')}
+function saveRecipeToMealPlan(){let r=recipes.find(x=>x.id===recipeMealId),name=$('rmName').value.trim(),date=$('rmDate').value;if(!r||!name||!date)return;let d=new Date(date+'T12:00:00'),day=dayName(d),slot=$('rmSlot').value,type=$('rmType').value;meals=meals.filter(x=>!(x.date===date&&x.slot===slot&&x.type===type));meals.push({id:uuid(),date,day,slot,type,name});save();closeM('recipeMealModal');renderSchedule();renderHome();toast('Resep ditambahkan ke Meal Plan')}
+function recipeToShop(id){let r=recipes.find(x=>x.id===id);r.ingredients.split('\n').filter(Boolean).forEach(line=>{let m=line.trim().match(/^(\d+(?:[.,]\d+)?)\s*(kg|g|ml|L|butir|buah|siung|ikat|pcs|pack)?\s+(.+)$/i);if(m)shop.push({id:uuid(),name:m[3].trim(),qty:parseFloat(m[1].replace(',','.')),unit:m[2]||'pcs',price:0,done:false});else shop.push({id:uuid(),name:line.trim(),qty:1,unit:'pcs',price:0,done:false})});save();renderShop();closeM('recipeDetail');toast('Bahan ditambahkan ke belanja')}
 renderHome();renderSchedule();renderShop();renderStock();renderHistory();renderRecipes();renderRequests();writeLocalState();
 </script>
 </body>
