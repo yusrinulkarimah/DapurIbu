@@ -47,7 +47,7 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,
 .toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#18375f;color:#fff;border-radius:99px;padding:9px 13px;font-size:11px;opacity:0;transition:.2s;z-index:80}.toast.show{opacity:1}
 .empty{text-align:center;padding:22px;color:var(--mut);font-size:11px}
 </style>
-<style id="DAPUR-IBU-V32">
+<style id="DAPUR-IBU-V33">
 body{background:#eef6fc!important}.app{background:#fff!important;box-shadow:0 0 55px #1c44691f!important}
 header{padding:22px 18px 15px!important;background:#fff!important}.brand{gap:13px!important}.logo{width:52px!important;height:52px!important;border:0!important;border-radius:18px!important;background:linear-gradient(145deg,#dceeff,#f6fbff)!important;box-shadow:0 10px 24px #2478df24!important}.brand h1{font-size:28px!important;letter-spacing:-.8px!important}.brand p{font-size:12.5px!important;margin-top:5px!important;color:#8293a6!important}main{padding:0 17px!important}
 .hero{position:relative;overflow:hidden;margin:5px 0 21px!important;padding:21px!important;border:0!important;border-radius:25px!important;background:linear-gradient(135deg,#dceeff,#edf7ff 65%,#fbfdff)!important;box-shadow:0 12px 30px #2569a919!important}.hero:after{content:"";position:absolute;width:105px;height:105px;border-radius:50%;right:-35px;top:-38px;background:#ffffff94}.hero h2{font-size:22px!important}.hero p,.hero small{font-size:12.5px!important}
@@ -64,7 +64,7 @@ header{padding:22px 18px 15px!important;background:#fff!important}.brand{gap:13p
 nav{padding:8px 6px calc(8px + env(safe-area-inset-bottom))!important;border-top:0!important;box-shadow:0 -8px 28px #20436317!important;background:#fffffff7!important}nav button{min-height:50px!important;border-radius:14px!important;gap:4px!important}nav button.active{background:#edf6ff!important;color:#2478df!important}nav svg{width:22px!important;height:22px!important}
 </style>
 
-<style id="DAPUR-IBU-V32-APP-LIKE">
+<style id="DAPUR-IBU-V33-APP-LIKE">
 :root{
  --b:#2f80ed;--b2:#6bb0f7;--ink:#16365f;--mut:#71859b;--line:#e7eef5;
  --sky:#eaf5ff;--sky2:#f7fbff;--mint:#ecf9f2;--peach:#fff4e8;--lav:#f4efff;--rose:#fff1f4;
@@ -403,7 +403,7 @@ window.__supabaseReady = new Promise((resolve,reject)=>{
 });
 </script>
 
-<style id="DAPUR-IBU-V32-LOGIN">
+<style id="DAPUR-IBU-V33-LOGIN">
 .authGate{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:22px;background:
 radial-gradient(circle at 18% 16%,rgba(185,220,255,.58) 0 60px,transparent 61px),
 radial-gradient(circle at 90% 8%,rgba(215,235,255,.72) 0 86px,transparent 87px),
@@ -485,7 +485,7 @@ linear-gradient(180deg,#f8fcff 0%,#edf7ff 55%,#e8f3ff 100%);overflow:hidden}
 <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
 <path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M9 20v-6h6v6" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
-</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">v32</span></p></div></div>
+</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">v33</span></p></div></div>
 
 </header>
 <main>
@@ -615,7 +615,31 @@ let currentDate=new Date(),editIndex=-1,reqFilter='all',approveIndex=-1;
 
 const SUPABASE_URL='https://uduxugyvvqmxbzznqdmu.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_9kz1C-zW9Eefsfj1ZsZn5Q_djk9TdPs';
+
 let sbClient=null,currentSbUser=null,realtimeChannel=null,cloudSaveTimer=null,appBooted=false,applyingRemote=false;
+
+async function ensureSupabaseClient(){
+  if(sbClient) return sbClient;
+  const msg=document.getElementById('loginMsg');
+  try{
+    if(msg) msg.textContent='Menyiapkan koneksi Supabase...';
+    await Promise.race([
+      window.__supabaseReady,
+      new Promise((_,reject)=>setTimeout(()=>reject(new Error('LIB_TIMEOUT')),15000))
+    ]);
+    if(!window.supabase) throw new Error('LIB_NOT_READY');
+    sbClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{
+      auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}
+    });
+    if(msg) msg.textContent='';
+    return sbClient;
+  }catch(e){
+    console.error('ensureSupabaseClient:',e);
+    if(msg) msg.textContent='Supabase gagal dimuat. Coba refresh atau jaringan lain.';
+    throw e;
+  }
+}
+
 
 function localState(){return {meals,shop,stock,history,recipes,reqs}}
 function writeLocalState(){
@@ -688,24 +712,29 @@ async function loginDapurIbu(){
   const email=document.getElementById('loginEmail').value.trim();
   const password=document.getElementById('loginPassword').value;
   const msg=document.getElementById('loginMsg'),btn=document.getElementById('loginBtn');
+
   msg.textContent='';
   if(!email||!password){msg.textContent='Masukkan email dan password.';return}
   if(!navigator.onLine){msg.textContent='Tidak ada koneksi internet.';return}
-  if(!sbClient){msg.textContent='Koneksi Supabase belum siap. Muat ulang halaman lalu coba lagi.';return}
 
   btn.disabled=true;
-  btn.textContent='Sedang masuk...';
+  btn.textContent='Menyiapkan koneksi...';
 
   try{
-    const timeout=new Promise((_,reject)=>setTimeout(()=>reject(new Error('LOGIN_TIMEOUT')),12000));
+    await ensureSupabaseClient();
+
+    btn.textContent='Sedang masuk...';
+
+    const timeout=new Promise((_,reject)=>setTimeout(()=>reject(new Error('LOGIN_TIMEOUT')),15000));
     const loginPromise=sbClient.auth.signInWithPassword({email,password});
     const {data,error}=await Promise.race([loginPromise,timeout]);
 
     if(error){
       console.error('Login error:',error);
-      if(String(error.message||'').toLowerCase().includes('invalid login credentials')){
+      const em=String(error.message||'').toLowerCase();
+      if(em.includes('invalid login credentials')){
         msg.textContent='Email atau password salah.';
-      }else if(String(error.message||'').toLowerCase().includes('email not confirmed')){
+      }else if(em.includes('email not confirmed')){
         msg.textContent='Email belum dikonfirmasi di Supabase.';
       }else{
         msg.textContent='Login gagal: '+(error.message||'coba lagi.');
@@ -721,7 +750,6 @@ async function loginDapurIbu(){
     currentSbUser=data.user;
     setAuthUi(currentSbUser);
 
-    // Cloud load is secondary: do not block successful login forever.
     try{
       await Promise.race([
         loadCloudState(),
@@ -736,9 +764,11 @@ async function loginDapurIbu(){
   }catch(e){
     console.error('Login exception:',e);
     if(e?.message==='LOGIN_TIMEOUT'){
-      msg.textContent='Koneksi ke Supabase terlalu lama. Periksa internet lalu coba lagi.';
+      msg.textContent='Login terlalu lama. Periksa internet lalu coba lagi.';
+    }else if(e?.message==='LIB_TIMEOUT'||e?.message==='LIB_NOT_READY'){
+      msg.textContent='Library Supabase gagal dimuat. Coba refresh atau jaringan lain.';
     }else{
-      msg.textContent='Terjadi gangguan saat login. Muat ulang halaman lalu coba lagi.';
+      msg.textContent='Koneksi Supabase gagal. Coba refresh halaman.';
     }
   }finally{
     btn.disabled=false;
@@ -756,21 +786,7 @@ function toggleAccountMenu(){document.getElementById('accountMenu').classList.to
 async function initRealtime(){
   const msg=document.getElementById('loginMsg');
   try{
-    msg.textContent='Menyiapkan koneksi...';
-    await Promise.race([
-      window.__supabaseReady,
-      new Promise((_,reject)=>setTimeout(()=>reject(new Error('LIB_TIMEOUT')),15000))
-    ]);
-    msg.textContent='';
-
-    if(!window.supabase){
-      msg.textContent='Library Supabase gagal dimuat. Coba muat ulang halaman.';
-      return;
-    }
-
-    sbClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{
-      auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}
-    });
+    await ensureSupabaseClient();
 
     const sessionResult=await Promise.race([
       sbClient.auth.getSession(),
@@ -803,10 +819,8 @@ async function initRealtime(){
     });
   }catch(e){
     console.error('Supabase init:',e);
-    if(e?.message==='LIB_TIMEOUT'||e?.message==='SUPABASE_LIBRARY_FAILED'){
-      msg.textContent='Koneksi library Supabase gagal. Muat ulang halaman atau coba jaringan lain.';
-    }else{
-      msg.textContent='Koneksi Supabase belum siap. Muat ulang halaman lalu coba lagi.';
+    if(msg && !msg.textContent){
+      msg.textContent='Supabase belum tersambung. Tekan Masuk untuk mencoba lagi.';
     }
   }
 }
@@ -816,6 +830,13 @@ document.addEventListener('keydown',e=>{
     loginDapurIbu();
   }
 });
+
+
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',()=>{ initRealtime(); },{once:true});
+}else{
+  setTimeout(()=>initRealtime(),0);
+}
 
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function rp(n){return 'Rp '+Number(n||0).toLocaleString('id-ID')}
@@ -865,7 +886,7 @@ let recipeMealId='';
 function openRecipeMeal(id){let r=recipes.find(x=>x.id===id);if(!r)return;recipeMealId=id;$('rmName').value=r.name;$('rmSlot').value='Makan Siang';$('rmType').value='Keluarga';$('rmDate').value=iso(new Date());closeM('recipeDetail');$('recipeMealModal').classList.add('show')}
 function saveRecipeToMealPlan(){let r=recipes.find(x=>x.id===recipeMealId),name=$('rmName').value.trim(),date=$('rmDate').value;if(!r||!name||!date)return;let d=new Date(date+'T12:00:00'),day=dayName(d),slot=$('rmSlot').value,type=$('rmType').value;meals=meals.filter(x=>!(x.day===day&&x.slot===slot&&x.type===type));meals.push({day,slot,type,name});save();closeM('recipeMealModal');renderSchedule();renderHome();toast('Resep ditambahkan ke Meal Plan')}
 function recipeToShop(id){let r=recipes.find(x=>x.id===id);r.ingredients.split('\n').filter(Boolean).forEach(line=>{let m=line.trim().match(/^(\d+(?:[.,]\d+)?)\s*(kg|g|ml|L|butir|buah|siung|ikat|pcs|pack)?\s+(.+)$/i);if(m)shop.push({name:m[3].trim(),qty:parseFloat(m[1].replace(',','.')),unit:m[2]||'pcs',price:0,done:false});else shop.push({name:line.trim(),qty:1,unit:'pcs',price:0,done:false})});save();renderShop();closeM('recipeDetail');toast('Bahan ditambahkan ke belanja')}
-renderHome();renderSchedule();renderShop();renderStock();renderHistory();renderRecipes();renderRequests();writeLocalState();initRealtime();
+renderHome();renderSchedule();renderShop();renderStock();renderHistory();renderRecipes();renderRequests();writeLocalState();
 </script>
 </body>
 </html>
