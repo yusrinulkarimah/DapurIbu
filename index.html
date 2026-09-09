@@ -47,7 +47,7 @@ nav{position:fixed;left:50%;bottom:0;transform:translateX(-50%);width:min(560px,
 .toast{position:fixed;left:50%;bottom:92px;transform:translateX(-50%);background:#18375f;color:#fff;border-radius:99px;padding:9px 13px;font-size:11px;opacity:0;transition:.2s;z-index:80}.toast.show{opacity:1}
 .empty{text-align:center;padding:22px;color:var(--mut);font-size:11px}
 </style>
-<style id="DAPUR-IBU-REALTIME-RPC">
+<style id="DAPUR-IBU-REALTIME-RPC-STATUSFIX">
 body{background:#eef6fc!important}.app{background:#fff!important;box-shadow:0 0 55px #1c44691f!important}
 header{padding:22px 18px 15px!important;background:#fff!important}.brand{gap:13px!important}.logo{width:52px!important;height:52px!important;border:0!important;border-radius:18px!important;background:linear-gradient(145deg,#dceeff,#f6fbff)!important;box-shadow:0 10px 24px #2478df24!important}.brand h1{font-size:28px!important;letter-spacing:-.8px!important}.brand p{font-size:12.5px!important;margin-top:5px!important;color:#8293a6!important}main{padding:0 17px!important}
 .hero{position:relative;overflow:hidden;margin:5px 0 21px!important;padding:21px!important;border:0!important;border-radius:25px!important;background:linear-gradient(135deg,#dceeff,#edf7ff 65%,#fbfdff)!important;box-shadow:0 12px 30px #2569a919!important}.hero:after{content:"";position:absolute;width:105px;height:105px;border-radius:50%;right:-35px;top:-38px;background:#ffffff94}.hero h2{font-size:22px!important}.hero p,.hero small{font-size:12.5px!important}
@@ -496,7 +496,7 @@ linear-gradient(180deg,#f8fcff 0%,#edf7ff 55%,#e8f3ff 100%);overflow:hidden}
 <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
 <path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M9 20v-6h6v6" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
-</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">REALTIME</span></p></div></div>
+</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">REALTIME FIX</span></p></div></div>
 
 </header>
 <main>
@@ -737,6 +737,7 @@ async function loadCloudState(){
       await saveCloudRPC();
     }else{
       applyCloudState(cloud);
+      syncFailCount=0;
       setCloudBadge('Tersinkron','ok');
     }
   }catch(e){
@@ -744,6 +745,7 @@ async function loadCloudState(){
     setCloudBadge('Gagal mengambil data','error');
   }
 }
+let syncFailCount=0;
 function subscribeRealtime(){
   if(!sbClient||!currentSbUser)return;
   if(realtimeChannel)sbClient.removeChannel(realtimeChannel);
@@ -763,6 +765,10 @@ function subscribeRealtime(){
     try{
       const {data,error}=await sbClient.rpc('get_dapur_state');
       if(error)throw error;
+
+      syncFailCount=0;
+      setCloudBadge('Tersambung','ok');
+
       const row=Array.isArray(data)?data[0]:data;
       if(row && row.updated_at && row.updated_at!==lastCloudUpdatedAt){
         lastCloudUpdatedAt=row.updated_at;
@@ -771,7 +777,12 @@ function subscribeRealtime(){
       }
     }catch(e){
       console.warn('RPC POLL ERROR',e);
-      setCloudBadge('Offline','error');
+      syncFailCount++;
+      if(syncFailCount>=3){
+        setCloudBadge('Koneksi terputus','error');
+      }else{
+        setCloudBadge('Menyambungkan ulang...','busy');
+      }
     }
   },2000);
 }
