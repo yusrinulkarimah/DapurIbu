@@ -438,7 +438,7 @@ nav button{
 <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
 <path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M9 20v-6h6v6" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
-</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">TABLE REALTIME</span></p></div></div>
+</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">TABLE REALTIME DIAGNOSTIC</span></p></div></div>
 
 </header>
 <main>
@@ -634,19 +634,35 @@ async function flushChanges(){
 
 function groupHistory(rows){const map=new Map();rows.forEach(r=>{const k=r.transaction_id||r.id;if(!map.has(k))map.set(k,{transaction_id:k,date:r.created_at||new Date().toISOString(),items:[],total:0});const g=map.get(k),item={id:r.id,name:r.name,qty:Number(r.qty)||0,unit:r.unit,price:Number(r.price)||0};g.items.push(item);g.total+=item.price});return [...map.values()].sort((a,b)=>new Date(b.date)-new Date(a.date))}
 async function loadAllFromCloud(){
+  const errors=[];
+  const safe=async(table,query)=>{
+    try{return await db(table,{query})}
+    catch(e){errors.push(table+': '+(e.message||String(e)));return null}
+  };
   const [m,s,st,h,rq,rc]=await Promise.all([
-    db('meal_plan',{query:'?select=*&order=meal_date.asc'}),db('shopping',{query:'?select=*&order=created_at.asc'}),
-    db('stock',{query:'?select=*&order=name.asc'}),db('history',{query:'?select=*&order=created_at.desc'}),
-    db('requests',{query:'?select=*&order=created_at.desc'}),db('recipes',{query:'?select=*&order=created_at.desc'})
+    safe('meal_plan','?select=*&order=meal_date.asc'),
+    safe('shopping','?select=*&order=created_at.asc'),
+    safe('stock','?select=*&order=name.asc'),
+    safe('history','?select=*&order=created_at.desc'),
+    safe('requests','?select=*&order=created_at.desc'),
+    safe('recipes','?select=*&order=created_at.desc')
   ]);
   applyingRemote=true;
-  meals=(m||[]).map(x=>({id:x.id,date:x.meal_date,day:dayName(new Date(x.meal_date+'T12:00:00')),slot:x.slot,type:x.type,name:x.name}));
-  shop=(s||[]).map(x=>({id:x.id,name:x.name,qty:Number(x.qty)||0,unit:x.unit,price:Number(x.price)||0,done:!!x.done}));
-  stock=(st||[]).map(x=>({id:x.id,name:x.name,qty:Number(x.qty)||0,unit:x.unit,min:Number(x.min_qty)||0}));
-  history=groupHistory(h||[]);
-  reqs=(rq||[]).map(x=>({id:x.id,name:x.requester_name||'',menu:x.menu_name,note:x.note||'',date:x.request_date||x.created_at,status:x.status||'waiting'}));
-  recipes=(rc||[]).map(x=>({id:x.id,name:x.name,ingredients:x.ingredients||'',steps:x.steps||'',photo:x.photo_url||''}));
-  writeLocalState();renderHome();renderSchedule();renderShop();renderStock();renderHistory();renderRecipes();renderRequests();applyingRemote=false;baseline=clone(localState())
+  if(m!==null)meals=(m||[]).map(x=>({id:x.id,date:x.meal_date,day:dayName(new Date(x.meal_date+'T12:00:00')),slot:x.slot,type:x.type,name:x.name}));
+  if(s!==null)shop=(s||[]).map(x=>({id:x.id,name:x.name,qty:Number(x.qty)||0,unit:x.unit,price:Number(x.price)||0,done:!!x.done}));
+  if(st!==null)stock=(st||[]).map(x=>({id:x.id,name:x.name,qty:Number(x.qty)||0,unit:x.unit,min:Number(x.min_qty)||0}));
+  if(h!==null)history=groupHistory(h||[]);
+  if(rq!==null)reqs=(rq||[]).map(x=>({id:x.id,name:x.requester_name||'',menu:x.menu_name,note:x.note||'',date:x.request_date||x.created_at,status:x.status||'waiting'}));
+  if(rc!==null)recipes=(rc||[]).map(x=>({id:x.id,name:x.name,ingredients:x.ingredients||'',steps:x.steps||'',photo:x.photo_url||''}));
+  writeLocalState();renderHome();renderSchedule();renderShop();renderStock();renderHistory();renderRecipes();renderRequests();
+  applyingRemote=false;baseline=clone(localState());
+  if(errors.length){
+    lastSyncError=errors.join(' | ');
+    syncStatus('Sebagian data gagal','err',lastSyncError);
+    return {ok:false,errors};
+  }
+  lastSyncError='';
+  return {ok:true,errors:[]};
 }
 async function pollCloud(){if(syncBusy||!currentSbUser)return;try{await loadAllFromCloud();syncStatus('Tersinkron','ok')}catch(e){lastSyncError=e.message||String(e);syncStatus('Koneksi terputus','err',lastSyncError)}}
 function startPolling(){if(window._diPoll)clearInterval(window._diPoll);window._diPoll=setInterval(()=>{if(!document.hidden&&!syncBusy)pollCloud()},3000)}
@@ -654,13 +670,56 @@ function startPolling(){if(window._diPoll)clearInterval(window._diPoll);window._
 async function loginDapurIbu(){
   const email=document.getElementById('loginEmail').value.trim(),password=document.getElementById('loginPassword').value,btn=document.getElementById('loginBtn'),msg=document.getElementById('loginMsg');msg.textContent='';
   if(!email||!password){msg.textContent='Masukkan email dan password.';return}btn.disabled=true;btn.textContent='Sedang masuk...';
-  try{const data=await authRequest('token?grant_type=password',{email,password});const s={access_token:data.access_token,refresh_token:data.refresh_token,user:data.user,expires_at:Date.now()+Number(data.expires_in||3600)*1000};saveSession(s);currentSbUser=s.user||null;document.getElementById('authGate').classList.add('hidden');document.getElementById('accountEmail').textContent=currentSbUser?.email||email;syncStatus('Mengambil data...','busy','Membaca tabel Supabase');await loadAllFromCloud();syncStatus('Tersinkron','ok');startPolling()}
-  catch(e){msg.textContent='Login/data gagal: '+(e.message||'coba lagi.')}finally{btn.disabled=false;btn.textContent='Masuk ke Dapur Ibu'}
+  try{
+    const data=await authRequest('token?grant_type=password',{email,password});
+    const s={access_token:data.access_token,refresh_token:data.refresh_token,user:data.user,expires_at:Date.now()+Number(data.expires_in||3600)*1000};
+    saveSession(s);currentSbUser=s.user||null;
+    document.getElementById('authGate').classList.add('hidden');
+    document.getElementById('accountEmail').textContent=currentSbUser?.email||email;
+    syncStatus('Mengambil data...','busy','Membaca tabel Supabase');
+    const result=await loadAllFromCloud();
+    if(result.ok)syncStatus('Tersinkron','ok');
+    startPolling();
+  }catch(e){msg.textContent='Login gagal: '+(e.message||'coba lagi.')}
+  finally{btn.disabled=false;btn.textContent='Masuk ke Dapur Ibu'}
 }
 function toggleAccountMenu(){document.getElementById('accountMenu').classList.toggle('show')}
-async function manualSync(){try{if(baseline)await flushChanges();await loadAllFromCloud();syncStatus('Tersinkron','ok')}catch(e){lastSyncError=e.message||String(e);syncStatus('Gagal sinkron','err',lastSyncError)}}
+async function manualSync(){
+  try{
+    if(baseline)await flushChanges();
+    const result=await loadAllFromCloud();
+    if(result.ok)syncStatus('Tersinkron','ok');
+  }catch(e){
+    lastSyncError=e.message||String(e);
+    syncStatus('Gagal sinkron','err',lastSyncError);
+  }
+}
 async function logoutDapurIbu(){if(window._diPoll)clearInterval(window._diPoll);clearSession();currentSbUser=null;baseline=null;document.getElementById('accountMenu').classList.remove('show');document.getElementById('accountPill').style.display='none';document.getElementById('authGate').classList.remove('hidden');document.getElementById('loginPassword').value=''}
-async function initRealtime(){try{let s=getSavedSession();if(!s?.access_token)return;if(!s.expires_at||Date.now()>s.expires_at-60000)s=await refreshSession();currentSbUser=s.user||null;document.getElementById('authGate').classList.add('hidden');document.getElementById('accountEmail').textContent=currentSbUser?.email||'';syncStatus('Mengambil data...','busy','Membaca tabel Supabase');await loadAllFromCloud();syncStatus('Tersinkron','ok');startPolling()}catch(e){clearSession();currentSbUser=null;document.getElementById('authGate').classList.remove('hidden')}}
+async function initRealtime(){
+  try{
+    let s=getSavedSession();
+    if(!s?.access_token)return;
+    if(!s.expires_at||Date.now()>s.expires_at-60000)s=await refreshSession();
+    currentSbUser=s.user||null;
+    document.getElementById('authGate').classList.add('hidden');
+    document.getElementById('accountEmail').textContent=currentSbUser?.email||'';
+    syncStatus('Mengambil data...','busy','Membaca tabel Supabase');
+    const result=await loadAllFromCloud();
+    if(result.ok)syncStatus('Tersinkron','ok');
+    startPolling();
+  }catch(e){
+    lastSyncError=e.message||String(e);
+    const lower=lastSyncError.toLowerCase();
+    if(lower.includes('sesi login')||lower.includes('refresh token')||lower.includes('invalid refresh')){
+      clearSession();currentSbUser=null;
+      document.getElementById('authGate').classList.remove('hidden');
+    }else{
+      document.getElementById('authGate').classList.add('hidden');
+      syncStatus('Koneksi bermasalah','err',lastSyncError);
+      startPolling();
+    }
+  }
+}
 document.addEventListener('DOMContentLoaded',initRealtime);
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function rp(n){return 'Rp '+Number(n||0).toLocaleString('id-ID')}
