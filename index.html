@@ -454,7 +454,7 @@ window.__supabaseReady = new Promise((resolve,reject)=>{
     <input id="loginEmail" type="email" autocomplete="email" placeholder="nama@email.com">
     <label>Password</label>
     <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Masukkan password">
-    <button id="loginBtn" type="button" onclick="loginDapurIbu()">Masuk ke Dapur Ibu</button>
+    <button id="loginBtn" type="button" onclick="loginDapurIbu()" aria-label="Masuk ke Dapur Ibu">Masuk ke Dapur Ibu</button>
     <div id="loginMsg" class="loginMsg"></div>
     <div class="authFoot">Setiap anggota keluarga menggunakan akun masing-masing.</div>
   </div>
@@ -481,7 +481,7 @@ window.__supabaseReady = new Promise((resolve,reject)=>{
 <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
 <path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M9 20v-6h6v6" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
-</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">REALTIME SAFE</span></p></div></div>
+</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">REALTIME SAFE FIXED</span></p></div></div>
 
 </header>
 <main>
@@ -673,7 +673,7 @@ function applyCloudState(s){
 
 let pendingCloudState=null;
 let syncRevisionCounter=0;
-let lastCloudUpdatedAt='';
+
 let syncFailCount=0;
 
 function makeRevision(){
@@ -912,7 +912,11 @@ async function initRealtime(){
   }
 }
 
-document.addEventListener('DOMContentLoaded',initRealtime);
+document.addEventListener('DOMContentLoaded',()=>{
+  const b=document.getElementById('loginBtn');
+  if(b){b.disabled=false;b.textContent='Masuk ke Dapur Ibu';}
+  initRealtime();
+});
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function rp(n){return 'Rp '+Number(n||0).toLocaleString('id-ID')}
 function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1400)}
