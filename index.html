@@ -438,7 +438,7 @@ nav button{
 <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
 <path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M9 20v-6h6v6" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
-</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">TABLE REALTIME DIAGNOSTIC</span></p></div></div>
+</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">TABLE REALTIME VALIDATED FIX</span></p></div></div>
 
 </header>
 <main>
@@ -568,7 +568,7 @@ let currentDate=new Date(),editIndex=-1,reqFilter='all',approveIndex=-1;
 const SUPABASE_URL='https://uduxugyvvqmxbzznqdmu.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_9kz1C-zW9Eefsfj1ZsZn5Q_djk9TdPs';
 
-let currentSbUser=null,syncTimer=null,syncBusy=false,syncAgain=false,changeVersion=0,baseline=null,applyingRemote=false,lastSyncError='';
+let currentSbUser=null,syncTimer=null,syncBusy=false,syncAgain=false,changeVersion=0,baseline=null,applyingRemote=false,lastSyncError='',dirtyLocal=localStorage.getItem('di_table_dirty')==='1';
 
 function uuid(){if(crypto&&crypto.randomUUID)return crypto.randomUUID();return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0,v=c==='x'?r:(r&3|8);return v.toString(16)})}
 function isUuid(v){return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(v||'')}
@@ -620,14 +620,14 @@ function diffRows(oldRows,newRows){const a=new Map(oldRows.map(x=>[x.id,x])),b=n
 async function upsertRows(table,rows){if(!rows.length)return;await db(table,{method:'POST',query:'?on_conflict=id',body:rows,prefer:'resolution=merge-duplicates,return=minimal'})}
 async function deleteRows(table,ids){if(!ids.length)return;await db(table,{method:'DELETE',query:'?id=in.('+ids.join(',')+')',prefer:'return=minimal'})}
 
-function save(){writeLocalState();if(applyingRemote||!currentSbUser)return;changeVersion++;syncStatus('Menyimpan...','busy','Menyimpan perubahan per item');clearTimeout(syncTimer);syncTimer=setTimeout(flushChanges,120)}
+function save(){writeLocalState();if(applyingRemote||!currentSbUser)return;dirtyLocal=true;localStorage.setItem('di_table_dirty','1');changeVersion++;syncStatus('Menyimpan...','busy','Menyimpan perubahan per item');clearTimeout(syncTimer);syncTimer=setTimeout(flushChanges,120)}
 async function flushChanges(){
   if(syncBusy){syncAgain=true;return}if(!currentSbUser||!baseline)return;
   syncBusy=true;syncAgain=false;const ver=changeVersion,captured=clone(localState());
   try{
     const oldT=rowsByTable(baseline),newT=rowsByTable(captured);
     for(const table of ['meal_plan','shopping','stock','recipes','requests','history']){const d=diffRows(oldT[table],newT[table]);await upsertRows(table,d.up);await deleteRows(table,d.del)}
-    baseline=clone(captured);lastSyncError='';syncStatus('Tersimpan online','ok');if(changeVersion!==ver)syncAgain=true
+    baseline=clone(captured);lastSyncError='';if(changeVersion===ver){dirtyLocal=false;localStorage.removeItem('di_table_dirty');syncStatus('Tersimpan online','ok')}else{syncAgain=true}
   }catch(e){lastSyncError=e.message||String(e);syncStatus('Gagal sinkron','err',lastSyncError);toast('Belum tersimpan online')}
   finally{syncBusy=false;if(syncAgain){syncAgain=false;setTimeout(flushChanges,200)}}
 }
@@ -654,8 +654,10 @@ async function loadAllFromCloud(){
   if(h!==null)history=groupHistory(h||[]);
   if(rq!==null)reqs=(rq||[]).map(x=>({id:x.id,name:x.requester_name||'',menu:x.menu_name,note:x.note||'',date:x.request_date||x.created_at,status:x.status||'waiting'}));
   if(rc!==null)recipes=(rc||[]).map(x=>({id:x.id,name:x.name,ingredients:x.ingredients||'',steps:x.steps||'',photo:x.photo_url||''}));
-  writeLocalState();renderHome();renderSchedule();renderShop();renderStock();renderHistory();renderRecipes();renderRequests();
-  applyingRemote=false;baseline=clone(localState());
+  writeLocalState();
+  baseline=clone(localState());
+  renderHome();renderSchedule();renderShop();renderStock();renderHistory();renderRecipes();renderRequests();
+  applyingRemote=false;
   if(errors.length){
     lastSyncError=errors.join(' | ');
     syncStatus('Sebagian data gagal','err',lastSyncError);
@@ -664,7 +666,7 @@ async function loadAllFromCloud(){
   lastSyncError='';
   return {ok:true,errors:[]};
 }
-async function pollCloud(){if(syncBusy||!currentSbUser)return;try{await loadAllFromCloud();syncStatus('Tersinkron','ok')}catch(e){lastSyncError=e.message||String(e);syncStatus('Koneksi terputus','err',lastSyncError)}}
+async function pollCloud(){if(syncBusy||dirtyLocal||!currentSbUser)return;try{const result=await loadAllFromCloud();if(result.ok)syncStatus('Tersinkron','ok')}catch(e){lastSyncError=e.message||String(e);syncStatus('Koneksi terputus','err',lastSyncError)}}
 function startPolling(){if(window._diPoll)clearInterval(window._diPoll);window._diPoll=setInterval(()=>{if(!document.hidden&&!syncBusy)pollCloud()},3000)}
 
 async function loginDapurIbu(){
@@ -686,7 +688,8 @@ async function loginDapurIbu(){
 function toggleAccountMenu(){document.getElementById('accountMenu').classList.toggle('show')}
 async function manualSync(){
   try{
-    if(baseline)await flushChanges();
+    if(dirtyLocal&&baseline)await flushChanges();
+    if(dirtyLocal){syncStatus('Belum tersimpan','err',lastSyncError||'Perubahan lokal belum berhasil dikirim');return}
     const result=await loadAllFromCloud();
     if(result.ok)syncStatus('Tersinkron','ok');
   }catch(e){
@@ -703,14 +706,25 @@ async function initRealtime(){
     currentSbUser=s.user||null;
     document.getElementById('authGate').classList.add('hidden');
     document.getElementById('accountEmail').textContent=currentSbUser?.email||'';
-    syncStatus('Mengambil data...','busy','Membaca tabel Supabase');
-    const result=await loadAllFromCloud();
-    if(result.ok)syncStatus('Tersinkron','ok');
+
+    if(dirtyLocal){
+      baseline=clone(localState());
+      syncStatus('Memulihkan perubahan...','busy','Ada data lokal yang belum tersimpan online');
+      await flushChanges();
+      if(!dirtyLocal){
+        const result=await loadAllFromCloud();
+        if(result.ok)syncStatus('Tersinkron','ok');
+      }
+    }else{
+      syncStatus('Mengambil data...','busy','Membaca tabel Supabase');
+      const result=await loadAllFromCloud();
+      if(result.ok)syncStatus('Tersinkron','ok');
+    }
     startPolling();
   }catch(e){
     lastSyncError=e.message||String(e);
     const lower=lastSyncError.toLowerCase();
-    if(lower.includes('sesi login')||lower.includes('refresh token')||lower.includes('invalid refresh')){
+    if(lower.includes('sesi login tidak ditemukan')||lower.includes('invalid refresh token')||lower.includes('refresh token not found')){
       clearSession();currentSbUser=null;
       document.getElementById('authGate').classList.remove('hidden');
     }else{
@@ -731,7 +745,7 @@ function switchShop(x){['buy','stock','hist'].forEach(n=>{$(n+'Panel').classList
 function goStock(){go('shopping');switchShop('stock')}
 function dayName(d){return DAYS[(d.getDay()+6)%7]}
 function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
-function renderHome(){let n=new Date(),h=n.getHours();$('greet').textContent=h<11?'Selamat pagi, Ibu! ☀️':h<15?'Selamat siang, Ibu! 🌤️':h<18?'Selamat sore, Ibu! 🌥️':'Selamat malam, Ibu! 🌙';$('dateText').textContent=n.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});let day=dayName(n),tones=['blue','green','purple','orange'];$('todayMeals').innerHTML=SLOTS.map((s,i)=>{let a=meals.filter(x=>x.day===day&&x.slot===s);return `<div class="meal ${tones[i]}"><h4>${s}</h4><div class="pair"><div class="mini"><span>Keluarga</span><b>${esc(a.find(x=>x.type==='Keluarga')?.name||'Belum ada menu')}</b></div><div class="mini"><span>MPASI</span><b>${esc(a.find(x=>x.type==='MPASI')?.name||'Belum ada menu')}</b></div></div></div>`}).join('');$('sumLow').textContent=stock.filter(x=>level(x)==='danger').length+' bahan';$('sumReq').textContent=reqs.filter(x=>(x.status||'waiting')==='waiting').length+' request baru'}
+function renderHome(){let n=new Date(),h=n.getHours(),el=$('greet');if(el)el.textContent=h<11?'Selamat pagi, Ibu! ☀️':h<15?'Selamat siang, Ibu! 🌤️':h<18?'Selamat sore, Ibu! 🌥️':'Selamat malam, Ibu! 🌙';el=$('dateText');if(el)el.textContent=n.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});let day=dayName(n),tones=['blue','green','purple','orange'],tm=$('todayMeals');if(tm)tm.innerHTML=SLOTS.map((s,i)=>{let a=meals.filter(x=>x.day===day&&x.slot===s);return `<div class="meal ${tones[i]}"><h4>${s}</h4><div class="pair"><div class="mini"><span>Keluarga</span><b>${esc(a.find(x=>x.type==='Keluarga')?.name||'Belum ada menu')}</b></div><div class="mini"><span>MPASI</span><b>${esc(a.find(x=>x.type==='MPASI')?.name||'Belum ada menu')}</b></div></div></div>`}).join('');el=$('sumLow');if(el)el.textContent=stock.filter(x=>level(x)==='danger').length+' bahan';el=$('sumReq');if(el)el.textContent=reqs.filter(x=>(x.status||'waiting')==='waiting').length+' request baru'}
 function weekStart(d){let x=new Date(d),k=(x.getDay()+6)%7;x.setDate(x.getDate()-k);x.setHours(12,0,0,0);return x}
 function shiftWeek(n){currentDate.setDate(currentDate.getDate()+n);renderSchedule()}
 function selectDay(s){currentDate=new Date(s+'T12:00:00');renderSchedule()}
