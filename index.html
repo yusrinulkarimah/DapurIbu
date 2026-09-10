@@ -399,6 +399,48 @@ nav button{
 .manualSyncBtn,.logoutBtn{width:100%;margin-top:9px;padding:10px;border:0;border-radius:12px;font-weight:800;font-size:10.5px}.manualSyncBtn{background:#edf6ff;color:#2a73bd}.logoutBtn{background:#fff0f2;color:#d05263}
 </style>
 
+
+<script id="DIAG-STACK-CAPTURE">
+window.__diLastError='';
+window.__diLastStack='';
+
+function __diSetDiag(message,stack){
+  window.__diLastError=message||'';
+  window.__diLastStack=stack||'';
+  const detail=document.getElementById('menuSyncDetail');
+  if(detail){
+    detail.textContent=(message||'Error tidak diketahui') + (stack ? ' | ' + stack.split('\n').slice(0,3).join(' ← ') : '');
+  }
+  const status=document.getElementById('accountStatus');
+  if(status)status.textContent='Error terdeteksi';
+  const mtext=document.getElementById('menuSyncText');
+  if(mtext)mtext.textContent='Error terdeteksi';
+  const dot=document.getElementById('accountDot');
+  const mdot=document.getElementById('menuSyncDot');
+  if(dot)dot.style.background='#df5968';
+  if(mdot)mdot.style.background='#df5968';
+}
+
+window.addEventListener('error',function(ev){
+  try{
+    const msg=(ev.error&&ev.error.message)||ev.message||'JavaScript error';
+    const stack=(ev.error&&ev.error.stack)||('');
+    __diSetDiag(msg,stack);
+    console.error('GLOBAL ERROR',ev.error||ev.message);
+  }catch(e){}
+});
+
+window.addEventListener('unhandledrejection',function(ev){
+  try{
+    const reason=ev.reason;
+    const msg=(reason&&reason.message)||String(reason||'Promise rejection');
+    const stack=(reason&&reason.stack)||'';
+    __diSetDiag(msg,stack);
+    console.error('UNHANDLED REJECTION',reason);
+  }catch(e){}
+});
+</script>
+
 </head>
 <body>
 
@@ -430,6 +472,7 @@ nav button{
     <div><b id="menuSyncText">Menghubungkan</b><small id="menuSyncDetail">Menyiapkan database</small></div>
   </div>
   <button class="manualSyncBtn" type="button" onclick="manualSync()">Sinkronkan sekarang</button>
+<button class="manualSyncBtn" type="button" onclick="showDiagnostic()">Lihat detail error</button>
   <button class="logoutBtn" type="button" onclick="logoutDapurIbu()">Keluar / Logout</button>
 </div>
 
@@ -438,7 +481,7 @@ nav button{
 <div class="brand"><div class="logo"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden="true">
 <path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
 <path d="M9 20v-6h6v6" stroke="#1976ed" stroke-width="1.8" stroke-linejoin="round"/>
-</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">TABLE REALTIME VALIDATED FIX</span></p></div></div>
+</svg></div><div><h1>Dapur Ibu</h1><p>Masak mudah, keluarga bahagia <span style="font-size:9px;color:#a2afbd">TABLE REALTIME DIAG STACK</span></p></div></div>
 
 </header>
 <main>
@@ -601,7 +644,13 @@ async function db(table,{method='GET',query='',body=null,prefer='return=represen
   const text=await res.text();let data=null;try{data=text?JSON.parse(text):null}catch(e){data=text}
   if(!res.ok)throw new Error((data&&data.message)||text||('Database '+res.status));return data
 }
-function syncStatus(text,type='busy',detail=''){const pill=document.getElementById('accountPill'),dot=document.getElementById('accountDot'),status=document.getElementById('accountStatus'),mdot=document.getElementById('menuSyncDot'),mtext=document.getElementById('menuSyncText'),mdetail=document.getElementById('menuSyncDetail');if(currentSbUser&&pill)pill.style.display='flex';const color=type==='ok'?'#38b879':type==='err'?'#df5968':'#f0a23a';if(dot)dot.style.background=color;if(mdot)mdot.style.background=color;if(status)status.textContent=text;if(mtext)mtext.textContent=text;if(mdetail)mdetail.textContent=detail||(type==='ok'?'Data tersimpan per item di Supabase':lastSyncError||'Sedang menghubungkan')}
+function syncStatus(text,type='busy',detail=''){const pill=document.getElementById('accountPill'),dot=document.getElementById('accountDot'),status=document.getElementById('accountStatus'),mdot=document.getElementById('menuSyncDot'),mtext=document.getElementById('menuSyncText'),mdetail=document.getElementById('menuSyncDetail');if(currentSbUser&&pill)pill.style.display='flex';const color=type==='ok'?'#38b879':type==='err'?'#df5968':'#f0a23a';if(dot)dot.style.background=color;if(mdot)mdot.style.background=color;if(status)status.textContent=text;if(mtext)mtext.textContent=text;if(mdetail){
+    const base=detail||(type==='ok'?'Data tersimpan per item di Supabase':lastSyncError||'Sedang menghubungkan');
+    mdetail.textContent=base;
+    if(type==='err'&&window.__diLastStack){
+      mdetail.textContent=base+' | '+window.__diLastStack.split('\n').slice(0,3).join(' ← ');
+    }
+  }}
 
 function rowsByTable(state){
   const now=new Date().toISOString(),h=[];
@@ -697,6 +746,13 @@ async function manualSync(){
     syncStatus('Gagal sinkron','err',lastSyncError);
   }
 }
+
+function showDiagnostic(){
+  const msg=window.__diLastError||lastSyncError||'Belum ada error yang tertangkap.';
+  const stack=window.__diLastStack||'Tidak ada stack trace.';
+  alert('DETAIL ERROR\n\n'+msg+'\n\n'+stack);
+}
+
 async function logoutDapurIbu(){if(window._diPoll)clearInterval(window._diPoll);clearSession();currentSbUser=null;baseline=null;document.getElementById('accountMenu').classList.remove('show');document.getElementById('accountPill').style.display='none';document.getElementById('authGate').classList.remove('hidden');document.getElementById('loginPassword').value=''}
 async function initRealtime(){
   try{
